@@ -1,0 +1,20 @@
+[
+  {"query": "大和アセットマネジメントのESを書いて", "should_trigger": true},
+  {"query": "第一生命の設問に回答を入れて", "should_trigger": true},
+  {"query": "移行後ESにSMBC日興証券を作成して回答を入れて", "should_trigger": true},
+  {"query": "エントリーシートを書いて。企業は野村證券で設問はガクチカと志望動機です", "should_trigger": true},
+  {"query": "みずほグループ.mdに回答を入れて", "should_trigger": true},
+  {"query": "三菱UFJアセットマネジメントのES、志望動機だけ書いて", "should_trigger": true},
+  {"query": "このES設問に答えて: 「学生時代に力を入れたことを400字で」（企業: 農林中金）", "should_trigger": true},
+  {"query": "ソニー銀行のエントリーシート、全設問を一気に仕上げて", "should_trigger": true},
+  {"query": "楽天銀行のESを書いてほしい。ガクチカ・自己PR・志望動機の3設問", "should_trigger": true},
+  {"query": "大和アセットマネジメントの面接準備をして", "should_trigger": false},
+  {"query": "第一生命のresearch_briefを作って", "should_trigger": false},
+  {"query": "大和アセットマネジメントのESから改善要素を抽出してfoundationsに反映して", "should_trigger": false},
+  {"query": "提出済みのSMBC信託銀行ESを参照して基盤回答を更新して", "should_trigger": false},
+  {"query": "インターンのエピソードを追加したい。財務部での自動化の経験を整理して", "should_trigger": false},
+  {"query": "大和アセットマネジメントのESフィードバックループを実行して", "should_trigger": false},
+  {"query": "野村證券の1次面接の準備をして", "should_trigger": false},
+  {"query": "志望動機を見てほしいんだけど、この文章どう思う？", "should_trigger": false},
+  {"query": "ESを保存したら自動でgit commitしてほしい", "should_trigger": false}
+]

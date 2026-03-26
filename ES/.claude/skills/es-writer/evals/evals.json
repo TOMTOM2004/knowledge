@@ -1,0 +1,45 @@
+{
+  "skill_name": "es-writer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "大和アセットマネジメントのESを書いて",
+      "expected_output": "大和アセットマネジメントの移行後ESファイルを読み込み、設問ごとに回答を生成してプレビューを提示する。research_brief.mdがあれば参照し、志望動機には競合差別化論拠を含める。guardrails.mdを読み込んでG1〜G11のチェックを実施する。",
+      "files": [],
+      "expectations": [
+        "移行後ES/大和アセットマネジメント.mdを読み込んでいる",
+        "company-info/大和アセットマネジメント/research_brief.mdの存在を確認している",
+        "references/guardrails.mdを読み込んでいる",
+        "プレビューに文字数カウントが含まれている",
+        "敬称として「貴社」を使用している",
+        "志望動機に企業固有の記述または【要確認】タグが含まれている"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "第一生命のESを書いて",
+      "expected_output": "第一生命の移行後ESファイルを読み込み、保険業界の敬称（貴社）を使って回答を生成する。guardrails.mdを参照しG11（誠実さ・チーム横断）チェックを実施する。",
+      "files": [],
+      "expectations": [
+        "移行後ES/第一生命.mdを読み込んでいる",
+        "references/guardrails.mdを読み込んでいる",
+        "敬称として「貴社」を使用している",
+        "プレビューを提示してから保存確認を求めている",
+        "文字数チェックを実施している"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "大和アセットマネジメントのESを書いて。志望動機・コース選択理由・活躍イメージ・学業の4設問がある",
+      "expected_output": "4問以上あるためreferences/multi-question-design.mdを読み込んでStep 3-Bを実施する。各設問に粒度の役割を割り当て、コンテンツ分配を設計してから一括生成する。",
+      "files": [],
+      "expectations": [
+        "references/multi-question-design.mdを読み込んでいる",
+        "設問ごとにWHY COMPANY / WHY COURSE / HOW TO CONTRIBUTE / EVIDENCEなどの役割を割り当てている",
+        "同じエピソードを複数設問で使用していない",
+        "references/guardrails.mdを読み込んでいる",
+        "全設問の文字数を一括チェックしている"
+      ]
+    }
+  ]
+}
