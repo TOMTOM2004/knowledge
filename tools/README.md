@@ -16,33 +16,35 @@ pip install faster-whisper
 ```powershell
 cd tools
 
-# 基本 (出力先: ../transcripts/interviews/)
-python transcribe.py C:\録音\20260326_みずほ1次.mp3
+# 企業名を指定 → company-info/みずほフィナンシャルグループ/ に保存
+python transcribe.py C:\録音\20260326_みずほ_1次面接.mp3 --company みずほフィナンシャルグループ
 
-# 出力先を others に変更
+# 企業名を省略 → 起動時に一覧から選択できる
+python transcribe.py C:\録音\20260326_みずほ_1次面接.mp3
+
+# 精度重視 (重要な面接に)
+python transcribe.py audio.mp3 --company みずほフィナンシャルグループ --model medium
+
+# 就活以外の用途 → transcripts/others/ に保存
 python transcribe.py C:\録音\seminar.mp3 --output ../transcripts/others
-
-# 精度重視 (時間がかかる)
-python transcribe.py audio.mp3 --model medium
 ```
 
-## モデルの選び方
+## 出力先
 
-| モデル | 速度 | 精度 | 目安 |
-|--------|------|------|------|
-| tiny   | 最速 | 低   | テスト用 |
-| small  | 速い | 中   | **日常利用推奨** |
-| medium | 普通 | 高   | 重要な面接 |
-| large-v2 | 遅い | 最高 | 最重要場面 |
+| 用途 | 保存先 |
+|------|--------|
+| 面接（企業指定あり） | `company-info/企業名/transcript_音声ファイル名.md` |
+| 面接（企業指定なし） | 起動時に一覧から選択 |
+| その他 | `transcripts/others/` |
 
-## 出力ファイル
+### 出力例
 
-`transcripts/interviews/` または `transcripts/others/` に Markdown 形式で保存されます。
+`company-info/みずほフィナンシャルグループ/transcript_20260326_みずほ_1次面接.md`
 
 ```markdown
-# 文字起こし: 20260326_みずほ1次
+# 文字起こし: 20260326_みずほ_1次面接
 
-- 元ファイル: `20260326_みずほ1次.mp3`
+- 元ファイル: `20260326_みずほ_1次面接.mp3`
 - 処理日時: 2026-03-26 14:30
 - モデル: small
 
@@ -55,12 +57,19 @@ python transcribe.py audio.mp3 --model medium
 ...
 ```
 
+## モデルの選び方
+
+| モデル | 速度 | 精度 | 用途 |
+|--------|------|------|------|
+| tiny   | 最速 | 低   | テスト用 |
+| small  | 速い | 中   | **日常利用推奨** |
+| medium | 普通 | 高   | 重要な面接 |
+| large-v2 | 遅い | 最高 | 最重要場面 |
+
 ## GitHubへのアップ
 
-文字起こし完了後、このリポジトリにコミット・push すれば Mac側からも参照できます。
-
 ```powershell
-git add transcripts/
+git add company-info/
 git commit -m "transcript: 20260326 みずほFG 1次面接"
 git push
 ```
