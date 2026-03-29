@@ -1,142 +1,136 @@
-# ESレビューフロー
+# ESレビューフロー（軽量モード）
 
-ES作成から提出前チェックまでの標準フロー。
+**軽量モードが default。** 全 reviewer を毎回回さない。段階起動が標準。
+
+詳細: `docs/workflow/quality-gates.md`
 
 ---
 
 ## フロー全体図
 
 ```
-[エピソード収集] → [ES草稿作成] → [機械チェック] → [多角レビュー] → [改善] → [提出]
-     ↓                ↓                ↓               ↓             ↓
-episode-formatter   es-writer      tools/checks/   agents/       editor-refiner
-                                   es_checker.py
+[ES草案] → [Gate1: script] → [Gate2: 設問+可読性] → [Gate3: 企業+職種適合] → [Gate4: 重複] → [提出]
+                ↓                    ↓                        ↓                     ↓
+          es_checker.py      question-fit            company-fit             consistency
+                             readability             role-fit                -overlap
 ```
 
 ---
 
 ## Step 1: 事前準備
 
-### 1-1. エピソードライブラリの確認
+### 1-1. research_brief の確認
+```
+「company-info/[企業名]/research_brief.md を確認して。
+ brief がなければ先に調査をして」
+```
+
+### 1-2. エピソード確認
 ```
 「ES/md/INDEX.md を見て、使えるエピソードを教えて」
 ```
 
-### 1-2. 企業調査の確認（未調査の場合）
+---
+
+## Step 2: ES草案作成（セッションC）
+
 ```
-「[企業名]の企業調査をして」→ company-researcher スキルが起動
+「[企業名]のESを書いて」→ es-writer が起動
 ```
 
-### 1-3. 企業調査の品質チェック
-```
-python tools/checks/research_checker.py [企業名]
-```
-または
-```
-「[企業名]の企業調査の不足を確認して」→ research-gap-reviewer エージェントが参照
-```
+参照するもの（最小限）:
+- `company-info/<企業名>/research_brief.md`
+- `ES/md/INDEX.md`
+- `ES/components/best_answers.md`
 
 ---
 
-## Step 2: ES草稿作成
-
-```
-「[企業名]のESを書いて」→ es-writer スキルが起動
-```
-
-es-writerは以下を参照して自動生成:
-- `ES/components/best_answers.md`（コア参照）
-- `ES/md/INDEX.md`（エピソード一覧）
-- `company-info/[企業名]/research_brief.md`（企業固有情報）
-
----
-
-## Step 3: 機械チェック
+## Step 3: Gate 1 — 機械チェック（必須）
 
 ```bash
 python tools/checks/es_checker.py 移行後ES/[企業名].md
 ```
 
-**確認項目**: 禁止表現・敬称混在・未回答・重複表現・技術語過多・抽象語過多・数字不足
-
-ERRORがあれば先に修正してから次へ進む。
+ERROR があれば先に修正してから次へ。
 
 ---
 
-## Step 4: 多角レビュー
+## Step 4: Gate 2 — 設問・可読性（必須、セッションC内）
 
-### 4-1. 設問適合チェック（最優先）
 ```
-「[企業名].mdの各設問に正面から答えているか確認して」
-→ question-fit-reviewer エージェント
-```
-
-### 4-2. 可読性チェック
-```
-「[企業名].mdの可読性をチェックして」
-→ readability-reviewer エージェント
+「[企業名].md の設問適合と可読性を確認して」
+→ question-fit-reviewer + readability-reviewer
 ```
 
-### 4-3. 企業適合チェック
+草案段階ではここまで。
+
+---
+
+## Step 5: Gate 3 — 企業・職種適合（必須、セッションD）
+
+**別セッションで実行することを推奨。**
+
 ```
-「[企業名].mdが[企業名]向けになっているか確認して」
-→ company-fit-reviewer エージェント
+「[企業名].md の企業適合と職種適合を確認して」
+→ company-fit-reviewer + role-fit-reviewer
 ```
 
-### 4-4. 職種適合チェック
-```
-「[企業名].mdが[職種名]向けになっているか確認して」
-→ role-fit-reviewer エージェント
-```
+**前提**: `company-info/<企業名>/research_brief.md` が存在すること
 
-### 4-5. 重複チェック
-```
-「[企業名].mdの設問間の重複を確認して」
-→ consistency-overlap-reviewer エージェント
-```
+---
 
-### 一括レビュー（時間がない場合）
+## Step 6: Gate 4 — 重複・一貫性（設問 3つ以上の場合）
+
 ```
-「[企業名].mdを全体的にレビューして」
-→ es-review-protocol スキルが各エージェントを順番に呼び出す
+「[企業名].md の設問間の重複を確認して」
+→ consistency-overlap-reviewer
 ```
 
 ---
 
-## Step 5: 改善
+## Step 7: 改善
 
 ```
-「[reviewer名]の指摘を踏まえて[企業名].mdを改善して」
-→ editor-refiner エージェント
-```
-
-または直接修正する。
-
----
-
-## Step 6: 面接深掘り耐性チェック
-
-```
-「[企業名].mdで面接で突っ込まれそうな質問を出して」
-→ skeptical-interviewer エージェント
+「[reviewer名]の指摘を踏まえて[企業名].md を改善して」
+→ editor-refiner（指摘が多い場合）または直接修正
 ```
 
 ---
 
-## Step 7: 改善内容の知識ベースへの還元（任意）
+## Step 8: Gate 5 — 面接深掘り（面接前のみ）
 
-### 提出後に実施
+別セッション（セッションE）で実行:
+
 ```
-「[企業名].mdからfoundationsを更新して」→ es-refiner スキル
-「ES改善点をskill-update-logに追加して」→ 手動記入
+「[企業名].md で面接で突っ込まれそうな質問を出して」
+→ skeptical-interviewer
 ```
 
 ---
 
-## レビュー判断基準
+## 段階起動まとめ
 
-| 判定 | 基準 | アクション |
-|-----|------|----------|
-| 提出可 | 全reviewer評価 ○以上 | そのまま提出 |
-| 修正後提出 | 1〜2項目 △あり | editor-refinerで修正後提出 |
-| 大幅修正必要 | 複数項目 ✗あり | 草稿から見直し |
+| Gate | reviewer | セッション | スキップ可否 |
+|------|---------|----------|-----------|
+| Gate 1 | es_checker.py | C | スキップ不可 |
+| Gate 2 | question-fit + readability | C | スキップ不可 |
+| Gate 3 | company-fit + role-fit | D | スキップ不可 |
+| Gate 4 | consistency-overlap | D | 設問 2つ以下ならスキップ可 |
+| Gate 5 | skeptical-interviewer | E | 書類段階ならスキップ可 |
+| Gate 6 | editor-refiner | D or E | 指摘なければスキップ可 |
+
+---
+
+## ⚠️ やってはいけないこと
+
+- 草案段階で company-fit / role-fit / skeptical-interviewer を呼ばない
+- `es-review-protocol` で全 reviewer を一括起動しない（重すぎる）
+- 「全体的にレビューして」という依頼をそのまま通さない
+
+### 一括レビューが必要な場合（例外）
+
+第一志望の最終提出前など特別な場合のみ:
+```
+「[企業名].md を全体的にレビューして」
+→ es-review-protocol（全エージェントを呼ぶ・高コスト）
+```
