@@ -115,19 +115,48 @@
 
 ---
 
-### セッションE: 面接想定問答
+### セッションE1: 面接調査
 
-**目的**: ES をもとに面接深掘り耐性を確認する
+**目的**: 体験記・選考実態を収集し、質問を重要度別に分類する
 
 **読むもの**:
-- `company-info/<企業名>/interview_prep_*.md`（あれば）
-- `company-info/<企業名>/research_brief.md`
-- interview 系 skill（stage に応じた最小セット）
+- `company-info/<企業名>/research_brief.md`（軸3・軸7-A・軸9を確認）
+- `company-info/<企業名>/interview_prep_*.md`（旧ファイルがあれば参考参照のみ）
 
-**reader**: skeptical-interviewer
+**スキル**: interview-research
 
 **書くもの**:
-- `company-info/<企業名>/interview_prep_<N>次_YYYYMMDD.md`
+- `company-info/<企業名>/interview_research_<ステップ>_<YYYYMMDD>.md`
+
+**読まないもの**:
+- ES系 skill（es-writer等）
+- interview-qa（次セッションで使う）
+
+**推奨依頼文**:
+```
+「[企業名]の[N]次面接の選考調査をして。
+ interview-research を使って。ESレビューはしなくていい」
+```
+
+**次に渡す成果物**: `interview_research_<ステップ>_<日付>.md`
+
+---
+
+### セッションE2: 想定問答生成
+
+**目的**: 調査結果をもとに重要度別の回答骨格・詰め対策・逆質問を生成する
+
+**読むもの**:
+- `company-info/<企業名>/interview_research_<ステップ>_*.md`（E1の成果物）
+- `company-info/<企業名>/research_brief.md`（軸3・軸7-A・軸8・軸9）
+- `移行後ES/<企業名>.md`（提出済みES）
+- `ES/md/01_自己分析_コア価値観将来像行動原理.md`
+- `ES/md/02_自己分析_強み弱み伸びしろ.md`
+
+**スキル**: interview-qa
+
+**書くもの**:
+- `company-info/<企業名>/interview_qa_<ステップ>_<YYYYMMDD>.md`
 
 **読まないもの**:
 - ES系 skill（es-writer等）
@@ -135,9 +164,11 @@
 
 **推奨依頼文**:
 ```
-「[企業名]の[N]次面接の準備をして。
- interview-prep を使って。ESレビューはしなくていい」
+「[企業名]の[N]次面接の想定問答を作って。
+ interview-qa を使って。調査ファイルは interview_research_[ステップ]_*.md を読んで」
 ```
+
+**次に渡す成果物**: `interview_qa_<ステップ>_<日付>.md`
 
 ---
 
@@ -149,7 +180,8 @@
 A → B: research_brief.md
 B → C: （更新された）research_brief.md
 C → D: ES草案ファイル
-D → E: 最終 ES ファイル
+D → E1: 最終 ES ファイル
+E1 → E2: interview_research_<ステップ>_<日付>.md
 ```
 
 新しいセッション開始時は:
@@ -166,7 +198,9 @@ D → E: 最終 ES ファイル
 | ES草案 | `ES/drafts/<企業名>.md` |
 | 提出前ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
-| 面接準備 | `company-info/<企業名>/interview_prep_<N>次_YYYYMMDD.md` |
+| 旧面接準備（参照のみ） | `company-info/<企業名>/interview_prep_<N>次_YYYYMMDD.md` |
+| 面接調査（新） | `company-info/<企業名>/interview_research_<ステップ>_<YYYYMMDD>.md` |
+| 面接想定問答（新） | `company-info/<企業名>/interview_qa_<ステップ>_<YYYYMMDD>.md` |
 
 ---
 

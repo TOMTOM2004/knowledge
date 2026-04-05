@@ -22,7 +22,8 @@
 | B: brief整形 | research_brief.md | 3〜7 KB |
 | C: ES草案 | brief + INDEX.md + 必要 components 1本 | 20〜40 KB |
 | D: ES仕上げ | ES本文 + brief | 15〜25 KB |
-| E: 面接準備 | brief + interview skill 最小セット | 20〜30 KB |
+| E1: 面接調査 | interview-research SKILL + WebSearch | 5 KB + web |
+| E2: 想定問答 | interview_research ファイル + brief + ES + 自己分析2本 | 25〜40 KB |
 
 **参考: 全部1セッション（旧運用）の場合: 100〜200 KB**
 
@@ -62,11 +63,18 @@
 
 （続きは別コマンドで: 「company-fit と role-fit と consistency を確認して」）
 
-### セッションE: 面接準備
+### セッションE1: 面接調査
 
 ```
-「[企業名]の[N]次面接の準備をして。
- ESレビューはしなくていい。面接系の質問生成だけ」
+「[企業名]の[N]次面接の選考調査をして。
+ interview-research を使って。ESレビューはしなくていい」
+```
+
+### セッションE2: 想定問答
+
+```
+「[企業名]の[N]次面接の想定問答を作って。
+ interview-qa を使って。調査ファイルは interview_research_[ステップ]_*.md を読んで」
 ```
 
 ---
@@ -81,6 +89,8 @@
 | finance-common と digital-common を同時に読む | 業種を1つ選ぶ |
 | ES 執筆中に interview 系 skill を混入 | 面接セッションで使う |
 | 草案段階で skeptical-interviewer を回す | ES 完成後に回す |
+| E1・E2を同一セッションで実行する | 別セッションに分割する |
+| interview-research なしで interview-qa を実行する | 必ず E1 を先に完了させる |
 
 ---
 

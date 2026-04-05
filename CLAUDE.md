@@ -28,7 +28,9 @@
 | 提出済みES | `ES/submitted/<企業名>.md` |
 | 確定版ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
-| 面接準備 | `company-info/<企業名>/interview_prep_*.md` |
+| 面接調査（新） | `company-info/<企業名>/interview_research_<ステップ>_<日付>.md` |
+| 面接想定問答（新） | `company-info/<企業名>/interview_qa_<ステップ>_<日付>.md` |
+| 旧面接準備（参照のみ） | `company-info/<企業名>/interview_prep_*.md` |
 | 運用ドキュメント | `docs/workflow/` |
 | チェックスクリプト | `tools/checks/` |
 
@@ -37,6 +39,7 @@
 ## ES作成時の参照順序（軽量モード）
 
 1. `company-info/<企業名>/research_brief.md` — **一次参照はこれだけ**（詳細調査ファイルを直接読まない）
+   - 軸7-A（核心固有性）が存在することを確認。未記載なら company-researcher を先に実行する
 2. `ES/md/INDEX.md` — 使えるエピソードを確認
 3. `ES/components/best_answers.md` — コア回答テンプレを確認
 4. es-writer スキルで生成
@@ -52,8 +55,36 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 
 1. `company-info/<企業名>/` フォルダを確認（既存資料があるか）
 2. company-researcher スキルで調査・生成
+   - 軸7-A（核心固有性）が生成されていることを確認する
 3. チェック: `python tools/checks/research_checker.py <企業名>`
 4. research-gap-reviewer エージェントで不足論点を確認
+
+---
+
+## 面接準備の3段階フロー（新規企業用）
+
+**前提**: `company-info/<企業名>/research_brief.md` が存在すること（軸7-A含む）
+
+### Stage 1: 選考調査（interview-research）
+```
+「<企業名>の<N>次面接の選考調査をして」
+```
+→ 出力: `company-info/<企業名>/interview_research_<ステップ>_<日付>.md`
+
+### Stage 2: 想定問答生成（interview-qa）
+```
+「<企業名>の<N>次面接の想定問答を作って」
+```
+→ 出力: `company-info/<企業名>/interview_qa_<ステップ>_<日付>.md`
+
+### Stage 3: 本番練習（skeptical-interviewer）
+```
+「<企業名>の<N>次面接で skeptical-interviewer を回して」
+```
+→ 別セッション推奨
+
+**軽量モード**: Stage 1・2・3は別セッションで実行する
+**既存企業**: `interview_prep_*.md` は参照のみ（上書き・削除禁止）
 
 ---
 
@@ -68,7 +99,9 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 ### 主なスキル
 - `company-researcher` — 企業調査（**必ず**このスキル経由。自前WebSearch禁止）
 - `es-writer` — ES作成（企業名+設問があれば自動起動）
-- `interview-prep` — 面接準備シート生成
+- `interview-research` — 面接調査専門（体験記収集・重要度分類）← **新規**
+- `interview-qa` — 想定問答生成専門（重要度別回答骨格・詰められ・逆質問）← **新規**
+- `interview-prep` — 旧面接準備（**既存ファイル参照専用。新規企業には使わない**）
 - `es-review-protocol` — ES全体レビュー（**第一志望最終提出前のみ使用**。通常は段階起動）
 - `es-refiner` — 提出済みESからfoundations更新
 - `es-improver` — 編集差分からes-writerを自動改善
@@ -91,7 +124,9 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 
 - `company-researcher` を使わず自前でWebSearchして企業調査しない
 - `data/raw/` に相当する原本ファイル（`ES/エピソード/`の docx 等）を削除・変更しない
-- research_brief.md を直接書き換えない（スキル経由で更新する）
+- `research_brief.md` を直接書き換えない（スキル経由で更新する）
+- `interview_prep_*.md`（旧フォーマット）を削除・変更しない（参照のみ）
+- `interview-research` なしで `interview-qa` を起動することを推奨しない
 - main ブランチに直接コミット・push しない
 - `.env` や秘密情報をコミットしない
 
@@ -116,3 +151,4 @@ CLAUDE.md には入れない。以下に配置する:
 - 品質ゲート → `docs/workflow/quality-gates.md`
 - エージェントコスト → `docs/workflow/agent-cost-tiering.md`
 - research_brief フロー → `docs/workflow/research-brief-flow.md`
+- 面接スキル設計思想 → `docs/workflow/interview-skill-design.md`
