@@ -11,8 +11,14 @@
     │
     ├── [入力] 企業名・職種・面接ラウンド・ES草稿
     │
-    ├── Stage A: 準備シート作成
-    │   ├── interview-prep (SKILL.md)
+    ├── Stage A1: 選考調査（新）
+    │   └── interview-research (SKILL.md)   ← 体験記収集・重要度分類
+    │
+    ├── Stage A2: 想定問答生成（新）
+    │   └── interview-qa (SKILL.md)         ← 重要度別回答骨格・詰め対策・逆質問
+    │
+    ├── Stage A（旧）: 準備シート作成（既存企業の参照のみ）
+    │   ├── interview-prep (SKILL.md)        ← 旧スキル（新規企業には使わない）
     │   ├── stages/first-interview-mode     ← 1次面接対策
     │   └── stages/final-interview-depth-mode ← 最終面接対策
     │
