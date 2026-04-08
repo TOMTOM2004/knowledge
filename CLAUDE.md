@@ -31,6 +31,14 @@
 | 面接調査（新） | `company-info/<企業名>/interview_research_<ステップ>_<日付>.md` |
 | 面接想定問答（新） | `company-info/<企業名>/interview_qa_<ステップ>_<日付>.md` |
 | 旧面接準備（参照のみ） | `company-info/<企業名>/interview_prep_*.md` |
+| 面接振り返り | `company-info/<企業名>/reflection_<N>次_<YYYYMMDD>.md` |
+| 音声文字起こし | `company-info/<企業名>/transcript_<N>次_<YYYYMMDD>.md` |
+| 直前チェックシート | `company-info/<企業名>/interview_direct_prep_<N>次_<YYYYMMDD>.md` |
+| 面接傾向パターン（全社横断） | `docs/interview_patterns.md` |
+| 質問バンク（全社横断） | `docs/question_bank.md` |
+| 選考状況トラッカー | `docs/application_status.md` |
+| 通過実績記録 | `docs/success_record.md` |
+| reflection テンプレート | `docs/schemas/reflection-template.md` |
 | 運用ドキュメント | `docs/workflow/` |
 | チェックスクリプト | `tools/checks/` |
 
@@ -88,6 +96,41 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 
 ---
 
+## 面接後の処理フロー（transcript活用）
+
+### 面接終了直後（スマホ / Claude Web）
+```
+① Gemini等で壁打ちしながら reflection を手作成・push
+   → company-info/<企業名>/reflection_<N>次_<YYYYMMDD>.md
+   → frontmatter は result: pending で作成
+```
+テンプレート → `docs/schemas/reflection-template.md`
+
+### transcript 到着後（Windows PC 自動 PR マージ後）
+```
+② interview-blindspot  → reflection に盲点セクション追記
+③ question-bank-updater → docs/question_bank.md 更新
+```
+
+### 次の選考が決まったら
+```
+④ interview-next-prep → 次回 interview_qa に引き継ぎ論点追加
+⑤ interview-reflect   → docs/interview_patterns.md 更新
+```
+
+### 合否確認後
+```
+⑥ reflection の frontmatter を更新（result: passed/rejected・date_result 記入）
+⑦ success-pattern-extractor → 定期実行（月1程度）
+```
+
+### 面接30分前
+```
+⑧ interview-direct-prep → 1枚チェックシートを生成
+```
+
+---
+
 ## スキル / エージェント / hook の使い分け
 
 | 種類 | 役割 | 使う場面 |
@@ -105,6 +148,12 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 - `es-review-protocol` — ES全体レビュー（**第一志望最終提出前のみ使用**。通常は段階起動）
 - `es-refiner` — 提出済みESからfoundations更新
 - `es-improver` — 編集差分からes-writerを自動改善
+- `interview-blindspot` — reflection × transcript の差分 → 盲点を reflection に追記 ← **新規**
+- `question-bank-updater` — transcript から質問抽出 → question_bank.md にマージ ← **新規**
+- `interview-direct-prep` — 面接30分前の1枚チェックシート生成 ← **新規**
+- `interview-reflect` — 全 reflection 横断集計 → interview_patterns.md 更新 ← **新規**
+- `interview-next-prep` — 前回深掘り → 次回 interview_qa に引き継ぎ論点追加 ← **新規**
+- `success-pattern-extractor` — passed ES・reflection → 共通パターン抽出・実績タグ付け ← **新規**
 
 ### 主なエージェント（`.claude/agents/`）
 - `question-fit-reviewer` — 設問適合（最優先）
@@ -127,6 +176,9 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 - `research_brief.md` を直接書き換えない（スキル経由で更新する）
 - `interview_prep_*.md`（旧フォーマット）を削除・変更しない（参照のみ）
 - `interview-research` なしで `interview-qa` を起動することを推奨しない
+- `interview-blindspot` を transcript なしで実行しない（transcript 到着前の実行は禁止）
+- `question-bank-updater` で質問文を要約・意訳しない（逐語記録を徹底する）
+- `reflection_*.md` の frontmatter `result` を未設定のまま放置しない（合否確認後に必ず更新する）
 - main ブランチに直接コミット・push しない
 - `.env` や秘密情報をコミットしない
 

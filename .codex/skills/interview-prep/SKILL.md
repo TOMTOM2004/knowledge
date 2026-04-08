@@ -5,6 +5,7 @@ description: >
   詰められポイント・逆質問リストを生成して保存する。
   company-researcher の research_brief.md を前提として読み込む。
   「〇〇の面接準備をして」「〇〇の1次面接の準備」「/interview-prep」などで呼び出す。
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch
 ---
 
 # Interview Prep スキル
