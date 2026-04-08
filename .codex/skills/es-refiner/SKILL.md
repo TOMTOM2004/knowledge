@@ -5,6 +5,7 @@ description: >
   components/foundations/ の基盤回答をブラッシュアップするスキル。
   「ESから改善要素を抽出して」「このESをfoundationsに反映して」「基盤回答を更新して」
   「foundations を更新して」「/es-refiner」などの依頼で呼び出す。
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
 
 # ES Refiner スキル
