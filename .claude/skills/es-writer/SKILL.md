@@ -17,6 +17,8 @@ allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 **参照ファイル（必要時に読み込む）:**
 - `references/guardrails.md` — G1〜G11 品質チェックルール（Step 4完了後に必ず読み込む）
 - `references/multi-question-design.md` — 3問以上ある場合の設計ロジック（Step 3後に判定して読み込む）
+- `references/audience-styles.md` — 読者別の表現スタイル（人事/文系若手/現場実務者向け。Step 3で文体調整時に読み込む）
+- `references/question-type-patterns.md` — 設問タイプ別の構造・配分パターン（志望動機/ガクチカ/強み弱み/ビジョン。Step 3で設問タイプ判定後に読み込む）
 
 ---
 

@@ -1,6 +1,8 @@
 ---
 name: editor-refiner
-description: 他のreviewerの指摘を踏まえ、実際の改善文案に落とす。冗長削除、文体統一、字数調整、表現磨きを担当する。
+description: >
+  他のreviewerの指摘を踏まえ、実際の改善文案を生成する最終編集エージェント。
+  入力: ESファイル + reviewerレポート + 目標字数。出力: Before/After/変更理由 形式の改善案。
 ---
 
 # editor-refiner
@@ -39,16 +41,9 @@ readability-reviewer・company-fit-reviewer・role-fit-reviewer・question-fit-r
 - 長文分割型
 - 技術語言い換え型
 
-### 読者層スキル（面接官タイプに応じて選択）
-- `audiences/junior-humanities-readable-style` — 社会人1〜3年目文系向けの変換辞書・語彙基準
-- `audiences/hr-readable-style` — 人事担当者向けの差別化表現・評価ポイント
-- `audiences/practitioner-readable-style` — 現場実務者向けの専門語の正確な使用原則
-
-### 設問種別スキル（設問タイプに応じて参照）
-- `question_types/motivation-question-patterns` — 志望動機の3層構造・字数別配分
-- `question_types/gakuchika-question-patterns` — ガクチカのSTAR+Why法・字数別配分
-- `question_types/strengths-weaknesses-patterns` — 強み/弱みの表現改善ルール
-- `question_types/future-vision-patterns` — ビジョン設問の短期/中期/長期ロードマップ構造
+### 読者層・設問知識（統合済み参照ファイル）
+- `skills/es-writer/references/audience-styles.md` — 読者別の表現スタイル（人事/文系若手/現場実務者）
+- `skills/es-writer/references/question-type-patterns.md` — 設問タイプ別の構造・配分パターン
 
 ## 禁止事項
 - 事実の追加・捏造はしない

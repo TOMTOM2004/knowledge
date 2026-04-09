@@ -17,6 +17,11 @@ allowed-tools: Read, Write
 
 **前提**: `interview-research` を先に実行し、`interview_research_<ステップ>_*.md` が存在すること
 
+**参照ファイル（必要時に読み込む）:**
+- `references/answer-patterns.md` — 面接回答パターン（話し言葉版）。ガクチカ/志望動機/強み弱み/深掘り/反論対処（Step 2で回答骨格生成時に読み込む）
+- `references/stage-modes.md` — 選考段階別の評価基準・チェックリスト（Step 1で選考ステップ特定後に読み込む）
+- `references/role-fit-criteria.md` — 職種別の評価観点・頻出質問（Step 2でコース特定後に該当セクションを読み込む）
+
 ---
 
 ## Step 0: 入力確認

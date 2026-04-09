@@ -1,6 +1,8 @@
 ---
 name: consistency-overlap-reviewer
-description: 複数設問を横断で見て、一貫性と重複を確認する。話がかぶっていないか、見せ方を分けられているかを確認する。
+description: >
+  ES全設問を横断分析し、一貫性と重複を確認する。入力: ESファイル（複数設問含む）。
+  出力: 一貫性評価(◎/○/△/✗) + 重複マトリクス + エピソード重複リスト + 修正推奨事項。
 ---
 
 # consistency-overlap-reviewer
