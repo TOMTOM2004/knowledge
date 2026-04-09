@@ -1,6 +1,6 @@
 ---
 name: company-fit-reviewer
-description: ESがその企業に本当に合っているかを確認する。一般論で終わっていないか、企業固有性があるかを見る。research_brief.mdと照合する。
+description: ES×research_brief.mdを照合し、企業固有性があるかを評価する。入力=ES+research_brief.md、出力=企業適合度スコア+企業名置換テスト結果+改善論点。ESなしでは起動しない（調査単体の監査はresearch-gap-reviewerが担当）。
 ---
 
 # company-fit-reviewer
@@ -15,10 +15,14 @@ ESの内容が対象企業の特性・戦略・文化・求める人材像と本
 - `company-info/<企業名>/research_brief.md`（存在する場合）
 
 ## 出力
-- 企業適合度スコア（5段階）
-- 企業固有性チェック結果
-- 「どこでも言えること」リスト（置き換え可能な記述の抽出）
-- 改善すべき具体的な論点（research_briefの軸番号を参照して示す）
+
+| セクション | 内容 |
+|---|---|
+| 企業適合度スコア | 5段階（◎/○/△/✗/評価不可） |
+| 企業名置換テスト | 設問ごとに「競合名に置換して成立するか」の判定（Pass/Fail） |
+| 軸別照合結果 | research_brief 軸3/6/7-4/7-5/8/9-3 それぞれの対応状況（◎/○/△/✗） |
+| 「どこでも言えること」リスト | 置き換え可能な記述の抽出（該当箇所を引用） |
+| 改善論点 | 重大度順。使えるresearch_brief軸番号を併記 |
 
 ## 評価観点
 
@@ -42,18 +46,9 @@ ESの内容が対象企業の特性・戦略・文化・求める人材像と本
 ### コアスキル
 - `company-fit-evaluation` (skills/company-fit-evaluation/SKILL.md)
 
-### 業界別スキル（企業の業種に応じて選択）
-- `industries/asset-management-fit` — AM企業の評価軸（フィデューシャリー・AUM・運用哲学）
-- `industries/banking-fit` — 銀行の評価軸（リレーション・ソリューション・メガ比較）
-- `industries/securities-fit` — 証券の評価軸（直接金融・市場感度・IB/リサーチ）
-- `industries/digital-fit` — 金融デジタル職の評価軸（内製化・金融ドメイン×技術）
-
-### 読者層スキル（面接官の職種に応じて選択）
-- `audiences/hr-readable-style` — 人事面接官向けの評価基準・差別化ポイント
-- `audiences/practitioner-readable-style` — 現場実務者面接官向けの評価基準
-
-### ドメインスキル
-- `domains/finance-common` — 金融共通の評価軸・NGパターン（金融業界全般）
+### 業界・ドメイン知識（統合済み参照ファイル）
+- `skills/company-researcher/references/industry-knowledge.md` — 業界別の評価観点・NG表現・チェックリスト
+- `skills/es-writer/references/audience-styles.md` — 読者別の表現スタイル（人事/文系若手/現場実務者）
 
 ## 禁止事項
 - research_brief.mdが存在しない場合は「調査不足のため企業固有性評価不可」と明示して終了する
