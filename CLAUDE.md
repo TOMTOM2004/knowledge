@@ -126,6 +126,7 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 - `interview-debate-orchestrator` — 模擬面接実行（質問表示・ペルソナ評価・差し込み判定）
 - `answer-reviewer` — 回答の4区分FB・言い換え案・骨格生成
 - `interview-learning-updater` — セッション後の弱点・境界表現を learning/ に記録
+- `reverse-question-generator` — 逆質問生成専門（面接官タイプ別・軸7-Aフック付き・NG判定）
 
 ### 主なエージェント（`.claude/agents/`）
 - `question-fit-reviewer` — 設問適合（最優先）
