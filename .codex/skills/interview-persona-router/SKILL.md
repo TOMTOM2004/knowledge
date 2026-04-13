@@ -30,6 +30,9 @@ description: >
 | consulting | 1st | `[hr_generalist, common_critic]` |
 | consulting | 2nd | `[hr_generalist, tech_manager, common_critic]` |
 | consulting | final | `[hr_generalist, final_interviewer, common_critic]` |
+| am | 1st | `[hr_generalist, am_business, common_critic]` |
+| am | 2nd | `[hr_generalist, am_business, am_fund_manager, common_critic]` |
+| am | final | `[hr_generalist, am_fund_manager, final_interviewer, common_critic]` |
 | other | any | `[hr_generalist, common_critic]` |
 
 ### 2. focus_themes による調整

@@ -15,8 +15,8 @@ fields:
   industry:
     type: enum
     required: true
-    values: [finance, tech, consulting, other]
-    description: "業界区分。ペルソナセット選択に使用"
+    values: [finance, am, tech, consulting, other]
+    description: "業界区分。ペルソナセット選択に使用。am: アセットマネジメント専門（am_fund_manager / am_business ペルソナを使用）"
     example: "finance"
 
   stage:
@@ -92,6 +92,8 @@ fields:
       - tech_manager
       - finance_front
       - finance_manager
+      - am_fund_manager
+      - am_business
       - common_critic
       - final_interviewer
     description: "使用するペルソナIDのリスト"

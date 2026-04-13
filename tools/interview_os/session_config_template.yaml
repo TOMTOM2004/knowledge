@@ -3,7 +3,7 @@
 #           company-info/<企業名>/interview-os/configs/ に置く
 
 company: ""             # 例: りそなグループ
-industry: ""            # finance / tech / consulting / other
+industry: ""            # finance / am / tech / consulting / other
 stage: ""               # 1st / 2nd / final
 course: ""              # 例: データサイエンス
 duration_minutes: 30
@@ -36,6 +36,23 @@ personas:
   #
   # 最終面接の場合:
   # - hr_generalist
+  # - final_interviewer
+  # - common_critic
+  #
+  # AM（アセットマネジメント）1次の場合:
+  # - hr_generalist
+  # - am_business
+  # - common_critic
+  #
+  # AM 2次の場合:
+  # - hr_generalist
+  # - am_business
+  # - am_fund_manager
+  # - common_critic
+  #
+  # AM 最終面接の場合:
+  # - hr_generalist
+  # - am_fund_manager
   # - final_interviewer
   # - common_critic
   - ""
