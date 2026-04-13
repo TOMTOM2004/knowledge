@@ -31,6 +31,11 @@
 | チェックスクリプト | `tools/checks/` |
 | スキル手順 | `.codex/skills/<name>/SKILL.md` |
 | エージェント手順 | `.codex/agents/<name>.md` |
+| 面接OSセッション設定 | `company-info/<企業名>/interview-os/configs/` |
+| 面接OS生成ファイル | `company-info/<企業名>/interview-os/generated/` |
+| 面接OSセッションログ | `company-info/<企業名>/interview-os/sessions/` |
+| 面接OS学習ログ | `company-info/<企業名>/interview-os/learning/` |
+| 面接OSスキーマ・ペルソナ | `tools/interview_os/` |
 
 ---
 
@@ -71,6 +76,13 @@
 - `es-review-protocol` — ES全体レビュー（第一志望最終提出前のみ）
 - `es-refiner` — 提出済みESからfoundations更新
 - `es-improver` — 編集差分からes-writerを自動改善
+
+#### 面接OS スキル（模擬面接実行用）
+- `interview-session-preparer` — 模擬面接セッション準備（質問候補生成・議論ログ生成）
+- `interview-persona-router` — 業界/段階/テーマからペルソナセット選定
+- `interview-debate-orchestrator` — 模擬面接実行（質問表示・ペルソナ評価・次問選択）
+- `answer-reviewer` — 回答の4区分FB・言い換え案・骨格生成
+- `interview-learning-updater` — セッション後の弱点・境界表現を learning/ に記録
 
 ### 主なエージェント（`.codex/agents/` 配下）
 - `question-fit-reviewer` — 設問適合（最優先）

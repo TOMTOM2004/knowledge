@@ -1,0 +1,53 @@
+# session_config テンプレート
+# 使用方法: このファイルをコピーして session_config_YYYYMMDD.yaml にリネームし、
+#           company-info/<企業名>/interview-os/configs/ に置く
+
+company: ""             # 例: りそなグループ
+industry: ""            # finance / tech / consulting / other
+stage: ""               # 1st / 2nd / final
+course: ""              # 例: データサイエンス
+duration_minutes: 30
+
+focus_themes:
+  - ""  # 例: 人事向けに分かりやすく話す
+  # - ""
+
+input_sources:
+  research_brief: "company-info/<企業名>/research_brief.md"
+  interview_prep:
+    - "company-info/<企業名>/interview_prep_<ステップ>_<日付>.md"
+  es_files:
+    - "ES/md/<エピソードファイル>.md"
+    - "ES/components/best_answers.md"
+  episode_files: []
+
+personas:
+  # 金融2次の場合:
+  # - hr_generalist
+  # - finance_front
+  # - finance_manager
+  # - common_critic
+  #
+  # テック2次の場合:
+  # - hr_generalist
+  # - tech_field
+  # - tech_manager
+  # - common_critic
+  #
+  # 最終面接の場合:
+  # - hr_generalist
+  # - final_interviewer
+  # - common_critic
+  - ""
+
+question_policy:
+  randomness: one_random_question   # none / one_random_question / two_random_questions
+  depth_level: 2                    # 1〜3
+  company_specificity_priority: high  # low / medium / high
+  final_interview_mode: false
+  question_count_target: 8          # 省略可（duration_minutes から自動算出）
+
+output:
+  base_dir: "company-info/<企業名>/interview-os/sessions/session_<YYYYMMDD>_<HHMM>"
+  save_debate_log: true
+  save_json: true
