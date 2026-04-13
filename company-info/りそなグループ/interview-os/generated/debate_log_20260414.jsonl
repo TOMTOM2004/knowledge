@@ -1,0 +1,11 @@
+{"turn": 1, "agent": "hr_generalist", "candidate_question": "志望動機（なぜ金融か・なぜ銀行か・なぜりそなか）", "reason": "2次では軸7-Aを使ったメガバンク差別化が最重要評価ポイント。結論先行・専門用語なしで話せるかを確認", "priority": 0.95}
+{"turn": 1, "agent": "common_critic", "candidate_question": "三菱UFJでも同じことが言えませんか？", "reason": "Q3の回答が他社でも言えるものになるリスクが高い", "priority": 0.92, "intervention_trigger": "Q3回答後・差別化不足検出時"}
+{"turn": 1, "agent": "finance_manager", "candidate_question": "2026年4月に新設されたデータ戦略部の4グループのうち、最も関心があるのはどこですか？", "reason": "4グループ体制の把握が会社研究の深さを測る最良指標", "priority": 0.89}
+{"turn": 1, "agent": "finance_front", "candidate_question": "「ビジネス創出のためのデータ分析」というコンセプトのもとで入社後に取り組みたいことは？", "reason": "DSの成果がお客様に届くイメージを持っているかを確認", "priority": 0.85}
+{"turn": 2, "agent": "common_critic", "candidate_question": "今の説明、人事の方に伝わりましたか？", "reason": "技術用語（Python・LLM・スコアリング等）多用リスク。Q2・Q4・Q9で発動", "priority": 0.87, "intervention_trigger": "技術用語多用検出時"}
+{"turn": 2, "agent": "common_critic", "candidate_question": "チームの成果とあなた個人の貢献を分けて説明してください", "reason": "Q2ガクチカでチームエピソード使用時に自分の役割が曖昧になるリスク", "priority": 0.80, "intervention_trigger": "Q2回答後・役割不明瞭検出時"}
+{"turn": 2, "agent": "hr_generalist", "candidate_question": "一番苦労したのはどの部分でしたか？", "reason": "ガクチカ深掘り1段目。苦労→学びの流れを引き出す", "priority": 0.78}
+{"turn": 3, "agent": "finance_manager", "candidate_question": "入社3年目のイメージを教えてください", "reason": "キャリアビジョンの具体性確認。支店勤務への姿勢も確認できる", "priority": 0.76}
+{"turn": 3, "agent": "common_critic", "candidate_question": "結論から先に言うとすれば、一言でどう表現しますか？", "reason": "結論が後ろすぎる回答への補欠差し込み", "priority": 0.75, "intervention_trigger": "結論後置き検出時（補欠）"}
+{"turn": 4, "agent": "all", "candidate_question": "最近、仕事や学業以外で最も熱中したことを教えてください", "reason": "ランダム質問。暗記対策・本番感醸成", "priority": 0.60, "question_type": "random"}
+{"turn": 5, "agent": "common_critic", "detected_issues": ["Q3でのメガバンク差別化不足リスク", "技術用語多用リスク（DS話でのjargon）", "Q2でのガクチカ役割曖昧リスク"], "intervention_required": true, "intervention_count_limit": 3, "reason": "priority 0.92/0.87/0.80 の順で最大3回実行"}

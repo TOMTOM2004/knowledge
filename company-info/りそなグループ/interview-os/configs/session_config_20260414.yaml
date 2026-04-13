@@ -1,0 +1,40 @@
+company: "りそなグループ"
+industry: finance
+stage: "2nd"
+course: "データサイエンス"
+duration_minutes: 30
+
+focus_themes:
+  - "人事向けに分かりやすく話す（技術話を薄める）"
+  - "結論を先に言う"
+  - "なぜりそなか（vs メガバンク）を軸7-A で答える"
+  - "DS固有の業務イメージ（データ戦略部4グループ）を具体的に語る"
+
+input_sources:
+  research_brief: "company-info/りそなグループ/research_brief.md"
+  interview_prep:
+    - "company-info/りそなグループ/interview_prep_2次個人面談_20260328.md"
+  es_files:
+    - "ES/md/03_インターン_財務資料自動化.md"
+    - "ES/md/16_自己分析_設計思想とエンジニアリングマインド.md"
+    - "ES/md/01_自己分析_コア価値観将来像行動原理.md"
+    - "ES/md/02_自己分析_強み弱み伸びしろ.md"
+  episode_files: []
+
+personas:
+  - hr_generalist
+  - finance_front
+  - finance_manager
+  - common_critic
+
+question_policy:
+  randomness: one_random_question
+  depth_level: 2
+  company_specificity_priority: high
+  final_interview_mode: false
+  question_count_target: 10
+
+output:
+  base_dir: "company-info/りそなグループ/interview-os/sessions/session_20260414_1430"
+  save_debate_log: true
+  save_json: true
