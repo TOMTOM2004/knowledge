@@ -1,0 +1,13 @@
+session_id: session_20260414_test
+company: りそなグループ
+course: データサイエンス
+stage: 2nd
+date: 2026-04-14
+personas: [hr_generalist, finance_front, finance_manager, common_critic]
+focus_themes:
+  - 人事向けに分かりやすく話す（技術話を薄める）
+  - 結論を先に言う
+  - なぜりそなか（vs メガバンク）を軸7-A で答える
+  - DS固有の業務イメージを具体的に語る
+total_questions: 8
+status: test
