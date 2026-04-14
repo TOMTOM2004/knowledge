@@ -1,6 +1,7 @@
 ---
 name: episode-formatter
 description: Use this skill when the user wants to add a new episode or self-analysis entry to the ES episode library. Triggered by phrases like "エピソードを追加", "自己分析を追加", "草案を整形", "episode-formatter", "/episode". Takes rough draft content from the user and formats it into the standard episode template, then saves it to /Users/ishidatomonori/Desktop/knowledge/ES/素材/.
+allowed-tools: Read, Write, Edit, Bash, Glob
 ---
 
 # Episode Formatter

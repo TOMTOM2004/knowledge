@@ -6,6 +6,7 @@ description: >
   スキルを自動更新する。
   「〇〇のESフィードバックループを実行して」「ESライターを改善して」「差分からスキルを更新して」
   「/es-improver」などで呼び出す。
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
 
 # ES Improver スキル

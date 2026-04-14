@@ -6,6 +6,7 @@ description: >
   例: 「〇〇の企業調査をして」「〇〇をリサーチして」「〇〇のリサーチブリーフを作って」
   「〇〇の面接対策をしたい」「〇〇について調べて」。
   company-info/<企業名>/ フォルダ内で作業しているときも自動起動する。
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch
 ---
 
 # Company Researcher スキル
