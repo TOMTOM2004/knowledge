@@ -1,0 +1,44 @@
+persona_id: tech_manager
+name: "テック中堅/管理寄り"
+industry: tech
+stage: [2nd, final]
+tone: thoughtful_forward_looking
+technical_tolerance: medium
+
+# ─── 評価軸 ───────────────────────────────────────
+core_axes:
+  - growth_potential     # 成長可能性
+  - field_connection     # 現場との接続
+  - career_clarity       # 将来の方向性
+  - team_fit             # チームで働けるか
+
+# ─── 重み配分 ─────────────────────────────────────
+axis_weight:
+  growth: 0.7
+  practical: 0.3
+
+# ─── 違和感を感じるもの ───────────────────────────
+dislikes:
+  - short_term_only       # 目先の話しかしない
+  - no_growth_image       # 入社後のイメージが薄い
+  - overconfidence        # 実力を過信している
+
+# ─── 深掘りスタイル ──────────────────────────────
+probe_styles:
+  - growth_probe      # 「入社後、どう成長したいですか？」
+  - career_probe      # 「5年後どうなっていたいですか？」
+  - connection_probe  # 「その経験は当社でどの業務に活きますか？」
+  - reflection_probe  # 「その経験から何を学びましたか？」
+
+# ─── フィードバック方針 ──────────────────────────
+feedback_mode:
+  produce_dual_explanation: false
+  focus_on: [growth_image, career_connection, learning_mindset]
+  penalize: [no_future_vision, too_technical_without_context]
+
+# ─── 質問重み付け ────────────────────────────────
+question_weight:
+  career_vision: 0.35
+  growth_story: 0.30
+  company_specific: 0.25
+  gakuchika: 0.10

@@ -22,15 +22,20 @@
 
 | 種類 | 場所 |
 |-----|------|
-| エピソードライブラリ | `ES/md/` （INDEX.md で一覧確認） |
-| ES最良回答テンプレ | `ES/components/best_answers.md` |
-| ES草稿 | `ES/drafts/<企業名>.md` |
-| 提出済みES | `ES/submitted/<企業名>.md` |
+| エピソードライブラリ | `ES/素材/` （INDEX.md で一覧確認） |
+| ES最良回答テンプレ | `ES/部品/best_answers.md` |
+| ES草稿 | `ES/企業別/作成中/<企業名>.md` |
+| 提出済みES | `ES/企業別/提出済/<企業名>.md` |
 | 確定版ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
 | 面接調査（新） | `company-info/<企業名>/interview_research_<ステップ>_<日付>.md` |
 | 面接想定問答（新） | `company-info/<企業名>/interview_qa_<ステップ>_<日付>.md` |
 | 旧面接準備（参照のみ） | `company-info/<企業名>/interview_prep_*.md` |
+| 面接OSセッション設定 | `company-info/<企業名>/interview-os/configs/` |
+| 面接OS生成ファイル | `company-info/<企業名>/interview-os/generated/` |
+| 面接OSセッションログ | `company-info/<企業名>/interview-os/sessions/` |
+| 面接OS学習ログ | `company-info/<企業名>/interview-os/learning/` |
+| 面接OSペルソナ・スキーマ | `tools/interview_os/` |
 | 面接振り返り | `company-info/<企業名>/reflection_<N>次_<YYYYMMDD>.md` |
 | 音声文字起こし | `company-info/<企業名>/transcript_<N>次_<YYYYMMDD>.md` |
 | 直前チェックシート | `company-info/<企業名>/interview_direct_prep_<N>次_<YYYYMMDD>.md` |
@@ -48,8 +53,8 @@
 
 1. `company-info/<企業名>/research_brief.md` — **一次参照はこれだけ**（詳細調査ファイルを直接読まない）
    - 軸7-A（核心固有性）が存在することを確認。未記載なら company-researcher を先に実行する
-2. `ES/md/INDEX.md` — 使えるエピソードを確認
-3. `ES/components/best_answers.md` — コア回答テンプレを確認
+2. `ES/素材/INDEX.md` — 使えるエピソードを確認
+3. `ES/部品/best_answers.md` — コア回答テンプレを確認
 4. es-writer スキルで生成
 5. 機械チェック: `python tools/checks/es_checker.py`
 6. Gate 2: question-fit + readability（草案後）
@@ -91,7 +96,16 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 ```
 → 別セッション推奨
 
-**軽量モード**: Stage 1・2・3は別セッションで実行する
+### Stage 4: 模擬面接OS（interview-session-preparer → interview-debate-orchestrator）
+```
+「<企業名>の<N>次面接セッションを準備して」   → interview-session-preparer
+「<企業名>の<N>次面接を開始して」            → interview-debate-orchestrator
+「今日の面接の学習ログを更新して」            → interview-learning-updater
+```
+→ 企業差し替え式・多ペルソナ評価・フィードバック自動生成。別セッション推奨
+→ 詳細: `docs/workflow/interview-os-design.md`
+
+**軽量モード**: Stage 1・2・3・4は別セッションで実行する
 **既存企業**: `interview_prep_*.md` は参照のみ（上書き・削除禁止）
 
 ---
@@ -154,6 +168,14 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 - `interview-reflect` — 全 reflection 横断集計 → interview_patterns.md 更新 ← **新規**
 - `interview-next-prep` — 前回深掘り → 次回 interview_qa に引き継ぎ論点追加 ← **新規**
 - `success-pattern-extractor` — passed ES・reflection → 共通パターン抽出・実績タグ付け ← **新規**
+
+#### 面接OS スキル（模擬面接実行用）
+- `interview-session-preparer` — 模擬面接セッション準備（質問候補生成・議論ログ生成）
+- `interview-persona-router` — 業界/段階/テーマからペルソナセット選定
+- `interview-debate-orchestrator` — 模擬面接実行（質問表示・ペルソナ評価・差し込み判定）
+- `answer-reviewer` — 回答の4区分FB・言い換え案・骨格生成
+- `interview-learning-updater` — セッション後の弱点・境界表現を learning/ に記録
+- `reverse-question-generator` — 逆質問生成専門（面接官タイプ別・軸7-Aフック付き・NG判定）
 
 ### 主なエージェント（`.claude/agents/`）
 - `question-fit-reviewer` — 設問適合（最優先）

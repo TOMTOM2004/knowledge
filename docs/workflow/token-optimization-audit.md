@@ -21,10 +21,10 @@
 ### ES執筆時に過剰ロードされているもの
 | ファイル | サイズ | 問題点 |
 |---------|--------|-------|
-| `ES/components/best_answers.md` | 27 KB | 毎回全文を読んでいる |
-| `ES/components/motivation.md` | 39 KB | 志望動機設問以外では不要 |
-| `ES/components/gakuchika.md` | 38 KB | ガクチカ設問以外では不要 |
-| `ES/components/self_pr.md` | 27 KB | 自己PR設問以外では不要 |
+| `ES/部品/best_answers.md` | 27 KB | 毎回全文を読んでいる |
+| `ES/部品/motivation.md` | 39 KB | 志望動機設問以外では不要 |
+| `ES/部品/gakuchika.md` | 38 KB | ガクチカ設問以外では不要 |
+| `ES/部品/self_pr.md` | 27 KB | 自己PR設問以外では不要 |
 | `company-info/*/research_brief.md` | 5〜20 KB | briefが薄い場合は詳細調査ファイルも読む |
 
 **ES1本生成時の想定ロード量: 60〜110 KB**
@@ -43,7 +43,7 @@
 | ファイル | 現状サイズ | 対処 |
 |---------|---------|------|
 | `company-info/*/research_brief.md` | 5〜20 KB | 既に brief 形式だが、長いものは ES/面接 向けに圧縮 |
-| `ES/components/*.md` | 27〜39 KB | 設問タイプ別に分割、呼ばれた設問タイプのみロード |
+| `ES/部品/*.md` | 27〜39 KB | 設問タイプ別に分割、呼ばれた設問タイプのみロード |
 | `company-researcher` SKILL.md | 463 lines | 実調査フェーズのみ読む |
 | `interview-prep` SKILL.md | 398 lines | 面接フェーズのみ読む |
 
@@ -111,4 +111,4 @@
 
 ### 優先度 LOW
 8. components ファイルの設問タイプ別分割
-9. ES/components/best_answers.md の要約版作成
+9. ES/部品/best_answers.md の要約版作成

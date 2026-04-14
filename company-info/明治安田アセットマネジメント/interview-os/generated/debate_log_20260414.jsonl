@@ -1,0 +1,10 @@
+{"turn": 1, "agent": "am_business", "candidate_question": "志望動機（なぜMYAMか）", "reason": "1次面談の最重要評価軸。インベストメント・チェーン理解と親会社背景への言及があるか。軸7-A直結", "priority": 0.95}
+{"turn": 1, "agent": "hr_generalist", "candidate_question": "自己PR（1分）", "reason": "社員1名の印象評価も兼ねる冒頭質問。因果推論専門用語の多用リスクが高い。結論先行・平易な語りを確認", "priority": 0.90}
+{"turn": 1, "agent": "common_critic", "candidate_question": "（差し込み）他の生保系AMとの違いを教えてください。ニッセイAMを選ばなかった理由は？", "reason": "Q3でニッセイAM等と差別化できない回答になるリスクが高い", "priority": 0.93, "intervention_trigger": "Q3回答後・競合差別化不足検出時"}
+{"turn": 2, "agent": "am_business", "candidate_question": "インベストメント・チェーンについての理解", "reason": "MYAM企業理念の核心。暗記レベルか自分の言葉で最終受益者まで辿れるかを見極める", "priority": 0.88}
+{"turn": 2, "agent": "am_business", "candidate_question": "明治安田生命グループの一員として当社が運用会社であることの意味", "reason": "生保系AMと証券系AMの違いを語れるかで会社研究の深さが分かる", "priority": 0.83}
+{"turn": 3, "agent": "am_business", "candidate_question": "（深掘り）仮に企画・IT職配属でも同様に成長・貢献できると思いますか", "reason": "role_probe。運用職一本姿勢はam_businessペルソナとしてNG。業務系への納得感を確認", "priority": 0.85, "probe_type": "role_probe"}
+{"turn": 3, "agent": "hr_generalist", "candidate_question": "なぜ運用職を志望するのですか", "reason": "Q5でも運用職以外への言及がゼロになるリスク。企画・IT職を否定する発言を誘発するかチェック", "priority": 0.76}
+{"turn": 4, "agent": "hr_generalist", "candidate_question": "学生時代に力を入れたこと（ガクチカ）深掘り: 最も苦労した部分", "reason": "苦労→学び→MYAMでの活かし方の流れを引き出す", "priority": 0.78}
+{"turn": 4, "agent": "am_business", "candidate_question": "（深掘り）その自動化の成果は、最終的にどんな人（受益者・顧客）に届いていましたか？", "reason": "ガクチカをインベストメント・チェーン視点で接続できるかを確認", "priority": 0.72}
+{"turn": 5, "agent": "common_critic", "detected_issues": ["Q3での生保系AM共通表現リスク（ニッセイAMとの差別化不足）", "Q8/Q9でのチェーン暗記リスク", "Q7/Q5での運用職一本姿勢リスク（role_probe未達成）"], "intervention_required": true, "intervention_count_limit": 3, "reason": "priority 0.93/0.88/0.82 の順で最大3回実行"}

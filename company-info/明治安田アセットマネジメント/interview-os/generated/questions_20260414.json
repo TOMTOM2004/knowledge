@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "company": "明治安田アセットマネジメント",
+    "course": "総合コース（運用職・IT職志望）",
+    "stage": "1次面談",
+    "date": "2026-04-14",
+    "personas": ["hr_generalist", "am_business", "common_critic"],
+    "duration_minutes": 30
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "category": "basic",
+      "text": "自己PRをしてください（1分で）",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "hr_generalist", "level": 1, "text": "もっと簡単に言うと、あなたの強みは一言でどう表現しますか？"},
+        {"persona": "hr_generalist", "level": 2, "text": "その強みをアセットマネジメントの仕事の具体的な場面で活かすイメージを教えてください"},
+        {"persona": "am_business", "level": 1, "text": "受益者のお金を預かる立場として、その分析力をどのように活かせると思いますか？"},
+        {"persona": "am_business", "level": 2, "text": "\"都合の良い解釈をしない\"という姿勢はどこで鍛えられましたか？受益者責任と接続して話せますか？"}
+      ]
+    },
+    {
+      "id": "Q2",
+      "category": "basic",
+      "text": "学生時代に力を入れたことを教えてください",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "hr_generalist", "level": 1, "text": "最も苦労したのはどの部分でしたか？"},
+        {"persona": "hr_generalist", "level": 2, "text": "チームの成果と、あなた個人の貢献を分けて説明してもらえますか？"},
+        {"persona": "am_business", "level": 1, "text": "その自動化の成果は、最終的にどんな人（受益者・顧客）に届いていましたか？"},
+        {"persona": "am_business", "level": 2, "text": "業務改善の型化・標準化という発想は、インベストメント・チェーンのどの機能に対応すると思いますか？"}
+      ]
+    },
+    {
+      "id": "Q3",
+      "category": "basic",
+      "text": "志望動機を教えてください（なぜ金融か・なぜAMか・なぜMYAMか）",
+      "time_seconds": 90,
+      "probes": [
+        {"persona": "hr_generalist", "level": 1, "text": "ニッセイAMや東京海上AMでも似たことができそうですが、なぜMYAMでなければならないのですか？"},
+        {"persona": "am_business", "level": 1, "text": "明治安田生命の保険契約者という最終受益者の存在を、あなたはどのように意識していますか？", "probe_type": "chain_probe"},
+        {"persona": "am_business", "level": 2, "text": "親会社が45兆円の資産を持つ生保グループという背景が、当社の運用戦略にどう影響していると思いますか？", "probe_type": "parent_probe"}
+      ]
+    },
+    {
+      "id": "Q4",
+      "category": "basic",
+      "text": "なぜ競合AMではなく明治安田アセットマネジメントなのですか",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "am_business", "level": 1, "text": "ニッセイAMと比べて、当社を選んだ決め手は何ですか？", "probe_type": "specificity_probe"}
+      ]
+    },
+    {
+      "id": "Q5",
+      "category": "basic",
+      "text": "なぜ運用職を志望するのですか",
+      "time_seconds": 45,
+      "probes": [
+        {"persona": "am_business", "level": 1, "text": "運用職以外の配属（企画・IT）でも同様に貢献できると思いますか？", "probe_type": "role_probe"}
+      ]
+    },
+    {
+      "id": "Q6",
+      "category": "basic",
+      "text": "あなたの強みと弱みを教えてください",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "hr_generalist", "level": 1, "text": "その弱みを克服するために、今どんな取り組みをしていますか？"}
+      ]
+    },
+    {
+      "id": "Q7",
+      "category": "basic",
+      "text": "入社後のキャリアイメージを教えてください",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "am_business", "level": 1, "text": "10年後、アセットマネジメント業界はどうなっていると思いますか？", "probe_type": "long_term_probe"},
+        {"persona": "am_business", "level": 2, "text": "仮に運用職ではなく企画・IT職へ配属された場合、同様に成長・貢献できると思いますか？", "probe_type": "role_probe"}
+      ]
+    },
+    {
+      "id": "Q8",
+      "category": "company_specific",
+      "text": "「インベストメント・チェーン」についてどのように理解していますか",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "am_business", "level": 1, "text": "投資家から保険契約者・年金加入者という最終受益者までの連鎖の中で、当社はどのポジションを担っていると思いますか？", "probe_type": "chain_probe"},
+        {"persona": "am_business", "level": 2, "text": "その連鎖の中で、あなたが最も貢献したい部分はどこですか？なぜそこですか？", "probe_type": "specificity_probe"}
+      ]
+    },
+    {
+      "id": "Q9",
+      "category": "company_specific",
+      "text": "明治安田生命グループの一員として当社が運用会社であることの意味をどう捉えていますか",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "am_business", "level": 1, "text": "生保系AMと証券系AM（例：大和AM）は何が違うと思いますか？", "probe_type": "parent_probe"}
+      ]
+    },
+    {
+      "id": "Q10",
+      "category": "company_specific",
+      "text": "「チームアプローチによる透明で一貫した運用プロセス」という当社の哲学についてどう思いますか",
+      "time_seconds": 60,
+      "probes": [
+        {"persona": "hr_generalist", "level": 1, "text": "チームアプローチのどの点があなたの価値観と合っていると感じましたか？"},
+        {"persona": "am_business", "level": 1, "text": "スター型ファンドマネージャー依存ではなく組織的な再現性を重視する理由を、受益者の観点から説明してもらえますか？"}
+      ]
+    },
+    {
+      "id": "Q11",
+      "category": "random",
+      "text": "趣味・特技を教えてください",
+      "time_seconds": 30,
+      "probes": []
+    }
+  ],
+  "reverse_questions": {
+    "note": "面談形式のため逆質問は高確率で発生。優先度Aを1問、時間があればBを1問。",
+    "priority_a": [
+      {
+        "id": "RQ1",
+        "text": "2025年2月に発表されたMan Groupとの提携について、新卒社員が実際に関わる機会はどのように想定されていますか？",
+        "purpose": "最新情報（プライベートデット提携）を把握していることを示す。若手関与への関心",
+        "source": "research_brief 軸1"
+      },
+      {
+        "id": "RQ2",
+        "text": "御社の投資委員会では、若手アナリストが自分の分析を持ち込んで議論に参加できるようになるまで、通常どのくらいの期間がかかりますか？",
+        "purpose": "チームアプローチの実態確認。成長速度への関心",
+        "source": "research_brief 軸5"
+      },
+      {
+        "id": "RQ3",
+        "text": "ESGエンゲージメント（企業との対話）について、若手が担当企業を持ち始めるのはどのような段階からですか？",
+        "purpose": "PRI5つ星・スチュワードシップ活動の若手関与を確認",
+        "source": "research_brief 軸1"
+      }
+    ],
+    "priority_b": [
+      {
+        "id": "RQ4",
+        "text": "御社でアクティブ運用のアルファを出すために最も大切にしている視点は、社員の方々に共通して何かありますか？",
+        "purpose": "運用哲学・文化への関心。社員個人の言葉を引き出す"
+      },
+      {
+        "id": "RQ5",
+        "text": "入社後の数年間、バック/ミドルを経験してフロントに移る方が多いと理解していますが、その期間で身につけておくべき力として何を重視していますか？",
+        "purpose": "キャリアパスの実態確認。将来像との整合を示す"
+      },
+      {
+        "id": "RQ6",
+        "text": "本日面接官をされている方が、この会社でいちばん面白いと感じている仕事・局面はどのような場面ですか？",
+        "purpose": "rapport building。面接官個人の経験を引き出す"
+      }
+    ],
+    "ng_patterns": [
+      "「御社の主な運用商品は何ですか？」← 公式サイトに記載。調査不足を露呈",
+      "「有給休暇は取りやすいですか？」← 1次面談では不適切",
+      "「御社ではどんなスキルが身につきますか？」← 受け身・御社に学びたい姿勢のNG例"
+    ]
+  },
+  "critic_interventions": [
+    {"priority": 0.93, "trigger": "Q3での競合差別化不足", "question": "他の生保系AMとの違いを教えてください。ニッセイAMを選ばなかった理由は何ですか？"},
+    {"priority": 0.88, "trigger": "Q8/Q9でチェーン暗記的", "question": "明治安田生命の保険契約者が最終受益者であることを、もう少し自分の言葉で話してもらえますか？"},
+    {"priority": 0.82, "trigger": "Q7で運用職一本", "question": "企画・IT職に配属された場合の成長イメージを聞かせてください"},
+    {"priority": 0.75, "trigger": "結論後置き（補欠）", "question": "結論から言うとすれば、一言でどう表現しますか？"}
+  ]
+}

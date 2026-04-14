@@ -1,0 +1,10 @@
+{"turn": 1, "agent": "hr_generalist", "candidate_question": "志望動機（なぜ金融か・なぜ銀行か・なぜりそなか）", "reason": "りそなとメガバンクの差別化を人事が分かる言葉で説明できるかが最大の評価ポイント", "priority": 0.95}
+{"turn": 1, "agent": "common_critic", "candidate_question": "他のメガバンクでも同じことが言えませんか？", "reason": "Q3の回答が他社でも言えるものになるリスクが高い。軸7-Aの使用確認が必要", "priority": 0.91, "intervention_trigger": "Q3回答後・差別化不足検出時"}
+{"turn": 1, "agent": "finance_front", "candidate_question": "Data Ignitionについて知っていますか？今後の発展についてどう思いますか？", "reason": "DSの成果をお客様に還元するイメージを持っているかどうかの確認", "priority": 0.88}
+{"turn": 2, "agent": "finance_manager", "candidate_question": "2026年4月に新設されたデータ戦略部についてどう思いますか？", "reason": "中長期視点で会社研究の深さを確認。4グループ体制の把握が差別化ポイント", "priority": 0.89}
+{"turn": 2, "agent": "common_critic", "candidate_question": "チームの成果とあなた個人の貢献をどう分けますか？", "reason": "ガクチカでチームエピソード使用時、自分の役割の曖昧さを検出", "priority": 0.80, "intervention_trigger": "Q2回答後・役割不明瞭検出時"}
+{"turn": 2, "agent": "common_critic", "candidate_question": "今の説明、人事の方が聞いていたとして伝わりましたか？", "reason": "技術用語多用リスクが高い。人事向けの言い換えを促す", "priority": 0.87, "intervention_trigger": "技術用語多用検出時"}
+{"turn": 3, "agent": "hr_generalist", "candidate_question": "その強みは入社後どう活きますか？", "reason": "自己PR後に強みの将来活用イメージを確認", "priority": 0.78}
+{"turn": 3, "agent": "finance_manager", "candidate_question": "もし同じ状況になったら次はどうしますか？", "reason": "過去の話から学習能力・成長意欲を測る", "priority": 0.75}
+{"turn": 4, "agent": "all", "candidate_question": "最近、仕事や学業以外で最も熱中したことは何ですか？", "reason": "ランダム質問。暗記対策と本番感の醸成", "priority": 0.60, "question_type": "random"}
+{"turn": 5, "agent": "common_critic", "detected_issues": ["Q3での差別化不足リスク", "技術用語多用リスク（DS話でjargon使用の可能性）", "ガクチカでの役割曖昧リスク"], "intervention_required": true, "intervention_count_limit": 3, "reason": "上位3点の差し込みを準備。priority 0.91/0.87/0.80 の順で実行"}

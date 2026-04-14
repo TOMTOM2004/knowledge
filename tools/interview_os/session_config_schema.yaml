@@ -1,0 +1,193 @@
+# session_config スキーマ定義
+# 面接OS Phase 1 — 必須/任意・型・説明
+
+schema_version: "1.0"
+
+fields:
+
+  # ─── セッション基本情報 ───────────────────────────────────────
+  company:
+    type: string
+    required: true
+    description: "企業名（company-info/ 配下のディレクトリ名と一致させること）"
+    example: "りそなグループ"
+
+  industry:
+    type: enum
+    required: true
+    values: [finance, am, tech, consulting, other]
+    description: "業界区分。ペルソナセット選択に使用。am: アセットマネジメント専門（am_fund_manager / am_business ペルソナを使用）"
+    example: "finance"
+
+  stage:
+    type: enum
+    required: true
+    values: [1st, 2nd, final]
+    description: "面接段階"
+    example: "2nd"
+
+  course:
+    type: string
+    required: false
+    description: "コース・職種名（複数の場合はリスト）"
+    example: "データサイエンス"
+
+  duration_minutes:
+    type: integer
+    required: true
+    min: 10
+    max: 90
+    description: "セッション予定時間（分）"
+    example: 30
+
+  # ─── 練習テーマ ──────────────────────────────────────────────
+  focus_themes:
+    type: list[string]
+    required: false
+    description: "今回特に意識する練習テーマ（最大5つ推奨）"
+    example:
+      - "人事向けに分かりやすく話す"
+      - "結論を先に言う"
+      - "技術話を薄める"
+
+  # ─── 入力ソース ──────────────────────────────────────────────
+  input_sources:
+    type: object
+    required: true
+
+    research_brief:
+      type: string
+      required: true
+      description: "research_brief.md への相対パス（knowledge/ 起点）"
+      example: "company-info/りそなグループ/research_brief.md"
+
+    interview_prep:
+      type: list[string]
+      required: false
+      description: "interview_prep_*.md への相対パス（複数可）"
+      example:
+        - "company-info/りそなグループ/interview_prep_2次個人面談_20260328.md"
+
+    es_files:
+      type: list[string]
+      required: true
+      description: "使用するESファイルへの相対パス"
+      example:
+        - "ES/素材/03_インターン_財務資料自動化.md"
+        - "ES/部品/best_answers.md"
+
+    episode_files:
+      type: list[string]
+      required: false
+      description: "追加で参照するエピソードファイル"
+      example: []
+
+  # ─── ペルソナ設定 ─────────────────────────────────────────────
+  personas:
+    type: list[enum]
+    required: true
+    values:
+      - hr_generalist
+      - tech_field
+      - tech_manager
+      - finance_front
+      - finance_manager
+      - am_fund_manager
+      - am_business
+      - common_critic
+      - final_interviewer
+    description: "使用するペルソナIDのリスト"
+    example:
+      - hr_generalist
+      - finance_front
+      - finance_manager
+      - common_critic
+
+  # ─── 質問生成ポリシー ─────────────────────────────────────────
+  question_policy:
+    type: object
+    required: true
+
+    randomness:
+      type: enum
+      required: true
+      values: [none, one_random_question, two_random_questions]
+      description: "ランダム質問の混入数"
+      example: "one_random_question"
+
+    depth_level:
+      type: integer
+      required: true
+      min: 1
+      max: 3
+      description: "深掘り質問の段数（1=1段, 2=2段, 3=3段）"
+      example: 2
+
+    company_specificity_priority:
+      type: enum
+      required: true
+      values: [low, medium, high]
+      description: "会社固有質問の優先度"
+      example: "high"
+
+    final_interview_mode:
+      type: boolean
+      required: true
+      description: "最終面接モード（価値観・斜め質問を強化）"
+      example: false
+
+    question_count_target:
+      type: integer
+      required: false
+      min: 3
+      max: 20
+      description: "目安質問数（duration_minutes から自動算出も可）"
+      example: 8
+
+  # ─── 出力設定 ────────────────────────────────────────────────
+  output:
+    type: object
+    required: true
+
+    base_dir:
+      type: string
+      required: true
+      description: "セッション出力先のベースディレクトリ（knowledge/ 起点）"
+      example: "company-info/りそなグループ/interview-os/sessions/session_20260413_1430"
+
+    save_debate_log:
+      type: boolean
+      required: false
+      default: true
+      description: "AI議論ログを保存するか"
+
+    save_json:
+      type: boolean
+      required: false
+      default: true
+      description: "JSON形式でも保存するか（MD に加えて）"
+
+# ─── フィードバック JSON スキーマ（参照用） ────────────────────
+feedback_schema:
+  question_id: string
+  persona_id: string
+  good_points: list[string]
+  bad_points: list[string]
+  improvements: list[string]
+  better_phrasing:
+    hr_version: string
+    technical_version: string
+  answer_skeleton: list[string]
+  flags:
+    logic_gap: boolean
+    consistency_issue: boolean
+    jargon_risk: boolean
+    company_specificity_low: boolean
+
+# ─── 議論ログ JSONL スキーマ（参照用） ───────────────────────
+debate_log_schema:
+  turn: integer
+  agent: string
+  candidate_question: string
+  reason: string
+  priority: float  # 0.0〜1.0

@@ -1,0 +1,40 @@
+company: 明治安田アセットマネジメント
+industry: am
+stage: 1st
+course: 総合コース（運用職・IT職志望）
+duration_minutes: 30
+
+focus_themes:
+  - インベストメント・チェーン理解を自分の言葉で語る
+  - 親会社（明治安田生命）背景をMYAM固有性として活用する
+  - 運用職以外の配属への納得感を示す（role_probe対策）
+  - 結論先行・専門用語抑制（hr_generalist視点）
+
+input_sources:
+  research_brief: "company-info/明治安田アセットマネジメント/research_brief.md"
+  interview_prep:
+    - "company-info/明治安田アセットマネジメント/interview_research_1次面談_20260414.md"
+    - "company-info/明治安田アセットマネジメント/interview_research_1次面接_20260409.md"
+  es_files:
+    - "移行後ES/明治安田アセットマネジメント.md"
+    - "ES/md/18_学業_卒論POSデータ因果推定.md"
+    - "ES/md/03_インターン_財務資料自動化.md"
+    - "ES/components/best_answers.md"
+  episode_files: []
+
+personas:
+  - hr_generalist
+  - am_business
+  - common_critic
+
+question_policy:
+  randomness: one_random_question
+  depth_level: 2
+  company_specificity_priority: high
+  final_interview_mode: false
+  question_count_target: 11
+
+output:
+  base_dir: "company-info/明治安田アセットマネジメント/interview-os/sessions/session_20260414"
+  save_debate_log: true
+  save_json: true

@@ -20,10 +20,10 @@
 
 | 種類 | 場所 |
 |-----|------|
-| エピソードライブラリ | `ES/md/` （INDEX.md で一覧確認） |
-| ES最良回答テンプレ | `ES/components/best_answers.md` |
-| ES草稿 | `ES/drafts/<企業名>.md` |
-| 提出済みES | `ES/submitted/<企業名>.md` |
+| エピソードライブラリ | `ES/素材/` （INDEX.md で一覧確認） |
+| ES最良回答テンプレ | `ES/部品/best_answers.md` |
+| ES草稿 | `ES/企業別/作成中/<企業名>.md` |
+| 提出済みES | `ES/企業別/提出済/<企業名>.md` |
 | 確定版ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
 | 面接準備 | `company-info/<企業名>/interview_prep_*.md` |
@@ -31,14 +31,19 @@
 | チェックスクリプト | `tools/checks/` |
 | スキル手順 | `.codex/skills/<name>/SKILL.md` |
 | エージェント手順 | `.codex/agents/<name>.md` |
+| 面接OSセッション設定 | `company-info/<企業名>/interview-os/configs/` |
+| 面接OS生成ファイル | `company-info/<企業名>/interview-os/generated/` |
+| 面接OSセッションログ | `company-info/<企業名>/interview-os/sessions/` |
+| 面接OS学習ログ | `company-info/<企業名>/interview-os/learning/` |
+| 面接OSスキーマ・ペルソナ | `tools/interview_os/` |
 
 ---
 
 ## ES作成時の参照順序
 
 1. `company-info/<企業名>/research_brief.md` — 一次参照はこれだけ
-2. `ES/md/INDEX.md` — 使えるエピソードを確認
-3. `ES/components/best_answers.md` — コア回答テンプレを確認
+2. `ES/素材/INDEX.md` — 使えるエピソードを確認
+3. `ES/部品/best_answers.md` — コア回答テンプレを確認
 4. `.codex/skills/es-writer/SKILL.md` の手順に従って生成
 5. 機械チェック: `python tools/checks/es_checker.py`
 6. Gate 2: question-fit + readability（草案後）→ `.codex/agents/` の手順に従う
@@ -71,6 +76,13 @@
 - `es-review-protocol` — ES全体レビュー（第一志望最終提出前のみ）
 - `es-refiner` — 提出済みESからfoundations更新
 - `es-improver` — 編集差分からes-writerを自動改善
+
+#### 面接OS スキル（模擬面接実行用）
+- `interview-session-preparer` — 模擬面接セッション準備（質問候補生成・議論ログ生成）
+- `interview-persona-router` — 業界/段階/テーマからペルソナセット選定
+- `interview-debate-orchestrator` — 模擬面接実行（質問表示・ペルソナ評価・次問選択）
+- `answer-reviewer` — 回答の4区分FB・言い換え案・骨格生成
+- `interview-learning-updater` — セッション後の弱点・境界表現を learning/ に記録
 
 ### 主なエージェント（`.codex/agents/` 配下）
 - `question-fit-reviewer` — 設問適合（最優先）

@@ -6,7 +6,7 @@ ES・企業調査の品質チェックスクリプト群。
 
 | ファイル | 目的 | 対象 |
 |---------|------|------|
-| `es_checker.py` | ESファイルの品質チェック | `移行後ES/*.md`, `ES/submitted/*.md` |
+| `es_checker.py` | ESファイルの品質チェック | `移行後ES/*.md`, `ES/企業別/提出済/*.md` |
 | `research_checker.py` | 企業調査の網羅性チェック | `company-info/<企業名>/research_brief.md` |
 
 ## 実行例

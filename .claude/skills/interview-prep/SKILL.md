@@ -67,9 +67,9 @@ Read: /Users/ishidatomonori/Desktop/knowledge/company-info/<企業名>/research_
 ### 1-2. 自己分析ファイルの読み込み
 
 ```
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/02_自己分析_強み弱み伸びしろ.md
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/01_自己分析_コア価値観将来像行動原理.md
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/components/other.md  ← キャリアビジョン・チーム・弱み設問
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/素材/02_自己分析_強み弱み伸びしろ.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/素材/01_自己分析_コア価値観将来像行動原理.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/部品/other.md  ← キャリアビジョン・チーム・弱み設問
 ```
 
 ---
