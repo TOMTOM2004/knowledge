@@ -1,6 +1,6 @@
 ---
 name: episode-formatter
-description: Use this skill when the user wants to add a new episode or self-analysis entry to the ES episode library. Triggered by phrases like "エピソードを追加", "自己分析を追加", "草案を整形", "episode-formatter", "/episode". Takes rough draft content from the user and formats it into the standard episode template, then saves it to /Users/ishidatomonori/Desktop/knowledge/ES/md/.
+description: Use this skill when the user wants to add a new episode or self-analysis entry to the ES episode library. Triggered by phrases like "エピソードを追加", "自己分析を追加", "草案を整形", "episode-formatter", "/episode". Takes rough draft content from the user and formats it into the standard episode template, then saves it to /Users/ishidatomonori/Desktop/knowledge/ES/素材/.
 ---
 
 # Episode Formatter
@@ -34,7 +34,7 @@ description: Use this skill when the user wants to add a new episode or self-ana
 ## Step 2: 次のファイル番号を確認
 
 ```bash
-ls /Users/ishidatomonori/Desktop/knowledge/ES/md/ | grep -E "^[0-9]+" | sort -n | tail -1
+ls /Users/ishidatomonori/Desktop/knowledge/ES/素材/ | grep -E "^[0-9]+" | sort -n | tail -1
 ```
 
 現在の最大番号 + 1 を次の番号とする。
@@ -130,7 +130,7 @@ last_updated: <今日の日付 YYYY-MM-DD>
 
 ## Step 5: INDEX.md を更新
 
-`/Users/ishidatomonori/Desktop/knowledge/ES/md/INDEX.md` の「ファイル一覧」テーブルに新しい行を追加する。
+`/Users/ishidatomonori/Desktop/knowledge/ES/素材/INDEX.md` の「ファイル一覧」テーブルに新しい行を追加する。
 
 追加する行の形式:
 ```

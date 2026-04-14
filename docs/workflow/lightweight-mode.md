@@ -50,7 +50,7 @@
 
 ```
 「[企業名]の[設問リスト]を書いて。
- 参照するのは research_brief.md と ES/md/INDEX.md だけでいい。
+ 参照するのは research_brief.md と ES/素材/INDEX.md だけでいい。
  レビューはしなくていい」
 ```
 

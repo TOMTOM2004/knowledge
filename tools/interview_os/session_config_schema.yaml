@@ -73,8 +73,8 @@ fields:
       required: true
       description: "使用するESファイルへの相対パス"
       example:
-        - "ES/md/03_インターン_財務資料自動化.md"
-        - "ES/components/best_answers.md"
+        - "ES/素材/03_インターン_財務資料自動化.md"
+        - "ES/部品/best_answers.md"
 
     episode_files:
       type: list[string]

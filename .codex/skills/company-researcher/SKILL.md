@@ -41,8 +41,8 @@ description: >
 
 ```
 Read: /Users/ishidatomonori/Desktop/knowledge/company-info/<企業名>/notes.md
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/INDEX.md
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/components/best_answers.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/素材/INDEX.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/部品/best_answers.md
 ```
 
 notes.md が存在しない場合は「`company-info/<企業名>/notes.md` が見つかりません。Web情報のみで調査します」と伝えて続行する。
@@ -64,9 +64,9 @@ notes.md から以下を抽出・整理する:
 INDEX.md を読んだあと、自己分析系ファイルを中心に以下を読み込む。
 
 ```
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/01_自己分析_コア価値観将来像行動原理.md
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/02_自己分析_強み弱み伸びしろ.md
-Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/12_自己分析_志望業界職種整理.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/素材/01_自己分析_コア価値観将来像行動原理.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/素材/02_自己分析_強み弱み伸びしろ.md
+Read: /Users/ishidatomonori/Desktop/knowledge/ES/素材/12_自己分析_志望業界職種整理.md
 ```
 
 各エピソードファイル（03〜08, 14〜17）については、INDEX.md のタイトルと主な設問のみを参照して概要を把握する。
@@ -288,7 +288,7 @@ Read: /Users/ishidatomonori/Desktop/knowledge/ES/md/12_自己分析_志望業界
 
 ### 軸8: エピソード適合マッピング
 
-社内ナレッジ（ES/md/）のエピソードリストと、軸3（求める人材像）・軸6（弱み/貢献余地）・軸7（なぜこの企業か）を照合する。
+社内ナレッジ（ES/素材/）のエピソードリストと、軸3（求める人材像）・軸6（弱み/貢献余地）・軸7（なぜこの企業か）を照合する。
 
 **マッチ評価基準**
 
