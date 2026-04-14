@@ -103,8 +103,8 @@ knowledge/
 - スキル: `<機能名>/SKILL.md`（例: `es-review-protocol/SKILL.md`）
 - 企業調査: `company-info/<企業名>/research_brief.md`
 - 面接準備: `company-info/<企業名>/interview_prep_<ステップ>_<YYYYMMDD>.md`
-- エピソード: `ES/md/<連番>_<カテゴリ>_<タイトル>.md`
-- ESドラフト: `ES/drafts/<企業名>.md`
+- エピソード: `ES/素材/<連番>_<カテゴリ>_<タイトル>.md`
+- ESドラフト: `ES/企業別/作成中/<企業名>.md`
 - 確定版ES: `移行後ES/<企業名>.md`
 
 ### ブランチ名

@@ -11,11 +11,11 @@
 
 | 旧パス | 新パス（目標） | 優先度 | 状態 |
 |--------|--------------|--------|------|
-| `ES/md/` | `ES/md/`（変更なし）| - | 維持 |
+| `ES/素材/` | `ES/素材/`（変更なし）| - | 維持 |
 | `ES/エピソード/` | `ES/エピソード/`（変更なし） | 低 | 維持 |
-| `ES/components/` | `ES/components/`（変更なし） | - | 維持 |
-| `ES/drafts/` | `ES/drafts/`（変更なし） | - | 維持 |
-| `ES/submitted/` | `ES/submitted/`（変更なし） | - | 維持 |
+| `ES/部品/` | `ES/部品/`（変更なし） | - | 維持 |
+| `ES/企業別/作成中/` | `ES/企業別/作成中/`（変更なし） | - | 維持 |
+| `ES/企業別/提出済/` | `ES/企業別/提出済/`（変更なし） | - | 維持 |
 | `ES/自己分析マインドマップ.md` | `docs/references/self-analysis-mindmap.md` | 中 | 未移行 |
 | `ES/changelog.md` | `ES/changelog.md`（変更なし） | - | 維持 |
 | `移行後ES/` | `移行後ES/`（変更なし） | - | 維持 |
@@ -64,12 +64,12 @@
 
 | 旧 | 新 |
 |---|---|
-| `ES/drafts/` | `es/drafts/` |
-| `ES/submitted/` | `es/submitted/` |
-| `ES/components/` | `es/components/` |
+| `ES/企業別/作成中/` | `es/drafts/` |
+| `ES/企業別/提出済/` | `es/submitted/` |
+| `ES/部品/` | `es/components/` |
 | `移行後ES/` | `es/final/` |
 | `company-info/` | `data/companies/` |
-| `ES/md/` | `data/episodes/` |
+| `ES/素材/` | `data/episodes/` |
 
 > **注意**: Phase Bは大規模な変更になるため、スキル内のパス参照をすべて更新する必要があります。
 > 既存スキルの `es-writer`・`episode-formatter`・`es-refiner` などが特定パスを参照しているため、

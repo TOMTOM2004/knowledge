@@ -20,10 +20,10 @@
 
 | 種類 | 場所 |
 |-----|------|
-| エピソードライブラリ | `ES/md/` （INDEX.md で一覧確認） |
-| ES最良回答テンプレ | `ES/components/best_answers.md` |
-| ES草稿 | `ES/drafts/<企業名>.md` |
-| 提出済みES | `ES/submitted/<企業名>.md` |
+| エピソードライブラリ | `ES/素材/` （INDEX.md で一覧確認） |
+| ES最良回答テンプレ | `ES/部品/best_answers.md` |
+| ES草稿 | `ES/企業別/作成中/<企業名>.md` |
+| 提出済みES | `ES/企業別/提出済/<企業名>.md` |
 | 確定版ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
 | 面接準備 | `company-info/<企業名>/interview_prep_*.md` |
@@ -42,8 +42,8 @@
 ## ES作成時の参照順序
 
 1. `company-info/<企業名>/research_brief.md` — 一次参照はこれだけ
-2. `ES/md/INDEX.md` — 使えるエピソードを確認
-3. `ES/components/best_answers.md` — コア回答テンプレを確認
+2. `ES/素材/INDEX.md` — 使えるエピソードを確認
+3. `ES/部品/best_answers.md` — コア回答テンプレを確認
 4. `.codex/skills/es-writer/SKILL.md` の手順に従って生成
 5. 機械チェック: `python tools/checks/es_checker.py`
 6. Gate 2: question-fit + readability（草案後）→ `.codex/agents/` の手順に従う

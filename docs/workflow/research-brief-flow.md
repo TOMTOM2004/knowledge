@@ -60,8 +60,8 @@ python tools/checks/research_checker.py <企業名>
 
 es-writer は以下のみ参照する:
 - `company-info/<企業名>/research_brief.md` ← **必ずこちら**
-- `ES/md/INDEX.md`（エピソード確認）
-- `ES/components/best_answers.md`（コアテンプレ）
+- `ES/素材/INDEX.md`（エピソード確認）
+- `ES/部品/best_answers.md`（コアテンプレ）
 
 ⚠️ 詳細調査ファイル（research.md 等）は直接参照しない
 

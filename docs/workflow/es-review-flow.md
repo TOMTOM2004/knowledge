@@ -27,7 +27,7 @@
 
 ### 1-2. エピソード確認
 ```
-「ES/md/INDEX.md を見て、使えるエピソードを教えて」
+「ES/素材/INDEX.md を見て、使えるエピソードを教えて」
 ```
 
 ---
@@ -40,8 +40,8 @@
 
 参照するもの（最小限）:
 - `company-info/<企業名>/research_brief.md`
-- `ES/md/INDEX.md`
-- `ES/components/best_answers.md`
+- `ES/素材/INDEX.md`
+- `ES/部品/best_answers.md`
 
 ---
 

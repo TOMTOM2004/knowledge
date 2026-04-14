@@ -68,11 +68,11 @@
 
 **読むもの**:
 - `company-info/<企業名>/research_brief.md`
-- `ES/md/INDEX.md`
-- `ES/components/best_answers.md`（必要な設問タイプのみ）
+- `ES/素材/INDEX.md`
+- `ES/部品/best_answers.md`（必要な設問タイプのみ）
 
 **書くもの**:
-- `ES/drafts/<企業名>.md` または `移行後ES/<企業名>.md`
+- `ES/企業別/作成中/<企業名>.md` または `移行後ES/<企業名>.md`
 
 **reviewer**: question-fit と readability のみ
 
@@ -150,8 +150,8 @@
 - `company-info/<企業名>/interview_research_<ステップ>_*.md`（E1の成果物）
 - `company-info/<企業名>/research_brief.md`（軸3・軸7-A・軸8・軸9）
 - `移行後ES/<企業名>.md`（提出済みES）
-- `ES/md/01_自己分析_コア価値観将来像行動原理.md`
-- `ES/md/02_自己分析_強み弱み伸びしろ.md`
+- `ES/素材/01_自己分析_コア価値観将来像行動原理.md`
+- `ES/素材/02_自己分析_強み弱み伸びしろ.md`
 
 **スキル**: interview-qa
 
@@ -195,7 +195,7 @@ E1 → E2: interview_research_<ステップ>_<日付>.md
 
 | ファイル | 命名規則 |
 |---------|---------|
-| ES草案 | `ES/drafts/<企業名>.md` |
+| ES草案 | `ES/企業別/作成中/<企業名>.md` |
 | 提出前ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
 | 旧面接準備（参照のみ） | `company-info/<企業名>/interview_prep_<N>次_YYYYMMDD.md` |

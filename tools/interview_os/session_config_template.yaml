@@ -17,8 +17,8 @@ input_sources:
   interview_prep:
     - "company-info/<企業名>/interview_prep_<ステップ>_<日付>.md"
   es_files:
-    - "ES/md/<エピソードファイル>.md"
-    - "ES/components/best_answers.md"
+    - "ES/素材/<エピソードファイル>.md"
+    - "ES/部品/best_answers.md"
   episode_files: []
 
 personas:

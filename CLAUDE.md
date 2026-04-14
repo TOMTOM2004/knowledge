@@ -22,10 +22,10 @@
 
 | 種類 | 場所 |
 |-----|------|
-| エピソードライブラリ | `ES/md/` （INDEX.md で一覧確認） |
-| ES最良回答テンプレ | `ES/components/best_answers.md` |
-| ES草稿 | `ES/drafts/<企業名>.md` |
-| 提出済みES | `ES/submitted/<企業名>.md` |
+| エピソードライブラリ | `ES/素材/` （INDEX.md で一覧確認） |
+| ES最良回答テンプレ | `ES/部品/best_answers.md` |
+| ES草稿 | `ES/企業別/作成中/<企業名>.md` |
+| 提出済みES | `ES/企業別/提出済/<企業名>.md` |
 | 確定版ES | `移行後ES/<企業名>.md` |
 | 企業調査 | `company-info/<企業名>/research_brief.md` |
 | 面接調査（新） | `company-info/<企業名>/interview_research_<ステップ>_<日付>.md` |
@@ -45,8 +45,8 @@
 
 1. `company-info/<企業名>/research_brief.md` — **一次参照はこれだけ**（詳細調査ファイルを直接読まない）
    - 軸7-A（核心固有性）が存在することを確認。未記載なら company-researcher を先に実行する
-2. `ES/md/INDEX.md` — 使えるエピソードを確認
-3. `ES/components/best_answers.md` — コア回答テンプレを確認
+2. `ES/素材/INDEX.md` — 使えるエピソードを確認
+3. `ES/部品/best_answers.md` — コア回答テンプレを確認
 4. es-writer スキルで生成
 5. 機械チェック: `python tools/checks/es_checker.py`
 6. Gate 2: question-fit + readability（草案後）
