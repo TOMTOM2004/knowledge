@@ -41,6 +41,8 @@
 | 直前チェックシート | `company-info/<企業名>/interview_direct_prep_<N>次_<YYYYMMDD>.md` |
 | 面接傾向パターン（全社横断） | `docs/interview_patterns.md` |
 | 質問バンク（全社横断） | `docs/question_bank.md` |
+| AM競合比較フレームワーク | `docs/am-comparison-framework.md` |
+| AM横断比較表 | `docs/am_competitor_comparison.md` |
 | 選考状況トラッカー | `docs/application_status.md` |
 | 通過実績記録 | `docs/success_record.md` |
 | reflection テンプレート | `docs/schemas/reflection-template.md` |
@@ -155,6 +157,7 @@ reviewer は段階起動。全 reviewer 一括は禁止。詳細 → `docs/workf
 
 ### 主なスキル
 - `company-researcher` — 企業調査（**必ず**このスキル経由。自前WebSearch禁止）
+- `am-competitor-researcher` — AM業界特化の競合横断比較（4群28軸。`docs/am-comparison-framework.md` が軸定義の正）
 - `es-writer` — ES作成（企業名+設問があれば自動起動）
 - `interview-research` — 面接調査専門（体験記収集・重要度分類）← **新規**
 - `interview-qa` — 想定問答生成専門（重要度別回答骨格・詰められ・逆質問）← **新規**
