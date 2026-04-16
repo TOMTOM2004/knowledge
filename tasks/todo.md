@@ -67,3 +67,93 @@
 - [ ] フォルダ構成・保存方針の議論（ユーザー草案あり）
 - [ ] Git管理の方針確認
 - [ ] 上記タスクの修正順序と担当スキルの決定
+
+---
+
+# AM競合比較タスク（A-01起点）
+
+作成日: 2026-04-16
+起点: tasks/todo.md 旧A-00〜A-04 + 2026-04-16セッションの実行結果
+
+---
+
+## 完了済み
+
+- [x] **A-01 スキル作成**: `am-competitor-researcher` スキル新規作成（PR #11 マージ済み）
+  - SKILL.md（7ステップ）+ references/ 3ファイル（web-query-templates / comparison-template / quality-check-am）
+  - research-lenses.md AMセクションをA-D群構造に再編
+  - CLAUDE.md にスキル・ファイル場所を登録
+- [x] **MYAM単社プロファイル**: `docs/am_competitor_comparison.md` を28軸で構築（PR #12）
+  - C群: 全4軸◎（親会社PDF読み取りで議決権行使・対話実績・ISS非依存を確認）
+  - A群: A-7◎、他8軸△
+  - B群: 6軸△、2軸✗（B-1a/B-1b は情報非公開）
+  - D群: D-3/D-5◎、他5軸△
+- [x] **SKILL.md フォールバック方針追加**: Step 3-3 に403時の5段階チェーン記述
+
+## 次セッションでやること
+
+### [N-01] OpenClaw MCP導入（最優先・A-01補完）
+- **目的**: myam.co.jp の403ブロックを解消し、MYAMプロファイルのA群・B群を◎に引き上げる
+- **やること**:
+  1. OpenClaw MCPサーバーをセットアップし、settings に接続設定を追加
+  2. SKILL.md の Step 3-3 の `[TODO: OpenClaw MCP導入後にツール名・呼び出し手順を具体化]` を実際のツール名で埋める
+  3. SKILL.md の `allowed-tools` に OpenClaw MCPツール名を追加
+- **検証**: myam.co.jp/about/voting/ にアクセスできることを確認
+- **ブランチ**: `claude/YYYYMMDD-openclaw-integration`
+
+### [N-02] MYAM 403解消後のデータ補強（N-01完了後）
+- **目的**: MYAMプロファイルの△軸を◎に引き上げる
+- **対象URL → 埋まる軸**:
+  - `myam.co.jp/about/voting/guideline.html` → C-2 議決権行使基準の詳細（現在は親会社データ。MYAM固有の基準を取得）
+  - `myam.co.jp/about/stewardship.html` → C-3 MYAMとしての対話実績（現在は親会社の682件。MYAM単体の数値を取得）
+  - `myam.co.jp/about/pdf/stewardshipreview_2025.pdf` → C群全体の2024年度最新データ
+  - `myam.co.jp/about/structure/` → B-2 Research architecture（PM/アナリスト構造）
+  - `myam.co.jp/about/structure/inside.html` → B-2 運用担当者の具体情報
+  - `myam.co.jp/fund/price/` → A-6 旗艦商品の特定（商品別残高）
+  - `myam.co.jp/about/pdf/sustainabilityreport_2024.pdf` → C-1/C-3 サステナビリティ詳細
+  - 目論見書PDF（ファンド個別） → B-4 Active Share・組入銘柄数・ターンオーバー
+- **更新対象**: `docs/am_competitor_comparison.md` のMYAM列を更新
+- **ブランチ**: N-01と同じブランチで可
+
+### [N-03] A-00 面談会transcript固有性抽出（N-02と独立・並行可能）
+- **目的**: `company-info/明治安田アセットマネジメント/transcript_明治安田アセットマネジメント第1回面談.md`（3,724行）から MYAM固有の情報を抽出し、比較表とdiscussion_topicsに反映
+- **やること**:
+  1. transcript全体を読み、責任投資部・リテール営業企画部の発言を整理
+  2. MYAM固有の手がかり（エンゲージメントの具体例、販売戦略、グループ連携の実態等）を抽出
+  3. `docs/am_competitor_comparison.md` のMYAM列に反映（特にB-1a Information edge、B-6 Risk management philosophy）
+  4. `company-info/明治安田アセットマネジメント/discussion_topics.md` のテーマ1（志望動機の固有性再設計）を更新
+- **ブランチ**: `claude/YYYYMMDD-myam-transcript-extraction`
+
+### [N-04] A-02 Tier1競合の深掘り調査（N-01完了後・別セッション推奨）
+- **目的**: ニッセイAM / AM-One を同じ28軸で調査し、`docs/am_competitor_comparison.md` に列を追加
+- **前提**:
+  - 両社の `research_brief.md` は既存（✅）
+  - OpenClaw MCPが導入済みであること（各社サイトも403の可能性あり）
+- **やること**:
+  1. 各社research_briefから28軸マッピング（Step 1-2）
+  2. ギャップ分析 → Web補完調査（Step 3）
+  3. 比較表にニッセイAM・AM-One列を追加（Step 4）
+- **ブランチ**: `claude/YYYYMMDD-am-tier1-comparison`
+
+### [N-05] A-03 全8社横断比較表の構築（N-04完了後・別セッション推奨）
+- **目的**: 全8社を28軸で比較し、Insight Layer（母体別パターン・MYAMにしか言えないこと）を生成
+- **前提**: N-04完了。野村AM・三井住友DSAMはresearch_briefなし → company-researcherで先に作成が必要
+- **ブランチ**: `claude/YYYYMMDD-am-full-comparison`
+
+### [N-06] A-04 MYAM志望動機の固有性確定（N-05完了後）
+- **目的**: 全社比較表から「MYAMにしか言えないこと」を抽出し、interview_qaの志望動機セクションを再構築
+- **前提**: N-05の比較表とInsight Layerが完成していること
+
+---
+
+## 依存関係
+
+```
+N-01 (OpenClaw導入)
+  └→ N-02 (MYAM 403解消データ補強)
+  └→ N-04 (Tier1競合調査)
+       └→ N-05 (全8社横断比較)
+            └→ N-06 (志望動機固有性確定)
+
+N-03 (transcript抽出) ← N-01/N-02と独立して実行可能
+```
