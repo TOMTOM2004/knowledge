@@ -104,14 +104,13 @@
 - **残存ギャップ（原理的制約）**: A-5（アクティブ/パッシブ比率の数値）とB-4（Active Share等）は公開情報からは取得不可能と確定。MYAMにはディスクロージャー誌が存在せず、会社開示は「財務状況等」ページ+EDINETに分散
 - **ブランチ**: `claude/20260416-playwright-mcp-integration`（PR #14）
 
-### [N-03] A-00 面談会transcript固有性抽出（N-02と独立・並行可能）
-- **目的**: `company-info/明治安田アセットマネジメント/transcript_明治安田アセットマネジメント第1回面談.md`（3,724行）から MYAM固有の情報を抽出し、比較表とdiscussion_topicsに反映
-- **やること**:
-  1. transcript全体を読み、責任投資部・リテール営業企画部の発言を整理
-  2. MYAM固有の手がかり（エンゲージメントの具体例、販売戦略、グループ連携の実態等）を抽出
-  3. `docs/am_competitor_comparison.md` のMYAM列に反映（特にB-1a Information edge、B-6 Risk management philosophy）
-  4. `company-info/明治安田アセットマネジメント/discussion_topics.md` のテーマ1（志望動機の固有性再設計）を更新
-- **ブランチ**: `claude/YYYYMMDD-myam-transcript-extraction`
+### [N-03] A-00 面談会transcript固有性抽出（N-02と独立・並行可能） ✅ 完了
+- **完了日**: 2026-04-17（抽出自体はPR #13で完了。比較表反映はPR #14で実施）
+- **成果**:
+  - [x] transcript → transcript_findings_面談会1_20260416.md に抽出（PR #13）
+  - [x] discussion_topics.md のテーマ1更新（PR #13）
+  - [x] am_competitor_comparison.md に反映: B-1a ✗→△化、A-2/B-3/B-6/D-2/D-2a を面談会一次情報で補強（PR #14）
+- **✗解消**: B-1a（定性的な情報優位の源泉を面談会証言で確認）。残り✗はB-1bの1軸のみ
 
 ### [N-04] A-02 Tier1競合の深掘り調査（N-01完了後・別セッション推奨）
 - **目的**: ニッセイAM / AM-One を同じ28軸で調査し、`docs/am_competitor_comparison.md` に列を追加
