@@ -104,7 +104,7 @@
 
 ### [N-02] MYAM 403解消後のデータ補強（N-01完了後）
 - **目的**: MYAMプロファイルの△軸を◎に引き上げる
-- **進捗**: ◎ 7→10（+3軸）。HTMLページ6件を取得済み。PDF（サステナビリティ・レポート/目論見書）は未取得
+- **進捗**: ◎ 7→10（+3軸）+ C群全4軸を最新データで大幅補強。HTMLページ6件+PDF1件を取得済み
 - **完了分**:
   - [x] `www.myam.co.jp/about/voting/guideline.html` → C-2 補強（MYAM固有ガイドライン2種、2026年4月改定）
   - [x] `www.myam.co.jp/about/stewardship.html` → C-1/C-3 補強（責任投資部5名体制、サステナビリティ・レポート2025発見）
@@ -112,9 +112,10 @@
   - [x] `www.myam.co.jp/about/structure/inside.html` → B-2 ◎化（7部体制、PM49名、平均15-19年）+ B-3 ◎化
   - [x] `www.myam.co.jp/fund/price/` → A-6 ◎化（ダルトン524億円が旗艦、地域応援ファンド群）
   - [x] `www.myam.co.jp/about/voting/` → C-2 補強（議決権行使分科会→責任投資委員会の意思決定フロー）
+- **PDF取得済み**:
+  - [x] `stewardshipreview_2025.pdf` → C群全4軸を2024年度データで大幅補強（対話1,470件/会社提案反対率15.7%/PRI★5×4/みずほR&T 74機関中1位）
 - **未実施（PDF取得が必要）**:
-  - [ ] `www.myam.co.jp/about/pdf/stewardshipreview_2025.pdf` → C群 2024年度最新データ
-  - [ ] `www.myam.co.jp/about/pdf/sustainabilityreport_2025.pdf` → C-1/C-3（**2024版より新しい2025版を発見**）
+  - [ ] `sustainabilityreport_2025.pdf`（7.72MB）→ C-1/C-3 追加補強（**2024版より新しい2025版を発見**）
   - [ ] 目論見書PDF → B-4 Active Share・組入銘柄数・ターンオーバー
   - [ ] A-5 パッシブ/アクティブ比率（ディスクロージャー誌 or サステナビリティ・レポートで確認）
 - **更新対象**: `docs/am_competitor_comparison.md` のMYAM列を更新済み
