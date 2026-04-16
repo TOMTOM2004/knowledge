@@ -92,48 +92,31 @@
 
 ## 次セッションでやること
 
-### [N-01] Playwright MCP導入（最優先・A-01補完）
-- **目的**: myam.co.jp の403ブロックを解消し、MYAMプロファイルのA群・B群を◎に引き上げる
-- **経緯**: 当初OpenClaw MCPを検討したが、OpenClawはチャットプラットフォーム統合AIであり、Webスクレイピング用途ではないことが判明。代替として実ブラウザ（Chromium）でページを取得するPlaywright MCPを採用
-- **進捗**:
-  - [x] Playwright MCPサーバーをuserスコープで追加（`claude mcp add` で `@playwright/mcp@latest` を登録済み・接続確認済み）
-  - [x] myam.co.jp/about/voting/ にアクセスできることを検証（Playwright MCP経由で議決権行使ページの全内容取得に成功）
-  - [x] SKILL.md の Step 3-3 のTODOを Playwright MCPの具体的手順（`browser_navigate` → `browser_snapshot` → `browser_click`）で記述
-  - [x] SKILL.md の `allowed-tools` に `mcp__playwright__browser_navigate`, `mcp__playwright__browser_snapshot`, `mcp__playwright__browser_click` を追加
-- **ブランチ**: `claude/YYYYMMDD-playwright-mcp-integration`
+### [N-01] Playwright MCP導入（最優先・A-01補完） ✅ 完了
+- **完了日**: 2026-04-16
+- **成果**: Playwright MCPをuserスコープで導入。myam.co.jpの403ブロック解消。SKILL.mdにツール名・手順を記述済み
+- **ブランチ**: `claude/20260416-playwright-mcp-integration`（PR #14）
 
-### [N-02] MYAM 403解消後のデータ補強（N-01完了後）
-- **目的**: MYAMプロファイルの△軸を◎に引き上げる
-- **進捗**: ◎ 7→10（+3軸）。HTMLページ6件を取得済み。PDF（サステナビリティ・レポート/目論見書）は未取得
-- **完了分**:
-  - [x] `www.myam.co.jp/about/voting/guideline.html` → C-2 補強（MYAM固有ガイドライン2種、2026年4月改定）
-  - [x] `www.myam.co.jp/about/stewardship.html` → C-1/C-3 補強（責任投資部5名体制、サステナビリティ・レポート2025発見）
-  - [x] `www.myam.co.jp/about/structure/` → B-2 ◎化（運用哲学3項目）
-  - [x] `www.myam.co.jp/about/structure/inside.html` → B-2 ◎化（7部体制、PM49名、平均15-19年）+ B-3 ◎化
-  - [x] `www.myam.co.jp/fund/price/` → A-6 ◎化（ダルトン524億円が旗艦、地域応援ファンド群）
-  - [x] `www.myam.co.jp/about/voting/` → C-2 補強（議決権行使分科会→責任投資委員会の意思決定フロー）
-- **未実施（PDF取得が必要）**:
-  - [ ] `www.myam.co.jp/about/pdf/stewardshipreview_2025.pdf` → C群 2024年度最新データ
-  - [ ] `www.myam.co.jp/about/pdf/sustainabilityreport_2025.pdf` → C-1/C-3（**2024版より新しい2025版を発見**）
-  - [ ] 目論見書PDF → B-4 Active Share・組入銘柄数・ターンオーバー
-  - [ ] A-5 パッシブ/アクティブ比率（ディスクロージャー誌 or サステナビリティ・レポートで確認）
-- **更新対象**: `docs/am_competitor_comparison.md` のMYAM列を更新済み
-- **ブランチ**: `claude/20260416-playwright-mcp-integration`
+### [N-02] MYAM 403解消後のデータ補強（N-01完了後） ✅ 完了
+- **完了日**: 2026-04-17
+- **成果**: ◎ 7→11（+4軸: A-6, B-1, B-2, B-3）。C群全4軸を2024年度MYAM単体データで大幅補強。A-1/B-4/B-5も定性補強
+- **取得ソース**: HTMLページ6件（Playwright MCP）+ PDF 4件（curl+Read: stewardshipreview_2025 / sustainabilityreport_2025 / 財務届出書202509 / ダルトン目論見書）
+- **残存ギャップ（原理的制約）**: A-5（アクティブ/パッシブ比率の数値）とB-4（Active Share等）は公開情報からは取得不可能と確定。MYAMにはディスクロージャー誌が存在せず、会社開示は「財務状況等」ページ+EDINETに分散
+- **ブランチ**: `claude/20260416-playwright-mcp-integration`（PR #14）
 
-### [N-03] A-00 面談会transcript固有性抽出（N-02と独立・並行可能）
-- **目的**: `company-info/明治安田アセットマネジメント/transcript_明治安田アセットマネジメント第1回面談.md`（3,724行）から MYAM固有の情報を抽出し、比較表とdiscussion_topicsに反映
-- **やること**:
-  1. transcript全体を読み、責任投資部・リテール営業企画部の発言を整理
-  2. MYAM固有の手がかり（エンゲージメントの具体例、販売戦略、グループ連携の実態等）を抽出
-  3. `docs/am_competitor_comparison.md` のMYAM列に反映（特にB-1a Information edge、B-6 Risk management philosophy）
-  4. `company-info/明治安田アセットマネジメント/discussion_topics.md` のテーマ1（志望動機の固有性再設計）を更新
-- **ブランチ**: `claude/YYYYMMDD-myam-transcript-extraction`
+### [N-03] A-00 面談会transcript固有性抽出（N-02と独立・並行可能） ✅ 完了
+- **完了日**: 2026-04-17（抽出自体はPR #13で完了。比較表反映はPR #14で実施）
+- **成果**:
+  - [x] transcript → transcript_findings_面談会1_20260416.md に抽出（PR #13）
+  - [x] discussion_topics.md のテーマ1更新（PR #13）
+  - [x] am_competitor_comparison.md に反映: B-1a ✗→△化、A-2/B-3/B-6/D-2/D-2a を面談会一次情報で補強（PR #14）
+- **✗解消**: B-1a（定性的な情報優位の源泉を面談会証言で確認）。残り✗はB-1bの1軸のみ
 
 ### [N-04] A-02 Tier1競合の深掘り調査（N-01完了後・別セッション推奨）
 - **目的**: ニッセイAM / AM-One を同じ28軸で調査し、`docs/am_competitor_comparison.md` に列を追加
 - **前提**:
   - 両社の `research_brief.md` は既存（✅）
-  - OpenClaw MCPが導入済みであること（各社サイトも403の可能性あり）
+  - Playwright MCP導入済み（✅ N-01完了。各社サイトも403の場合に使用）
 - **やること**:
   1. 各社research_briefから28軸マッピング（Step 1-2）
   2. ギャップ分析 → Web補完調査（Step 3）
