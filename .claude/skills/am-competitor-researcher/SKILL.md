@@ -6,7 +6,7 @@ description: >
   「〇〇と△△を比較して（AM文脈）」などの依頼で起動する。
   company-researcher が1社単位の調査であるのに対し、このスキルは
   複数AM企業を同一軸で横断比較し、差別化の構造を明らかにする。
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch, mcp__playwright__browser_navigate, mcp__playwright__browser_snapshot, mcp__playwright__browser_click
 ---
 
 # AM Competitor Researcher スキル
@@ -158,7 +158,11 @@ WebFetch で 403 エラーやPDF解析失敗が発生した場合、以下の順
 1. **WebSearch スニペットからのデータ抽出**: 検索結果のスニペットに数値や事実が含まれている場合はそれを使用する
 2. **親会社・グループ会社の公開資料**: 子会社サイトがブロックされていても親会社（例: meijiyasuda.co.jp）からグループ全体の情報を取得できる場合がある
 3. **PDFローカル解析**: WebFetch でダウンロードされたPDFは Read ツール（pages パラメータ指定）で画像として読み取れる。バイナリ解析に失敗してもこの方法で内容を抽出する
-4. **OpenClaw MCP（将来対応）**: ブラウザベースのMCPサービスで403を回避してHTML/PDFを取得する。[TODO: OpenClaw MCP導入後にツール名・呼び出し手順を具体化]
+4. **Playwright MCP（実ブラウザ取得）**: WebFetchで403になるサイトは、Playwright MCPで実ブラウザ（Chromium）経由でアクセスする。手順:
+     1. `mcp__playwright__browser_navigate` でURLを開く（ドメインは `www.` 付きを使用。例: `www.myam.co.jp`）
+     2. `mcp__playwright__browser_snapshot` でページ内容をアクセシビリティツリーとして取得
+     3. リンク先のPDF等が必要な場合は `mcp__playwright__browser_click` でリンクをクリックし、遷移後に再度 `browser_snapshot` で取得
+     4. 取得したデータには出典に `[Playwright MCP経由]` タグを付ける
 5. **手動補完依頼**: 上記すべてで取得できない場合、ユーザーにURL一覧を提示し「ブラウザで開いてテキストを貼ってください」と依頼する
 
 フォールバックで取得したデータには出典に `[フォールバック: <手段>]` タグを付ける。
