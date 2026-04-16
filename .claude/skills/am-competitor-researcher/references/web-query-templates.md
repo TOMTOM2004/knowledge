@@ -66,11 +66,44 @@
 2. **次点**（B-1a, B-1b, C-4 sub）: 最優先完了後に調査
 3. **補助**（D-2a, D-5）: 時間があれば調査。定性情報中心で可
 
-## データソース優先順位
+## AM会社公式サイトの直接取得ソース（WebSearchより高品質）
 
-| 群 | 一次ソース | 二次ソース |
-|---|-----------|-----------|
-| A群 | 有価証券報告書（EDINET）/ 投信協会統計 / ディスクロージャー誌 | 採用ページ / IR資料 |
-| B群 | 社長メッセージ / 運用レポート / ファンド目論見書 | 座談会記事 / 月次レポート |
-| C群 | スチュワードシップ報告書（公開義務あり）/ 議決権行使結果 | 統合報告書 / PRIレポート |
-| D群 | 統合報告書 / IR資料 / 採用実績 | OpenWork口コミ / 就活会議 |
+WebSearchクエリの前に、まず以下の公式サイトページ/PDFを直接取得する。
+多くのAM会社は共通のURL構造を持つため、存在確認してから取得する。
+
+### HTMLページ（Playwright MCP or WebFetch）
+
+| パス（相対） | 内容 | 得られる軸 | 取得方法 |
+|---|---|---|---|
+| `/about/finance.html` | 財務届出書PDF一覧 | A-1, A-9, D-1, D-2a | Playwright MCP → PDFリンク取得 → curl+Read |
+| `/about/stewardship.html` | スチュワードシップ・コード対応 + レポートPDFリンク | C-1〜C-4 | Playwright MCP or WebFetch |
+| `/about/voting/` | 議決権行使方針・ガイドライン・結果 | C-2 | Playwright MCP or WebFetch |
+| `/about/structure/` `/about/structure/inside.html` | 運用体制・担当者一覧 | B-2, B-3 | Playwright MCP or WebFetch |
+| `/fund/price/` | 基準価額一覧（純資産額付き） | A-6 | Playwright MCP or WebFetch |
+| `/about/un-pri.html` | 責任投資イニシアティブ一覧 | C-1 | Playwright MCP or WebFetch |
+
+### PDF（curl + Read）
+
+**重要: Playwright MCPのsnapshotではPDFは空になる。PDFは必ず curl+Read で取得する。**
+
+| PDF名 | 典型的なパス | 得られる軸 |
+|---|---|---|
+| スチュワードシップ活動振り返りPDF | `/about/pdf/stewardshipreview_YYYY.pdf` | C-1〜C-4（**最重要PDF**: 対話件数・議決権行使結果・PRI評価） |
+| サステナビリティ・レポートPDF | `/about/pdf/sustainabilityreport_YYYY.pdf` | B-1, C-1, C-3（運用プロセス・ESGインテグレーション詳細） |
+| 正会員の財務状況等に関する届出書 | `/about/finance/upload_pdf/...MYAMYYYYMM.pdf` | A-1, A-9, D-1, D-2a（PL/BS完全データ） |
+| 交付目論見書 | `/fund/<ファンド名>/<ファンド名>_prospectus1.pdf` | B-4, D-4（URLは `/fund/unyou_report.json` から取得可能） |
+
+### 面談会一次情報
+
+| ファイル | 場所 | 得られる軸 |
+|---|---|---|
+| transcript_findings_*.md | `company-info/<企業名>/` | B-1a, B-3, B-6, D-2, D-2a, A-2（公式資料にない定性情報）|
+
+## データソース優先順位（更新版）
+
+| 群 | 一次ソース | 二次ソース | 三次ソース |
+|---|-----------|-----------|-----------|
+| A群 | 正会員の財務届出書PL / 基準価額一覧 / 有価証券報告書（EDINET） | 投信協会統計 / 採用ページ | 交付目論見書（AUM総額） |
+| B群 | 運用担当者一覧ページ / サステナビリティ・レポートPDF / 交付目論見書 | 社長メッセージ / 運用レポート | 面談会transcript_findings |
+| C群 | スチュワードシップ活動振り返りPDF（**最重要**） / 議決権行使ページ | サステナビリティ・レポートPDF | 統合報告書 |
+| D群 | 正会員の財務届出書PL / 面談会transcript_findings | OpenWork口コミ / 採用実績 | IR資料 |
