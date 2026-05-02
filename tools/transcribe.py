@@ -1,8 +1,8 @@
 """
-transcribe.py - 音声ファイルを文字起こしするスクリプト (Windows対応)
+transcribe.py - 音声ファイルを文字起こしするスクリプト
 
-## セットアップ (Windows PowerShell)
-    pip install faster-whisper
+## セットアップ
+    pip install mlx-whisper
 
 ## 使い方
     # 企業名を指定 → company-info/企業名/ に保存
@@ -11,12 +11,16 @@ transcribe.py - 音声ファイルを文字起こしするスクリプト (Windo
     # 出力先を直接指定 (就活以外の用途など)
     python transcribe.py audio.mp3 --output ../transcripts/others
 
-    # モデルサイズ指定 (tiny/base/small/medium/large-v2)
-    python transcribe.py audio.mp3 --company みずほフィナンシャルグループ --model medium
+    # モデルサイズ指定 (tiny/base/small/medium/large-v3)
+    python transcribe.py audio.mp3 --company みずほフィナンシャルグループ --model large-v3
 
 ## ファイル命名規則 (音声ファイル名に従う)
     YYYYMMDD_企業名_種別.mp3  →  transcript_YYYYMMDD_企業名_種別.md
     例: 20260326_みずほ_1次面接.mp3  →  transcript_20260326_みずほ_1次面接.md
+
+## 備考
+    mlx-whisper は Apple Silicon (M1/M2/M3/M4) の GPU を使って高速に文字起こしする。
+    従来の faster-whisper (CPU実行) から移行。
 """
 
 import argparse
@@ -29,21 +33,35 @@ COMPANY_INFO_DIR = Path(__file__).parent.parent / "company-info"
 TRANSCRIPTS_DIR = Path(__file__).parent.parent / "transcripts"
 
 
+MODEL_MAP = {
+    "tiny": "mlx-community/whisper-tiny-mlx",
+    "base": "mlx-community/whisper-base-mlx",
+    "small": "mlx-community/whisper-small-mlx",
+    "medium": "mlx-community/whisper-medium-mlx",
+    "large-v3": "mlx-community/whisper-large-v3-mlx",
+}
+
+
 def transcribe(audio_path: Path, output_dir: Path, model_size: str) -> Path:
     try:
-        from faster_whisper import WhisperModel
+        import mlx_whisper
     except ImportError:
-        print("Error: faster-whisper がインストールされていません。")
-        print("  pip install faster-whisper")
+        print("Error: mlx-whisper がインストールされていません。")
+        print("  pip install mlx-whisper")
         sys.exit(1)
 
-    print(f"モデル読み込み中: {model_size}")
-    model = WhisperModel(model_size, device="auto", compute_type="auto")
-
+    model_id = MODEL_MAP.get(model_size, MODEL_MAP["large-v3"])
+    print(f"モデル読み込み中: {model_id} (GPU: Apple Silicon MLX)")
     print(f"文字起こし開始: {audio_path.name}")
-    segments, info = model.transcribe(str(audio_path), language="ja")
 
-    print(f"検出言語: {info.language} (確度: {info.language_probability:.2f})")
+    result = mlx_whisper.transcribe(
+        str(audio_path),
+        path_or_hf_repo=model_id,
+        language="ja",
+        verbose=False,
+    )
+
+    print(f"検出言語: {result.get('language', 'ja')}")
 
     output_dir.mkdir(parents=True, exist_ok=True)
     out_file = output_dir / f"transcript_{audio_path.stem}.md"
@@ -52,13 +70,15 @@ def transcribe(audio_path: Path, output_dir: Path, model_size: str) -> Path:
         f.write(f"# 文字起こし: {audio_path.stem}\n\n")
         f.write(f"- 元ファイル: `{audio_path.name}`\n")
         f.write(f"- 処理日時: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
-        f.write(f"- モデル: {model_size}\n\n")
+        f.write(f"- モデル: {model_id}\n")
+        f.write(f"- エンジン: mlx-whisper (Apple Silicon GPU)\n\n")
         f.write("---\n\n")
 
-        for segment in segments:
-            start = _fmt_time(segment.start)
-            end = _fmt_time(segment.end)
-            f.write(f"**[{start} → {end}]**\n{segment.text.strip()}\n\n")
+        for segment in result.get("segments", []):
+            start = _fmt_time(segment["start"])
+            end = _fmt_time(segment["end"])
+            text = segment["text"].strip()
+            f.write(f"**[{start} → {end}]**\n{text}\n\n")
 
     print(f"完了: {out_file}")
     return out_file
@@ -72,7 +92,10 @@ def _fmt_time(seconds: float) -> str:
     return f"{m:02d}:{s:02d}"
 
 
-def resolve_output_dir(company: str | None, output: str | None) -> Path:
+from typing import Optional
+
+
+def resolve_output_dir(company: Optional[str], output: Optional[str]) -> Path:
     if company:
         company_dir = COMPANY_INFO_DIR / company
         if not company_dir.exists():
@@ -108,9 +131,9 @@ def main():
     )
     parser.add_argument(
         "--model", "-m",
-        default="small",
-        choices=["tiny", "base", "small", "medium", "large-v2"],
-        help="Whisperモデルサイズ (デフォルト: small)"
+        default="large-v3",
+        choices=["tiny", "base", "small", "medium", "large-v3"],
+        help="Whisperモデルサイズ (デフォルト: large-v3)"
     )
     args = parser.parse_args()
 
