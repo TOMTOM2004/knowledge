@@ -1,61 +1,61 @@
-# Handoff — MYAM 1次面接準備（N-07 完了 → Gate 2 別セッション）
-_Last updated: 2026-04-17 12:35 / session: N-06 + N-07 両方完了、次は Gate 2 レビュー（別セッション推奨）_
+# Handoff — 複数プロジェクト並行進行中（みずほFG 大企業RM 逆質問完了 / MYAM 1次面接 Gate2 待ち）
+_Last updated: 2026-05-03 / session: みずほFG 大企業RM 逆質問ブラッシュアップ完了 + MYAM N-07 stash 保留_
 
 ## 🎯 Next action（1つだけ、具体的に）
-- What: `移行後ES/明治安田アセットマネジメント.md` の Gate 2 レビュー（question-fit-reviewer + readability-reviewer）
-- Where: 別セッションで実行推奨（軽量モード・段階起動）
-- Done when: 2 reviewer の出力を受けて、4固有性の抽象表現（「貢献」「積極的に」等 WARNING 5件）を具体化した改訂案が生成されている
+- What: みずほFG 大企業RM 面談相手プロフィール反映（届いてから Tier2 から該当質問を選択投入する流れ）
+- Where: `company-info/みずほフィナンシャルグループ/reverse_questions_大企業RM_20260420.md` の「社員プロフィール反映後の調整候補」セクション
+- Done when: 面談相手の年次・所属・経歴に応じて Tier2 (B1-B4, #6, #9) から投入する質問が選定済み + #X-B C「17年目で何が成熟・未成熟」の角度調整完了
+- 着手タイミング: 面談（5/12）直前期、プロフィール届き次第
 
 ## 📍 State snapshot
-- ✅ Done:
-  - N-01 Playwright MCP 導入（PR #14 merged）
-  - N-02 MYAM 403解消データ補強
-  - N-03 面談会 transcript 抽出
-  - N-04 / N-05 全8社横断比較（PR #16 merged）
-  - N-06 `interview_qa_1次面接_20260417.md` 新規作成（4固有性ベース、504→626行 / +122行、commit `3c1b26a`）
-  - **N-07 `移行後ES/明治安田アセットマネジメント.md` 更新**（2設問を4固有性ベース再構築・旧版は `_before_N07_20260329.md` に退避保存・実測798字/800字×2・es_checker ERROR 0件）
+- ✅ Done（本セッション）:
+  - **みずほFG 大企業RM 逆質問ブラッシュアップ 7 commit 全 main マージ済**（PR #18, #19, #20）
+    - `bd0e2f3` #5 数字判断を業界別ケース化（GX・半導体・海外M&A）
+    - `32ee3bf` #X-B 邦銀唯一のみずほ証券兼職（リサーチ5ファクト引用、MUFG時事フック）
+    - `aa81a4b` #X-A 長期テーマ伴走（粒度・KPI継承・引き継ぎ）
+    - `d6a7c45` #1 #4 深掘り追加（意思決定権限・役割境界・リサーチャー実務）
+    - `6c50da6` #7 v3 全面改訂（B/E/F: 稟議AI仮説・コミュニケーション中身・R&T翻訳機能）
+    - `ce2f34f` 重複 #X-A 削除（merge artifact）
+    - `bea7fd8` Tier2再構成・B4 ESG角度修正・当日優先順位ガイド改訂
 - 🟡 In progress:
-  - 現ブランチ `claude/20260417-myam-interview-qa-update` に N-06 `3c1b26a` コミット済み（push / PR 状態は未確認）
-  - N-07 コミット予定（本セッション）
-  - `tools/transcribe.py` 未コミット変更あり（内容不明・N-06/N-07 と別起源・今回のコミットに含めない）
-  - untracked: JCB `transcript_2次_20260416.md`、みずほFG 複数、大和AM 他（**別セッションのスコープ**、今回のコミットに含めない）
+  - **MYAM 1次面接準備（stash@{0} に保留）**: `company-info/明治安田アセットマネジメント/interview_qa_1次面接_20260417.md` + `tasks/todo.md` の未コミット変更を `claude/20260428-myam-interview-format-update` ブランチで stash 退避中。再開時は stash pop
+  - 旧 todo.md は MYAM N-06/N-07 進行中の状態で記載（本ファイルで上書き済、参照は git history）
 - 🔴 Blocked:
   - なし
 
 ## 🧠 Context not in code
 - 決定:
-  - MYAM 4固有性（2026-04-17 N-06 で採用・以降の ES / 面接準備の基礎）:
-    1. 相互会社 × 調査集中 × 独立判断 × 小規模シニア（MYAM のみ PM 平均 15-19 年）
-    2. ESG 格付を DCF 割引率に直接反映（他社はスコア化止まり）
-    3. 営業と運用の完全分離（面談会 transcript「ファンドを売るからこの株を見といて、ということはない」）
-    4. 純流出 ▲22 億円（8社中唯一の純流出 → 課題先進 → 若手貢献余地最大）
-  - 旧 `interview_qa_1次面接_20260416.md` は差分比較のため**残す**（削除禁止）
-- 試してダメだった:
-  - （未把握）
-- 落とし穴:
-  - 新規ファイル名は `interview_qa_<ステップ>_<日付>.md`（CLAUDE.md 規則）。旧版と日付で区別する
-  - `移行後ES/` 配下は日本語ファイル名。git log / status 出力ではエスケープ表記になる点に注意
-  - 現ブランチ名は N-06 用。N-07 を同ブランチで継続すると1 PR に複数機能が混ざる可能性 → 別ブランチ `claude/20260417-myam-es-n07` を切る方が望ましい
+  - **みずほFG 大企業RM 逆質問の最終構成**: 当日 45 分タイムラインで Tier1 = 必須6問（#1, #X-B, #4, #7, #X-A, #10）+ 時間次第4問（#2, #3, #5, #8）+ Tier2 = 6問（B1-B4, #6, #9 プロフィールトリガーで選択）
+  - **B4 ESG**: 「ESG投資」（曖昧・運用会社文脈）から「サステナビリティリンクローン・グリーンボンド」（具体プロダクト）に角度修正。「ESGプレミアムは本物か」「達成しやすいKPIで金利優遇を取りに行く顧客を見抜けるか」というユーザー独自視点を質問に組込
+  - **当日序盤の必須運用**: 面接官の経歴（年次・所属・前任部署・兼職対象か等）を必ず冒頭で聞き、Tier2 の選択投入の判断材料にする
+  - **DX 本質資料 `ES/素材/31_日本のDXに関する考察と改善.md`** は今回 #7 F（みずほR&T × 大企業RM 翻訳機能）の背景仮説として参照済。**DX 知見の整理 = 別セッションで実施予定**（逆質問と相互補強する形で構造化）
+- 参考情報:
+  - みずほFG 関連リサーチ Agent 実行 2 回:
+    1. みずほ証券兼職実態（2009年日本初・17年目・形式判明・GCF20人・MUFG処分）
+    2. みずほR&T銀行統合（みずほデジタルコネクト・産調×R&T分業・統合効果）
+  - claude-brain `claude/20260422-slack-todo-triage` の 4 commit 中、3 commit は B-1 PR #10 で main 取り込み済。`05ea50f` Slack TODO はスキップ判断（実体は `~/claude-memory-mcp/` と `~/.claude/`）
+  - personal-tasks の DONE 3件処理済（音声集積update / アメリカ経済 / 財務情報分析論）
+
+## ❌ Don't do (this task)
+<!-- Hot層: このタスク限定の失敗・判断ミス -->
+- [trap] merge --no-ff で同じセクションが重複挿入されることがある（今回 #X-A が2箇所に重複した。修正PR #19 で対応）
+- [mistake] git heredoc で `$(cat <<'EOF' ... EOF)` が macOS bash で `bad substitution: no closing` エラーになる場合がある → 一時ファイル経由（`/tmp/commit-msg.txt`）+ `git commit -F` で回避
 
 ## ❓ Open questions for user
-- [ ] 現ブランチ `claude/20260417-myam-interview-qa-update` の N-06 `3c1b26a` + N-07 コミットは **push / PR 作成済み**か？ 未なら本セッションで push + PR を実行するか？
-- [ ] `tools/transcribe.py` の未コミット変更は何の目的か？（今回の N-06/N-07 には含めていない）
-- [ ] untracked の transcript / competitor_comparison 群（JCB 2次、みずほFG 複数、大和AM 他）は別セッションで扱う想定か？
-- [ ] N-08（am-competitor-researcher eval）、N-09（面接本番準備）の実施時期は未定のままか？
-- [ ] 旧 todo-running-log にある Interview OS 改善タスク **T-01〜T-09** は現在アクティブか、休眠か？
-- [ ] Gate 2（question-fit + readability）はいつ・どのセッションで実施するか？
+- [ ] DX 知見整理（`ES/素材/31` ベース）の別セッションはいつ実行するか？
+- [ ] みずほFG 面談相手プロフィールが届いた時点で再度起動するか？それとも当日まで待つか？
+- [ ] MYAM Gate2 レビューは別セッションで実施想定のままか？stash の扱いは？
+- [ ] 旧 todo-running-log にある Interview OS 改善タスク T-01〜T-09 は現在アクティブか、休眠か？
 
 ## 📂 Key files
-- `company-info/明治安田アセットマネジメント/interview_qa_1次面接_20260417.md`（N-06 成果物）
-- `company-info/明治安田アセットマネジメント/interview_qa_1次面接_20260416.md`（旧版・差分比較用）
-- `docs/am_competitor_comparison_8companies_20260417.md`
-- `company-info/明治安田アセットマネジメント/am_profile.md`
-- `company-info/明治安田アセットマネジメント/transcript_findings_面談会1_20260416.md`
-- `ES/素材/INDEX.md`
-- `移行後ES/明治安田アセットマネジメント.md`（N-07 対象）
-- `tasks/todo-running-log-20260417.md`（旧 todo.md をリネーム保全。N-01〜N-09 / T-01〜T-09 の詳細ログ）
+- `company-info/みずほフィナンシャルグループ/reverse_questions_大企業RM_20260420.md`（本セッションの主成果物）
+- `company-info/みずほフィナンシャルグループ/transcript_CareerLounge-中堅中小RM_20260422.md`（中堅中小RM 実回答素材）
+- `company-info/みずほフィナンシャルグループ/README.md`（みずほフォルダ index）
+- `ES/素材/31_日本のDXに関する考察と改善.md`（DX 本質資料、別セッションで再整理予定）
+- `company-info/明治安田アセットマネジメント/interview_qa_1次面接_20260417.md`（MYAM stash 中）
+- `移行後ES/明治安田アセットマネジメント.md`（MYAM Gate2 待ち）
 
 ## ❌ Out of scope
-- 他企業（みずほFG、JCB、大和AM 等）の ES / 面接準備
-- Interview OS 改善系タスク T-01〜T-09（別軸の system 改善）
-- `tools/transcribe.py` の機能追加・変更（Open questions の回答後に判断）
+- 本セッション内では DX 知見の構造化整理は実施しない（別セッションで実施）
+- 本セッション内では MYAM N-08 / N-09 / Gate2 は実施しない
+- Interview OS 改善系タスク T-01〜T-09
