@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ES横断ビュー</title>
+<style>
+:root {
+  --bg: #0f1115;
+  --panel: #161a22;
+  --panel2: #1c212d;
+  --border: #242935;
+  --text: #e6e8eb;
+  --muted: #8a93a6;
+  --accent: #38bdf8;
+  --best: #fbbf24;
+  --best-bg: #2a1f00;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  margin: 0; padding: 24px;
+  background: var(--bg); color: var(--text);
+  font-size: 14px; line-height: 1.7;
+}
+h1 { font-size: 22px; margin: 0 0 4px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 18px; }
+.controls {
+  display: flex; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap;
+}
+.controls input {
+  background: var(--panel); border: 1px solid var(--border); color: var(--text);
+  padding: 8px 12px; border-radius: 6px; min-width: 280px; font-size: 14px;
+}
+.controls label {
+  display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px;
+}
+.tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+.tab-btn {
+  background: var(--panel); border: 1px solid var(--border); color: var(--muted);
+  padding: 8px 14px; border-radius: 6px 6px 0 0; cursor: pointer; font-size: 13px;
+  font-family: inherit;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { background: var(--panel2); color: var(--text); border-bottom-color: var(--panel2); }
+.tab-btn .ct {
+  display: inline-block; background: var(--border); color: var(--muted);
+  padding: 1px 6px; border-radius: 10px; margin-left: 6px; font-size: 11px;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.group { margin-bottom: 32px; }
+.group h2 {
+  font-size: 15px; color: var(--accent); margin: 0 0 12px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.group h2 .count { color: var(--muted); font-size: 12px; font-weight: 400; }
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 12px;
+}
+.card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px;
+  display: flex; flex-direction: column;
+}
+.card.is-best { border-color: var(--best); background: linear-gradient(180deg, var(--best-bg) 0%, var(--panel) 60%); }
+.card header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 8px; margin-bottom: 8px;
+}
+.card .co { font-weight: 600; font-size: 13px; }
+.card .badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.b {
+  display: inline-block; padding: 2px 6px; border-radius: 4px;
+  font-size: 10px; font-weight: 600;
+}
+.b.best { background: var(--best); color: #2a1f00; }
+.b.note { background: var(--border); color: var(--muted); }
+.b.len { background: var(--accent); color: #002030; }
+.q { color: var(--muted); font-size: 11px; margin-bottom: 8px; line-height: 1.5; }
+.body { font-size: 13px; line-height: 1.75; white-space: pre-wrap; word-break: break-word; }
+.card.collapsed .body {
+  max-height: 4.5em; overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+.card.hidden { display: none; }
+</style>
+</head>
+<body>
+<h1>ES横断ビュー</h1>
+<div class="meta">生成: 2026-05-10 17:04 / 対象: ES/部品/ / 総回答数: 101</div>
+
+<div class="tabs"><button class="tab-btn active" data-target="gakuchika">ガクチカ <span class="ct">30</span></button><button class="tab-btn" data-target="self_pr">自己PR <span class="ct">21</span></button><button class="tab-btn" data-target="motivation">志望動機 <span class="ct">30</span></button><button class="tab-btn" data-target="other">その他頻出 <span class="ct">20</span></button></div>
+
+<div class="controls">
+  <input id="filter" type="text" placeholder="本文・会社名で絞り込み">
+  <label><input type="checkbox" id="bestonly"> ⭐ ベストのみ</label>
+  <label><input type="checkbox" id="collapse" checked> 折りたたみ表示</label>
+</div>
+
+<div class="tab-panel active" data-tab="gakuchika"><section class="group">
+  <h2>Group 1: インターン（データ分析・自動化） <span class="count">(12)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友海上あおい損害保険">
+  <header>
+    <div class="co">三井住友海上あおい損害保険</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">400字</span></div>
+  </header>
+  <div class="q">学生時代にもっとも力を入れたこと</div>
+  <div class="body">データサイエンティストの長期インターンで、クライアント企業の財務部の資料作成を自動化し、業務リスクを解消しました。当初の手順書は曖昧で古いバージョンだったため、作業に2日を要する属人的な状態でした。私はまず全体像を把握し、技術的に不可能な点やデータ整合性の不備を洗い出し、実装前に解消すべき論点を構造化しました。その際、上司への確認事項を「そのまま顧客へ送信可能なレベル」で作成して手戻りを防ぎ、回答待ちの間にPythonでの実装を進める並行稼働で納期を短縮しました。また、変換マスタをYAML定義し顧客自身で修正可能にする等、将来の移行も見据えて運用性を高めました。将来的なクラウド移行を見据え、マスタ分離等のアーキテクチャ設計も行いました。結果、作業時間を30分に短縮し、顧客の持続可能な運用基盤を確立しました。技術と段取りの両輪で、実務課題を解決した経験です。</div>
+</article>
+<article class="card" data-company="SOMPO">
+  <header>
+    <div class="co">SOMPO</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">【設問1】学生時代に、最も力を入れた取組み</div>
+  <div class="body">IT企業での長期インターンにおいて、属人化していた「財務部向け月次資料作成業務」をPythonで自動化し、誰もが運用できる「仕組み」へと再構築した経験です。 本件に最も注力した理由は、目先のタスク消化ではなく、担当者退職により業務が停止する組織的リスクを根本から解決し、チーム全体の生産性を底上げしたいと考えたからです。 当初、引き継ぎ期間が短く手順書も曖昧な中、私は「単なる全自動化」に固執しませんでした。まずタスク全体を俯瞰して不明点を一括で確認し、手戻りを防止しました。その上で、PDFの目視確認など「人間が判断すべき重要な工程」はあえて手動入力として設計に残し、それ以外の前処理から集計・出力までを一気通貫で実行できるプログラムを構築しました。 結果として、従来2日かかっていた作業を実行時間30分未満に圧縮しつつ、品質と安全性を担保した再現性のある業務フローを確立できました。</div>
+</article>
+<article class="card" data-company="かんぽ（デジタル）">
+  <header>
+    <div class="co">かんぽ（デジタル）</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">学生時代に最も苦労あるいは努力した経験</div>
+  <div class="body">長期インターンで、属人化していた財務集計業務の自動化に苦労しました。当初、私は要件や手順の曖昧さを放置したままプログラミング実装を進めてしまい、後から仕様の認識ズレやデータ不備が発覚し、大幅な手戻りと納期遅延を引き起こしました。この失敗から「自分の技術力への過信」と「確認工程の軽視」という課題を痛感しました。<br>これを乗り越えるため、次からは作業着手前に「確認事項や例外処理」を徹底的に洗い出し、クライアントと前提を早期に合意するプロセスを構築しました。また、完全自動化に固執せず、目視確認が必要な部分はあえて手動入力点として残すなど、実運用に耐えうる安全な設計を心がけました。<br>この経験から、技術力以上に、関係者との丁寧な合意形成や、不確実性を一つずつ構造化して前に進める「地道で確実なプロセス設計」がビジネスにおいて不可欠であると学びました。</div>
+</article>
+<article class="card" data-company="日本生命">
+  <header>
+    <div class="co">日本生命</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">力を入れて取り組んだこと（本選考）</div>
+  <div class="body">長期インターンで、クライアント企業の財務報告資料作成の自動化に取り組みました。顧客担当者の退職に伴い業務を引き継いだ際、膨大な手作業（Excel）により過去データに誤りが散見される事実に驚きました。「時間は有限な資源であり、人は付加価値の高い業務に集中すべき」という考えから、私は抜本的な仕組み化を決意しました。施策として、計算処理はPythonで自動化しつつ、最終判断は人が「Go」を出す余地を残し、安全性を担保しました。同時に過去の数値誤りも全件検証して是正しました。また、進行においては上司の時間を奪わないよう、生成AIを活用して「現状と選択肢」を簡潔に整理し、即断できるコミュニケーションを徹底しました。結果、従来1〜2日を要した作業を30分未満に短縮し、データの正確性も回復させました。技術で効率化しつつ、人の責任と時間を尊重する価値観を貴社でも活かしたいと考えます。</div>
+</article>
+<article class="card" data-company="野村アセット">
+  <header>
+    <div class="co">野村アセット</div>
+    <div class="badges"><span class="b len">300字</span></div>
+  </header>
+  <div class="q">Q13. 学生時代に力を入れたこと</div>
+  <div class="body">長期インターン先で、クライアントの財務部向け月次資料作成を自動化した経験です。属人化し、運用の断絶が懸念される重要タスクを私は単なる自動化に留まらず、組織として誰でも同じ品質を再現できる状態を目指しました。当初は手順書の揺れや仕様の不透明さが障壁となりましたが、実装前に確認事項の棚卸しを徹底しました。具体的には、自動化すべき工程と判断が必要な工程を切り分け、人間が確認すべき点をパラメータとして明示する設計にしました。また、独自の設計フォーマットを作成し、検証観点をログとして残す運用を確立しました。結果、作業時間を2日分削減し、不確実な状況下でも仕組みによってリスクを制御する重要性を学びました。</div>
+</article>
+<article class="card" data-company="三菱UFJニコス">
+  <header>
+    <div class="co">三菱UFJニコス</div>
+    <div class="badges"><span class="b len">300字</span></div>
+  </header>
+  <div class="q">上記の中から一つを選び、強み・特徴を発揮したエピソード詳細（submitted）</div>
+  <div class="body">長期インターンにて、クライアントの財務集計業務の自動化を担当しました。担当者の退職により後任が不在で、手順書をもとにしたシステム化が急務でした。 私はPythonを用いた開発を行う中で、手順書と実際のデータ間の相違や、技術的に不可能な処理を洗い出し、事実ベースでの確認作業を徹底しました。また、顧客側のITスキルを考慮し、全自動化ではなくあえて手作業の入力部分を残すことで、現場が確実に運用できる設計に落とし込みました。 結果として、既存業務の大幅な時間短縮に貢献しました。この経験から、単なる技術提供に留まらず、実運用を見据えて要件の矛盾を正し、確実な仕組みへと昇華させる力を発揮できました。</div>
+</article>
+<article class="card" data-company="りそな">
+  <header>
+    <div class="co">りそな</div>
+    <div class="badges"><span class="b len">300字</span></div>
+  </header>
+  <div class="q">上記の実績に至るまでの行動（本選考）</div>
+  <div class="body">長期インターンにて、財務部向け定例資料作成の自動化と業務フローの刷新に注力しました。当初、16時間以上を要する属人的な作業が課題でした。私はまず全体工程を構造化し、確認事項を前倒しで整理する「フロントローディング」を徹底しました。実装面ではPythonを活用し、単なる自動化に留まらず、「0とNullの財務的な峻別」や「マジックナンバーの廃止」といったデータ品質の抜本的改善を提案・実行しました。結果、処理時間を30分未満へ短縮し、属人化リスクを排除した信頼性の高いデータ基盤を構築しました。この経験から、技術を手段として課題の本質を捉え、AIやツールを「オーケストレーション（指揮）」して組織の生産性を最大化する重要性を学びました。</div>
+</article>
+<article class="card" data-company="三菱UFJモルガン・スタンレー証券（冬）">
+  <header>
+    <div class="co">三菱UFJモルガン・スタンレー証券（冬）</div>
+    <div class="badges"><span class="b len">300字</span></div>
+  </header>
+  <div class="q">これまでの人生で特に頑張って取り組んだこと</div>
+  <div class="body">長期インターンのDSチームで、案件ごとに発生する数値合わせ業務の標準化に取り組みました。3人のDSがそれぞれ独自のやり方で対応しており、私はフォーマットを持たずに作業が破綻し、先輩に巻き取っていただいた経験があります。これは個人のミスではなくチームの構造的な問題だと捉え、先輩2名にヒアリングして共通手順とチェック項目を整理し、包括的な数値合わせフォーマットを作成しました。さらに生成AIに投げるプロンプトとしてナレッジ化し共有したことで、先輩の負担は減り、誰でも数値をそろえられる状態を実現できました。私は現場の非効率を言語化し、周囲を巻き込みプロセスを設計し直す役割を担いました。</div>
+</article>
+<article class="card" data-company="三井住友信託銀行（）">
+  <header>
+    <div class="co">三井住友信託銀行（）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">未記入 → 提出用のみ掲載</span></div>
+  </header>
+  <div class="q">Q2: 学生時代に力を注いだ活動（2days / 提出用）</div>
+  <div class="body">私が学生時代に最も打ち込んだのは、IT企業での長期インターンにおけるデータ分析業務です。クライアント企業のデータを扱い、集計ロジックの作成から分析設計、レポート作成まで一連のプロセスに携わっています。当初は、与えられたタスクを頭の中だけで整理して進めていたため、期限内にやり切れず上司に巻き取っていただくという悔しい経験をしました。この反省から、着手前に全体像とタスクの優先順位を書き出して整理してから作業に入る進め方に変えました。<br>また、人為的なミスや仕組み上の課題に直面した際には、担当者個人の工夫に頼るのではなく、自動集計ロジックの作成やコードの共通化など、再現性の高い仕組みに置き換えることを意識して改善に取り組みました。その結果、私が設計したアウトプット形式が採用される場面も増え、部分的だったタスクも一連の流れとして任せていただけるようになりました。</div>
+</article>
+<article class="card" data-company="野村證券（IB部門）">
+  <header>
+    <div class="co">野村證券（IB部門）</div>
+    <div class="badges"><span class="b len">約450字</span></div>
+  </header>
+  <div class="q">大学時代に最も粘り強く取り組んだこと（提出用）</div>
+  <div class="body">私が大学時代に最も粘り強く取り組んだのは、IT企業での長期インターンにおけるデータ分析業務です。クライアント企業の売上や入出金データを扱い、集計ロジックの作成から分析設計、レポート作成まで一連のプロセスに携わりました。<br>当初、与えられたタスクを頭の中だけで整理して進めていたため、複数案件が重なった際に処理が追いつかず、期限内にやり切れず上司に巻き取っていただくという悔しい経験をしました。ここで「仕事の設計が甘さ」と捉え直し、進め方自体を根本から改善することを決めました。<br>具体的には、着手前に分析の目的、想定アウトプット、コードや集計の流れ、全体像を可視化してから作業に入るよう徹底しました。また、データ不備に関して自動集計ロジックやチェックフローを組み込み、再現性のある仕組みに置き換えることに粘り強く取り組みました。<br>その結果、私が設計したアウトプット形式や集計ロジックがクライアント向けレポートの標準として採用され、分析プロセス全体を任される存在へと役割が変わりました。この経験を通じて、私は「プロセスの設計と仕組み化を粘り強く改善し続けること」が、最終的に大きな成果につながることを学びました。</div>
+</article>
+<article class="card" data-company="三井住友カード（本選考）">
+  <header>
+    <div class="co">三井住友カード（本選考）</div>
+    <div class="badges"><span class="b len">約350字</span></div>
+  </header>
+  <div class="q">問題解決をしたエピソード</div>
+  <div class="body">私が問題解決をした経験は、長期インターンで属人化した財務資料作成業務をPythonで自動化し、業務継続リスクを解消した取り組みです。 第一に全体像把握です。既存の手順書を工程分解し、自動化可否や例外条件を棚卸ししました。仕様の曖昧さを実装前に洗い出し、手戻りを防ぐ設計を行いました。 第二に計画力です。「確認待ちでの停滞」を防ぐため、不明点を初期に一括で質問し、回答待ちの間に実装可能な工程を先行させる並行稼働を行いました。 第三にタスク整理です。工程ごとの完了条件を定義し、検証ログを残す設計にしました。データ欠損等のトラブルも前提を合意して仕様に反映し、従来2日要した作業を30分に短縮する再現性のある仕組みを構築しました。 この経験から、実装技術以上に論点の構造化と段取りが解決の鍵だと学びました。</div>
+</article>
+<article class="card" data-company="サントリー">
+  <header>
+    <div class="co">サントリー</div>
+    <div class="badges"><span class="b len">約150字</span></div>
+  </header>
+  <div class="q">今のあなたを作ったエピソード エピソード1（提出用）</div>
+  <div class="body">大学3年生からIT企業で長期インターンを続けています。初期に重要な集計ロジックを誤り、タスクを上司に巻き取っていただくことになりました。この失敗から「ただタスクをこなす」のではなく、目的や背景を整理し、丁寧な設計と検証を行い、アウトプットを渡す姿勢に変わりました。これ以降、クライアントにとっての最善のアウトプットになるように設計し出力することを心がけるようになり、現在の仕事に対する軸となっています</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>Group 2: オープンキャンパス企画 <span class="count">(7)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="日本生命">
+  <header>
+    <div class="co">日本生命</div>
+    <div class="badges"><span class="b best">⭐ Best</span></div>
+  </header>
+  <div class="q">力を入れて取組んだこと（インターン</div>
+  <div class="body">私がこれまでの人生で力を入れて取り組んだのは、大学のオープンキャンパスにおける掲示物企画の改善です。私は来場者のニーズと掲示内容のズレを感じ、「思い立ったが吉日」の価値観のもと、すぐにアンケートを企画・実施しました。その結果、学生生活に関する具体的な情報が求められていると判明し、職員に対して改善提案を行いました。提案では、単なる主観ではなく、得られたデータと関連論文を用いて「最大多数の最大幸福」の観点から来場者全体にとってのメリットを論理的に示しました。この経験を通じて、即時に動く実行力と、多角的な視点から周囲の利益を考える力の重要性を学びました。今後もこの姿勢を持ち、周囲に価値を届けられる人材を目指します。</div>
+</article>
+<article class="card" data-company="野村証券（インターン）">
+  <header>
+    <div class="co">野村証券（インターン）</div>
+    <div class="badges"><span class="b len">500字制限・一部</span></div>
+  </header>
+  <div class="q">大学院時代に粘り強く努力し成果をあげた経験</div>
+  <div class="body">大学のオープンキャンパスの設営、運営を行うサークルに所属しています。学生スタッフにはオープンキャンパスの通常業務に加えて、プロジェクトの活動もあります。<br><br>私は企画プロジェクトに所属しており、オープンキャンパスで学生企画として大学生活や授業、私生活などについてまとめた掲示物を作成、掲載、改修を行っています。毎年同じ内容の掲示物では来場者の需要に応えられていないという問題意識から、真に価値ある情報を提供したいと強く思いました。<br><br>そこで、来場者の需要を正確に把握するため、企画プロジェクトでアンケートの導入しました。プロジェクトメンバーでアンケートを作成し、大学職員への導入を承認していただき実現しました。私はこの取り組みにおいて、アンケート導入の立案と、データ活用の基盤となるデータガバナンスの設定を主導しました。<br><br>（以下は塾バイトのエピソードに続く複合型）</div>
+</article>
+<article class="card" data-company="りそな（インターン）">
+  <header>
+    <div class="co">りそな（インターン）</div>
+    <div class="badges"><span class="b len">300字</span></div>
+  </header>
+  <div class="q">学生生活を通して頑張ったこと 上記について</div>
+  <div class="body">大学のオープンキャンパスの設営、運営を行うサークルに所属している。また運営、設営に加えてプロジェクトにも所属していて、オープンキャンパスで学生企画として大学生活や授業、私生活などについてまとめた掲示物を作成、掲載、改修を行っています。毎年同じ内容の掲示物では来場者の需要に応えられていないという問題意識から、真に価値ある情報を提供したいと強く思いました。<br><br>そこで、来場者の需要を正確に把握するため、アンケートの導入を企画しました。プロジェクトメンバーでアンケートを作成し、大学職員への導入交渉を行いました。このアンケートは次回のオープンキャンパスから導入予定です。<br><br>私はこの取り組みにおいて、アンケートの企画立案と、データ活用の基盤となるデータガバナンスの設定を主導しました。</div>
+</article>
+<article class="card" data-company="三菱UFJリサーチ＆コンサルティング">
+  <header>
+    <div class="co">三菱UFJリサーチ＆コンサルティング</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">Q1: 力を入れて取り組んだ内容を踏まえて</div>
+  <div class="body">大学のオープンキャンパスの設営、運営を行うサークルに所属している。また運営、設営に加えてプロジェクトにも所属していて、オープンキャンパスで学生企画として大学生活や授業、私生活などについてまとめた掲示物を作成、掲載、改修を行っています。毎年同じ内容の掲示物では来場者の需要に応えられていないという問題意識から、真に価値ある情報を提供したいと強く思いました。<br><br>そこで、来場者の需要を正確に把握するため、アンケートの導入を企画しました。プロジェクトメンバーでアンケートを作成し、大学職員への導入交渉を行いました。このアンケートは次回のオープンキャンパスから導入予定です。<br><br>私はこの取り組みにおいて、アンケートの企画立案と、データ活用の基盤となるデータガバナンスの設定を主導しました。</div>
+</article>
+<article class="card" data-company="ドコモ">
+  <header>
+    <div class="co">ドコモ</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">Q9: チャレンジしたエピソード</div>
+  <div class="body">わたしはただものではない、なぜならば——（文頭規定あり）学生スタッフの企画プロジェクトでマンネリ化していた活動に加えて新たなチャレンジを行った。学生スタッフとは大学入学課直轄のサークルで大学のオープンキャンパスの設営、運営を行っている。大学の職員の下で毎回同じようにオープンキャンパスを開催している。学生スタッフのメンバーはプロジェクトに所属しオープンキャンパスの設営、運営の他にプロジェクトの活動を行なっている。私が所属する企画プロジェクトでは大学生活や授業について高校生や保護者向けに掲示物を作成し展示しておりますが内容の刷新は行われてきませんでした。<br><br>しかし、私は高校生や保護者に需要がある掲示物を作成したいと考えアンケートを導入し掲示物の刷新をするべく職員に掛け合い、次回のオープンキャンパスでの導入を目指しています。</div>
+</article>
+<article class="card" data-company="三菱UFJ信託銀行（インターン）">
+  <header>
+    <div class="co">三菱UFJ信託銀行（インターン）</div>
+    <div class="badges"><span class="b len">500字</span></div>
+  </header>
+  <div class="q">Q6: もっとも力を入れて取り組んだこと</div>
+  <div class="body">もっとも力を入れて取り組んだこと：新しいことにチャレンジすること<br><br>私が所属している学生スタッフは大学のオープンキャンパスの運営・設営を行っています。通常業務に加えて、学生スタッフにはプロジェクトが存在し、私がプロジェクトリーダーを務める企画プロジェクトでは、オープンキャンパスで展示する掲示物の企画、作成を行っています。掲示物は例年同じものを作成あるいは回収をしていますが、今年からは来場者にアンケートを取り掲示物の刷新を行いたいと考えました。学生スタッフは大学直属の組織であり、職員の管轄によって動くことができるので、例年とは異なる動きをする場合には職員の許可を取る必要があります。今回我々が動いている企画では、新たにアンケートを導入するため一人の上の職員だけではなく我々を管轄する入学課の課長にも許可を取る必要があります。新しい取り組みをすることについては職員からの賛同を得ることができましたが、アンケートを取るという点については情報の管理についてしっかりと統制を取るという条件で承認をいただきました。我々が苦労した点はアンケートの扱いやアンケートでどこまで情報を取得するかという点でした。データサイエンスを目指す身としては大きな傾向が出るのではないかと期待していましたが、この点については諦め、新しく刷新をするということを優先しました。こちらが情報するという条件で我々の案は承認を得ることができました。</div>
+</article>
+<article class="card" data-company="三井住友銀行（インターン）">
+  <header>
+    <div class="co">三井住友銀行（インターン）</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">設問2-2（400字）</div>
+  <div class="body">私が所属している学生スタッフの企画プロジェクトでは例年同じ内容の掲示物を作成あるいは改修をしていますが、今年からは来場者にアンケートを取り掲示物の刷新を行いたいと考えました。私たちは大学職員の管轄によって動くことができるので、例年とは異なる動きをする場合には職員の許可を取る必要があります。私たちは新たにアンケートを導入するために私たちを管轄する入学課の課長にも許可を取る必要がありました。アンケートを取ることについては情報の管理についてしっかりと統制を取るという条件で承認をいただきました。我々が苦労した点はアンケートの扱いやアンケートでどこまで情報を取得するかという点でした。データサイエンスを目指す身としては大きな傾向が出るのではないかと期待していましたが、この点については諦め、新しく刷新をするということを優先しました。こちらが情報するという条件で我々の案は承認を得ることができました。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>Group 3: 塾バイトリーダー <span class="count">(7)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友海上あおい損害保険">
+  <header>
+    <div class="co">三井住友海上あおい損害保険</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">400字</span></div>
+  </header>
+  <div class="q">組織やチームをよりよくするために自ら考え、行動した経験</div>
+  <div class="body">個別指導塾のバイトリーダーとして、指導品質の「脱属人化」と「標準化」を推進し、組織全体の教育力を向上させました。当時、教室では講師間の連携が希薄で、指導報告書の記載内容も個人の裁量に委ねられていました。そのため、情報共有不足による引き継ぎミスや、担当変更による指導の質の低下が常態化していました。私はこれを「仕組みの欠陥」と捉え、2つの改革を行いました。第一に、報告書のフォーマットを刷新し、記載すべき定性・定量項目を定義することで、誰が見ても生徒状況を正確に把握できる状態に整えました。第二に、社員と講師のパイプ役となり、優れた指導法を共有・マニュアル化する運用を定着させました。結果、講師個人の経験則に依存していた授業が、組織として「再現可能なオペレーション」へと進化し、誰が担当しても高品質な指導が提供できる体制を確立しました。</div>
+</article>
+<article class="card" data-company="三井住友信託銀行（）">
+  <header>
+    <div class="co">三井住友信託銀行（）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">400字</span></div>
+  </header>
+  <div class="q">学生時代に力を入れた活動</div>
+  <div class="body">学生時代に最も打ち込んだことはアルバイトです。大学1年生から個別指導塾でバイトリーダーを務め、社員・講師間の意識合わせと運営改善に注力しました。着任当初はコミュニケーションが乏しく、授業の引き継ぎが不安定で指導品質にばらつきがありました。私は授業後の生徒報告書を「必須項目を定義した共通フォーマット」に統一。次に、講師間で指導のベストプラクティスを共有する場を設け、同意が得られた生徒には基本手順を統一して適用しました。これにより、講師交代時でも指導の前提が揃い、引き継ぎ漏れと属人性を抑制しました。</div>
+</article>
+<article class="card" data-company="三菱UFJニコス（）">
+  <header>
+    <div class="co">三菱UFJニコス（）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">約250字</span></div>
+  </header>
+  <div class="q">参考：インターン用ガクチカ下書き（提出用）</div>
+  <div class="body">学生時代に最も打ち込んだことはアルバイトです。大学1年生から個別指導塾でバイトリーダーを務め、社員・講師間の意識合わせと運営改善に注力しました。着任当初はコミュニケーションが乏しく、授業の引き継ぎが不安定で指導品質にばらつきがありました。私は授業後の生徒報告書を「必須項目を定義した共通フォーマット」に統一。次に、講師間で指導のベストプラクティスを共有する場を設け、同意が得られた生徒には基本手順を統一して適用しました。これにより、講師交代時でも指導の前提が揃い、引き継ぎ漏れと属人性を抑制しました。</div>
+</article>
+<article class="card" data-company="三菱UFJリサーチ＆コンサルティング（）">
+  <header>
+    <div class="co">三菱UFJリサーチ＆コンサルティング（）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約250字</span></div>
+  </header>
+  <div class="q">塾バイトエピソード（提出用）</div>
+  <div class="body">学生時代に最も打ち込んだことはアルバイトです。大学1年生から個別指導塾でバイトリーダーを務め、社員・講師間の意識合わせと運営改善に注力しました。<br>当初は講師間、社員と講師間の会話が乏しく、全体として情報を共有する雰囲気がありませんでした。始めは楽しく働きたいという思いでしたが、次第に会話不足が業務上の損失になっていることに気づきました。<br>そこで新人という立場を活かし、講師全員と積極的に会話をして関係性をつなぎました。その結果、講師室の雰囲気が明るくなり、引き継ぎも円滑になりました。<br>さらに、授業後の生徒報告書を「必須項目を定義した共通フォーマット」にすることで、講師交代時の指導品質を安定させました。<br>その結果、クレームは減少し、保護者面談での講師評価が向上したと社員から報告を受けました。この経験を通じて、職場全体の雰囲気づくりの重要性と、組織のオペレーションを継続的に運用する難しさを学びました。</div>
+</article>
+<article class="card" data-company="横浜銀行（）">
+  <header>
+    <div class="co">横浜銀行（）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">400字</span></div>
+  </header>
+  <div class="q">学生時代に注力したこと</div>
+  <div class="body">学生時代に最も打ち込んだことはアルバイトです。大学1年生から個別指導塾でバイトリーダーを務め、社員・講師間の意識合わせと運営改善に注力しました。着任当初はコミュニケーションが乏しく、授業の引き継ぎが不安定で指導品質にばらつきがありました。私は授業後の生徒報告書を「必須項目を定義した共通フォーマット」に統一。次に、講師間で指導のベストプラクティスを共有する場を設け、同意が得られた生徒には基本手順を統一して適用しました。これにより、講師交代時でも指導の前提が揃い、引き継ぎ漏れと属人性を抑制しました。</div>
+</article>
+<article class="card" data-company="野村證券（グローバルマーケット）">
+  <header>
+    <div class="co">野村證券（グローバルマーケット）</div>
+    <div class="badges"><span class="b len">約350字</span></div>
+  </header>
+  <div class="q">大学時代に粘り強く努力し成果をあげた経験（提出用）</div>
+  <div class="body">私はアルバイトで個別指導塾の講師を務めています。そこでは小学生〜高校生まで教えており、ボリュームゾーンは高校受験対策に通っている中学生でした。（中略）私は同じ校舎で働く全ての講師に協力を仰ぎ、特定の進め方を本人に合わせた生徒を除き、基本的な進め方を私の進め方で行ってもらうことになりました。結果としてその年の実績は例年に比べて志望が高い学校へと進学できた生徒が多く、受験学年でない生徒も入塾前と入塾後では成績や模試の結果が全体的に上昇しました。この経験で私が痛感したのはオペレーションは導入することよりも運用の軌道に乗せることが重要であるということです。</div>
+</article>
+<article class="card" data-company="サントリー">
+  <header>
+    <div class="co">サントリー</div>
+    <div class="badges"><span class="b len">約150字</span></div>
+  </header>
+  <div class="q">今のあなたを作ったエピソード エピソード3（提出用）</div>
+  <div class="body">大学1年春から個別指導塾でバイトリーダーを務め、講師間の連携不足による指導品質のばらつき改善に取り組みました。授業報告書を必須項目付きの共通フォーマットに統一し、ベストプラクティスを共有して基本手順を標準化。講師交代時でも指導の前提が揃う仕組みを作れた経験は、属人的な業務を構造化して改善するという今の自分のスタイルの原点になっています。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>Group 4: 文化祭実行委員 <span class="count">(4)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友信託銀行（draft">
+  <header>
+    <div class="co">三井住友信託銀行（draft</div>
+    <div class="badges"><span class="b best">⭐ Best</span></div>
+  </header>
+  
+  <div class="body">私は中高一貫校の文化祭において、中学2年時にクラス企画のチーフを務め、中高全学年で観客動員数2位という結果を残しました。私の役割は、企画の段取りを設計し、全体を指揮することでした。来場者が楽しめる構成と、限られた準備時間で実現可能な計画の両立を意識して企画を練りました。<br>一方で、効率的に進めたい私の思いとは裏腹に、なかなか動いてくれないメンバーも多く、当初は「なぜ合理的に動いてくれないのか」と戸惑いを感じました。そこで「なぜこの順番で行うのか」「ここを工夫すると当日が楽になる」といった背景やメリットを言葉にして伝えることを意識し、メンバーの得意な作業に合わせて役割を再設計しました。<br>その結果、準備後半には自発的に動いてくれるメンバーが増え、当日も大きなトラブルなく運営できました。私は「人は必ずしも合理的に動かない」という前提に立ち、背景を共有しながら周囲を巻き込むことの重要性を学びました。</div>
+</article>
+<article class="card" data-company="三井住友銀行（）">
+  <header>
+    <div class="co">三井住友銀行（）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">約200字</span></div>
+  </header>
+  <div class="q">チームワーク</div>
+  <div class="body">私が「チームワーク」を発揮した取り組みは、中学2年時の文化祭におけるクラス企画のチーフ経験です。中高全学年のクラス企画の中で観客動員数2位を獲得しました。私の役割は、段取り設計と役割分担を行い、全体を前に進めることです。準備段階では温度感が異なるメンバーも多く、作業が進まないことが課題でした。そこで目標を背景から共有し、役割を再設計しました。結果として全体が自発的に動き、当日の運営も成功しました。相手を尊重しつつ共通目標に向けて協働設計することで、チームとして力を発揮できると学びました。</div>
+</article>
+<article class="card" data-company="IBM">
+  <header>
+    <div class="co">IBM</div>
+    <div class="badges"><span class="b len">200字</span></div>
+  </header>
+  <div class="q">Q3: あなたの強みが発揮されたエピソード</div>
+  <div class="body">僕は中学３年間、クラスの文化祭実行委員を勤めリーダーシップを発揮し、クラスを盛り上げてきたと実感しています。特に中学２年生のころの文化祭では集客数が中学全体で1位、中高全体で２位を取りました。出し物のテーマ、内容、シフト、班分けなどは基本的に一人で行い、その後クラスメートに仕事を割り振る形で行いました。集客数で入賞するという目標を達成し、最後までやり切ることができました。</div>
+</article>
+<article class="card" data-company="三菱UFJリサーチ＆コンサルティング">
+  <header>
+    <div class="co">三菱UFJリサーチ＆コンサルティング</div>
+    <div class="badges"><span class="b len">600字設問内の事例</span></div>
+  </header>
+  <div class="q">Q2: 企業の生産性向上が進まない原因と解決策（一部言及）</div>
+  <div class="body">私は中高の文化祭でクラスの実行委員でしたが、クラス全員が文化祭を最高のものにしたいという共通認識を持ち、一人一人がクオリティを上げる工夫について考え行動した結果として集客数1位を獲得することができました。</div>
+</article></div>
+</section></div>
+<div class="tab-panel" data-tab="self_pr"><section class="group">
+  <h2>Group 1: 構造化・仕組み化力 <span class="count">(7)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="かんぽ（デジタル">
+  <header>
+    <div class="co">かんぽ（デジタル</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">350字</span></div>
+  </header>
+  
+  <div class="body">私の強みは、属人的で曖昧な業務を構造化し、再現可能な仕組みに落とし込む力です。<br>長期インターンでは、担当者の退職によりブラックボックス化していた月次財務資料の作成業務を引き継ぎました。単にPythonでコードを書くのではなく、まず既存のExcel手順書から「どこでミスが起きやすいか」「どこに人間の判断が介在するか」を細かく分解しました。その上で、処理をモジュール化し、後から検証しやすいようログを残す設計へと業務自体を再構築しました。<br>結果として、従来2日以上かかっていた作業を約30分に短縮する見通しを立てただけでなく、誰が実行しても同じ品質を担保できる運用基盤を作り上げました。<br>入社後も、現場に散在する複雑なデータや非効率なプロセスに対し、単にツールを導入するだけでなく、実運用に寄り添った地道な仕組み化を行うことで、貴社のDX推進と顧客体験の向上に貢献します。</div>
+</article>
+<article class="card" data-company="三井住友海上あおい損害保険">
+  <header>
+    <div class="co">三井住友海上あおい損害保険</div>
+    <div class="badges"><span class="b len">200字</span></div>
+  </header>
+  <div class="q">専門性（200字）</div>
+  <div class="body">専門性は「計量経済学」と、現場の経験則を技術に実装する「翻訳力」です。大学では因果推論を学び、事象の真因を解明する思考力を養いました。また実務を通じ、有効な分析には「熟練者のドメイン知識」が不可欠と痛感したため、現場の暗黙知を詳細設計とAI活用によって再現可能なアルゴリズムへ正確に翻訳する実装フローを確立しました。数理と現場の架け橋として、実効性の高い意思決定基盤を構築します。</div>
+</article>
+<article class="card" data-company="三井住友海上あおい損害保険">
+  <header>
+    <div class="co">三井住友海上あおい損害保険</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">組織やチームをよりよくするために自ら考え、行動した経験（400字）</div>
+  <div class="body">個別指導塾のバイトリーダーとして、指導品質の「脱属人化」と「標準化」を推進し、組織全体の教育力を向上させました。当時、教室では講師間の連携が希薄で、指導報告書の記載内容も個人の裁量に委ねられていました。そのため、情報共有不足による引き継ぎミスや、担当変更による指導の質の低下が常態化していました。私はこれを「仕組みの欠陥」と捉え、2つの改革を行いました。第一に、報告書のフォーマットを刷新し、記載すべき定性・定量項目を定義することで、誰が見ても生徒状況を正確に把握できる状態に整えました。第二に、社員と講師のパイプ役となり、優れた指導法を共有・マニュアル化する運用を定着させました。結果、講師個人の経験則に依存していた授業が、組織として「再現可能なオペレーション」へと進化し、誰が担当しても高品質な指導が提供できる体制を確立しました。</div>
+</article>
+<article class="card" data-company="三菱UFJニコス">
+  <header>
+    <div class="co">三菱UFJニコス</div>
+    <div class="badges"><span class="b len">300字</span></div>
+  </header>
+  <div class="q">本選考ESエピソード詳細（300字）</div>
+  <div class="body">長期インターンにて、クライアントの財務集計業務の自動化を担当しました。担当者の退職により後任が不在で、手順書をもとにしたシステム化が急務でした。 私はPythonを用いた開発を行う中で、手順書と実際のデータ間の相違や、技術的に不可能な処理を洗い出し、事実ベースでの確認作業を徹底しました。また、顧客側のITスキルを考慮し、全自動化ではなくあえて手作業の入力部分を残すことで、現場が確実に運用できる設計に落とし込みました。 結果として、既存業務の大幅な時間短縮に貢献しました。この経験から、単なる技術提供に留まらず、実運用を見据えて要件の矛盾を正し、確実な仕組みへと昇華させる力を発揮できました。</div>
+</article>
+<article class="card" data-company="三菱UFJモルガン・スタンレー証券">
+  <header>
+    <div class="co">三菱UFJモルガン・スタンレー証券</div>
+    <div class="badges"><span class="b len">120字</span></div>
+  </header>
+  <div class="q">設問2の言葉を選んだ理由（200字以内）</div>
+  <div class="body">複雑で属人的な業務を要素分解し、再現可能な仕組みへ昇華できるからです。<br>長期インターンで、クライアントの属人化し毎月数日を要していた財務部向け資料作成を引き継ぎました。私はまず業務の全体像を俯瞰して自動化できる処理と目視が必要な例外処理を明確に切り分け、関係者と事前に合意形成を図りました。<br>一貫した手順に落とし込んだ結果、作業時間を大幅に圧縮し、属人性の排除と納期の厳守を両立しました。</div>
+</article>
+<article class="card" data-company="SOMPO">
+  <header>
+    <div class="co">SOMPO</div>
+    <div class="badges"><span class="b len">400字</span></div>
+  </header>
+  <div class="q">設問1 ガクチカ（400字）</div>
+  <div class="body">IT企業での長期インターンにおいて、属人化していた「財務部向け月次資料作成業務」をPythonで自動化し、誰もが運用できる「仕組み」へと再構築した経験です。 本件に最も注力した理由は、目先のタスク消化ではなく、担当者退職により業務が停止する組織的リスクを根本から解決し、チーム全体の生産性を底上げしたいと考えたからです。 当初、引き継ぎ期間が短く手順書も曖昧な中、私は「単なる全自動化」に固執しませんでした。まずタスク全体を俯瞰して不明点を一括で確認し、手戻りを防止しました。その上で、PDFの目視確認など「人間が判断すべき重要な工程」はあえて手動入力として設計に残し、それ以外の前処理から集計・出力までを一気通貫で実行できるプログラムを構築しました。 結果として、従来2日かかっていた作業を実行時間30分未満に圧縮しつつ、品質と安全性を担保した再現性のある業務フローを確立できました。</div>
+</article>
+<article class="card" data-company="野村證券">
+  <header>
+    <div class="co">野村證券</div>
+    <div class="badges"><span class="b len">430字</span></div>
+  </header>
+  <div class="q">インベストメントバンキング ガクチカ（500字）—提出用—</div>
+  <div class="body">私が大学時代に最も粘り強く取り組んだのは、IT企業での長期インターンにおけるデータ分析業務です。クライアント企業の売上や入出金データを扱い、集計ロジックの作成から分析設計、レポート作成まで一連のプロセスに携わりました。<br>当初、与えられたタスクを頭の中だけで整理して進めていたため、複数案件が重なった際に処理が追いつかず、期限内にやり切れず上司に巻き取っていただくという悔しい経験をしました。ここで「仕事の設計が甘さ」と捉え直し、進め方自体を根本から改善することを決めました。<br>具体的には、着手前に分析の目的、想定アウトプット、コードや集計の流れ、全体像を可視化してから作業に入るよう徹底しました。また、データ不備に関して自動集計ロジックやチェックフローを組み込み、再現性のある仕組みに置き換えることに粘り強く取り組みました。<br>その結果、私が設計したアウトプット形式や集計ロジックがクライアント向けレポートの標準として採用され、分析プロセス全体を任される存在へと役割が変わりました。この経験を通じて、私は「プロセスの設計と仕組み化を粘り強く改善し続けること」が、最終的に大きな成果につながることを学びました。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>Group 2: 多面的思考・行動力 <span class="count">(4)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三菱総合研究所MDI">
+  <header>
+    <div class="co">三菱総合研究所MDI</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">259字</span></div>
+  </header>
+  <div class="q">自己PR（400字</div>
+  <div class="body">私の強みは「**多面的に考え、行動に落とし込む力**」です。単に思考量が多いだけでなく、マクロ・ミクロの視点で予測し、相手の立場も踏まえて判断した上で、実行可能な形で仕組みに落とすことを意識しています。<br><br>例えばインターンでは、手作業で属人的だったデータ抽出作業に対し、これまでの生成AIの知識も活用しPythonで自動化しました。これにより週3時間の作業をゼロにし、効率化に貢献しています。<br><br>また、大学の承認が必要なオープンキャンパス運営では、掲示物内容改善のため来場者アンケートを設計し、次回の運営に反映する準備を進めています。<br><br>中高の文化祭で培ったリーダーシップでメンバーをまとめるのは得意ですが、考えて終わらず、**現場の制約や他者の視点を踏まえて主体的に行動し、実行できる点**こそが私の最大の武器だと考えています。</div>
+</article>
+<article class="card" data-company="電通デジタル">
+  <header>
+    <div class="co">電通デジタル</div>
+    <div class="badges"><span class="b len">269字</span></div>
+  </header>
+  <div class="q">自己PR（300字）</div>
+  <div class="body">私の強みは「多面的に考え、行動に落とし込む力」です。単に思考量が多いだけでなく、マクロ・ミクロの視点で予測し、相手の立場も踏まえて判断した上で、実行可能な形で仕組みに落とすことを意識しています。<br><br>また、大学の承認が必要なオープンキャンパス運営では、掲示物内容改善のため来場者アンケートを設計し、次回の運営に反映する準備を進めています。<br><br>中高の文化祭で培ったリーダーシップでメンバーをまとめるのは得意ですが、考えて終わらず、現場の制約や他者の視点を踏まえて主体的に行動し、実行できる点こそが私の最大の武器だと考えています。</div>
+</article>
+<article class="card" data-company="ソフトバンク">
+  <header>
+    <div class="co">ソフトバンク</div>
+    <div class="badges"><span class="b len">動画スクリプト</span></div>
+  </header>
+  <div class="q">自己PR（1分間）</div>
+  <div class="body">私の強みは、「多面的に考え、行動に落とし込む力」です。<br><br>単に思考量が多いのではなく、マクロ・ミクロの視点で予測し、相手の立場も踏まえて判断した上で、実行可能な形で仕組みに落とすことを意識しています。<br><br>たとえばインターンでは、手作業で属人的だったデータ抽出作業をPythonで自動化し、週3時間の作業をゼロにしました。<br><br>また、大学の承認が必要なオープンキャンパスの運営では、掲示物内容を改善するために来場者アンケートを設計し、次のオープンキャンパスに反映する準備を進めています。<br><br>考えて終わらず、現場の制約や他者の視点を踏まえて実行できる点が、私の一番の武器だと考えています。</div>
+</article>
+<article class="card" data-company="キーエンス">
+  <header>
+    <div class="co">キーエンス</div>
+    <div class="badges"><span class="b len">動画スクリプト</span></div>
+  </header>
+  <div class="q">自己PR動画（30秒）原稿メモ</div>
+  <div class="body">私の強みは、「多面的に考え、行動に落とし込む力」です。<br><br>単に思考量が多いのではなく、マクロ・ミクロの視点で予測し、相手の立場も踏まえて判断した上で、実行可能な形で仕組みに落とすことを意識しています。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>Group 3: 因果推論・データ分析視点 <span class="count">(4)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="大和アセットマネジメント">
+  <header>
+    <div class="co">大和アセットマネジメント</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">298字</span></div>
+  </header>
+  <div class="q">自己PR（300字</div>
+  <div class="body">私の強みは、常識的な前提を疑い、データを用いて構造的に本質を解き明かす力です。私は大学入学前から「経済学における合理的な代表的個人」という仮定と、現実の行動の乖離に違和感を抱いていました。複雑な現実を捉えるには、既存モデルを鵜呑みにせず、構成要素を分解する必要があると考え、ゼミでは因果推論に注力しました。データに潜むバイアスを取り除き真の要因を特定する訓練を重ねています。 現在は卒業論文にて、異質な行動パターンを変数として組み込み、より解像度の高い経済予測モデルの構築に挑戦しています。貴社においても、投資セオリーを批判的に検証し、構造変化を捉えることで、超過収益の源泉を発掘したいと考えています。</div>
+</article>
+<article class="card" data-company="野村アセット">
+  <header>
+    <div class="co">野村アセット</div>
+    <div class="badges"><span class="b len">294字</span></div>
+  </header>
+  <div class="q">Q3 能力・経験・スキルを踏まえた志望動機（300字）</div>
+  <div class="body">私は「因果推論」と「データエンジニアリング」を武器に、顧客資産を守り抜く「堅牢な戦略家」を目指し貴社を志望します。長期インターンでは、ベテランの暗黙知をデータ分析により形式知へ翻訳する業務に従事しました。理論を机上の空論で終わらせず、不備のある実データを整備し、保守性の高いパイプラインを構築する「実装力」が私の強みです。また、新NISA普及に伴う非合理な行動変容を新たな変数と捉え、定量化することで独自の収益機会を創出したいと考えます。部活動のバスケ経験で培った「守りの精神」を受託者責任の遂行に結びつけ、評論家ではなく結果に責任を持つ運用者として、日本社会の安定に貢献します。</div>
+</article>
+<article class="card" data-company="かんぽ（デジタル）">
+  <header>
+    <div class="co">かんぽ（デジタル）</div>
+    <div class="badges"><span class="b len">245字</span></div>
+  </header>
+  <div class="q">学業・ゼミ・研究室等の内容（250字以内）</div>
+  <div class="body">私の所属するゼミナールでは、「経済学におけるデータサイエンス」というテーマで計量経済学や因果推論を学んでいます。具体的には、データ上の表面的な相関関係（データが一緒に動いている状態）だけで満足するのではなく、統計学の手法を用いて「なぜその結果に至ったのか」という真の要因（因果関係）を特定するアプローチを研究しています。この学びを通じ、直感や通説をデータで客観的に裏付け、顧客行動の根本的な背景を可視化することで、よりパーソナライズされた価値提供に繋げる思考力を身につけました。</div>
+</article>
+<article class="card" data-company="三井住友銀行">
+  <header>
+    <div class="co">三井住友銀行</div>
+    <div class="badges"><span class="b len">174字</span></div>
+  </header>
+  <div class="q">将来像</div>
+  <div class="body">私が将来なりたい社会人像は、利害関係者間の論点を構造化し、根拠ある選択肢を提示して意思決定の質を高め、実行まで前に進められるプロフェッショナルです。<br>私は経済学で培った構造的な見立てと、データ分析による検証力を用いて、現状把握と予測を行い、判断材料を可視化して提供したいです。<br>入社後は業務知識と定量分析力を用いて信頼を積み上げ、将来は社内外を巻き込みながら大きな案件を動かせる人材になりたいです。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>Group 4: その他・複合型 <span class="count">(6)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友銀行">
+  <header>
+    <div class="co">三井住友銀行</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">230字</span></div>
+  </header>
+  <div class="q">プロフェッショナル</div>
+  <div class="body">私が「プロフェッショナル」を発揮した取り組みは、IT企業での長期インターンにおけるデータサイエンス業務です。<br>期限内に完遂できず上司に巻き取っていただいた経験を機に、依頼時点で要件を言語化し、工程を分解して優先順位を付け、設計を書いてから実装する手順に改めました。<br>また、チェックフローと再現性のある集計ロジックを組み込み、短時間で検証できる形に改善しました。その結果、私に任せていただける仕事の範囲が広がりました。<br>これらを通じて、成果物に責任を持ち、学習と改善で自分を高め続ける重要性を体得しました。</div>
+</article>
+<article class="card" data-company="野村信託銀行">
+  <header>
+    <div class="co">野村信託銀行</div>
+    <div class="badges"><span class="b len">複合型・草稿</span></div>
+  </header>
+  <div class="q">自己紹介下書き（草稿）</div>
+  <div class="body">私は、**「ビジネスの現場をテクノロジーでハックする、文理融合の実装者」**です。<br><br>経済学部でビジネスの論理を学ぶ一方、長期インターンでは見習いデータサイエンティストとして、**「業務変革」**に執念を持って取り組みました。<br><br>クライアントへの財務資料作成が属人化し、毎月2日以上かかっていた現場に対し、私はPythonを用いた自動化を主導しました。単にコードを書くだけでなく、曖昧な業務フローを構造化し、誰でも再現可能な形にシステム化したことで、作業時間を一つのnotebookを実行するだけの時間に圧縮しました。<br><br>私は、ビジネスの「目的」とテクノロジーの「手段」をつなぐ翻訳者として、御社の「情報革命」に貢献いたします。</div>
+</article>
+<article class="card" data-company="ブリジストン">
+  <header>
+    <div class="co">ブリジストン</div>
+    <div class="badges"><span class="b len">200字</span></div>
+  </header>
+  <div class="q">自己PR（200字）—提出用—</div>
+  <div class="body">私は、長期的な視点で計画を立て、チームを巻き込みながら成果を出すことが得意です。マクロ的な視点から全体像を捉え、目標達成に向けて段階的に行動を設計することを常に意識しています。<br><br>現在はアルバイトとしてデータサイエンティストの業務に携わり、分析業務や自動化タスクを担当しています。日々の業務では、データの数値だけでなくビジネス上の背景も理解した上でアウトプットを作成しています。また、職場の飲み会にも積極的に参加し、社員の方々と交流を深めることで、円滑なコミュニケーションや共通認識の形成にも努めています。<br><br>好奇心が旺盛で、新しいことにすぐ挑戦する性格です。「思い立ったが吉日」という言葉を座右の銘に、思いついたことはすぐに行動に移すタイプです。特に最近は、最新のAI技術のキャッチアップを継続的に行っており、業務改善や新しい分析手法の習得に積極的に取り組んでいます。</div>
+</article>
+<article class="card" data-company="日本投資銀行">
+  <header>
+    <div class="co">日本投資銀行</div>
+    <div class="badges"><span class="b len">動画スクリプト</span></div>
+  </header>
+  <div class="q">動画自己PR—提出用—</div>
+  <div class="body">私らしさは、将来から逆算して今の行動を設計する「未来起点の意思決定」です。生成AIの進化を見据え、人×AIで価値を生む実務を体得するため、独学で学んできたデータサイエンスを現場で試す長期インターンに参加しました。現場では、コーディングを自分で書くことに固執せず、生成AIに正確なコードを出力させるための要件の言語化・検証・改善に注力。あわせて、分析設計やKPI設定といった上流工程を自ら希望して担当し、目的―指標―データ―運用の接続を意識して進めています。将来像から必要スキルを特定し、最短の実践機会に身を置く――このバックキャスティングの姿勢が、私の行動原理です。</div>
+</article>
+<article class="card" data-company="ゴールドマンサックス">
+  <header>
+    <div class="co">ゴールドマンサックス</div>
+    <div class="badges"><span class="b len">275字</span></div>
+  </header>
+  <div class="q">長所（400字）</div>
+  <div class="body">私の長所は課題を細分化し、解決策を提示することです。大学一年生の頃から続けていた個別指導塾の講師業では生徒の点数が伸びない原因や理解できていないなどの課題を掘り下げて分析することが求められました。講師を続けていくにつれ苦手科目の点数が次第に伸びてきたことで課題の発見と対策は成功したと認識しました。一方、私の短所は１つの分野の専門性を磨くことです。PCの自作を試みたときに、事前に詳細に調べて友人に相談したのですが、元々詳しい友人には知識では劣っていて、専門性を磨くことは短所であると感じました。</div>
+</article>
+<article class="card" data-company="野村證券">
+  <header>
+    <div class="co">野村證券</div>
+    <div class="badges"><span class="b len">動画スクリプト</span></div>
+  </header>
+  <div class="q">動画選考スクリプト（将来像＋自己PR 90秒）</div>
+  <div class="body">私は、投資銀行部門の**M&amp;Aアドバイザリーを軸に**、業界を限定せずに企業価値向上の意思決定と実行プロセスを前に進められる人材を目指しています。M&amp;Aは、資本政策や成長戦略と直結する「企業の資源配分の意思決定」だと捉えており、その意思決定の質を高める仕事に強く惹かれています。<br><br>その上で私の強みは、**新しい領域でも短期間でキャッチアップし、曖昧な要件を構造化して、再現性のある形でアウトプットに落とし込む力**です。長期インターンでは、クライアントデータの集計から分析設計・レポート化まで担当する中で、データ定義やフィルタ条件の違いによって数値が揺れ、結論の信頼性が損なわれる難しさを経験しました。そこで、まず全体像と手順を設計し、前提・定義・チェック観点を明文化した上で、検証しやすい中間データを残す形へ改善しました。御社のインターンでは、M&amp;Aアドバイザリーの実務において、限られた時間の中で論点整理と検証を徹底し、チームの意思決定を支える経験を積みたいと考えています。</div>
+</article></div>
+</section></div>
+<div class="tab-panel" data-tab="motivation"><section class="group">
+  <h2>パート1: 汎用要素（業界・軸レベル） <span class="count">(3)</span></h2>
+  <div class="grid"><article class="card" data-company="金融業界を志望する理由（共通軸）">
+  <header>
+    <div class="co">金融業界を志望する理由（共通軸）</div>
+    <div class="badges"></div>
+  </header>
+  
+  <div class="body"></div>
+</article>
+<article class="card" data-company="データサイエンス・因果推論を活かしたい（共通軸）">
+  <header>
+    <div class="co">データサイエンス・因果推論を活かしたい（共通軸）</div>
+    <div class="badges"></div>
+  </header>
+  
+  <div class="body"></div>
+</article>
+<article class="card" data-company="インターン参加理由の共通表現（共通軸）">
+  <header>
+    <div class="co">インターン参加理由の共通表現（共通軸）</div>
+    <div class="badges"></div>
+  </header>
+  
+  <div class="body"></div>
+</article></div>
+</section>
+<section class="group">
+  <h2>パート2: 企業別志望動機 <span class="count">(27)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="SOMPO">
+  <header>
+    <div class="co">SOMPO</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">当社で実現したい夢や目標に触れながら、当社を志望する理由（400文字以下）</div>
+  <div class="body">私の目標は、事故や災害による「損害の補填」という保険の本来の役割を全うしつつ、データを駆使してリスクを「未然に防ぐ」ソリューションを生み出し、社会のレジリエンス向上に貢献することです。 数ある金融機関の中でも貴社を志望する理由は、「安心・安全・健康のテーマパーク」というビジョンに強く共感したためです。万が一の補償にとどまらず、介護事業やパランティア社との提携によるリアルデータ活用など、保険の枠を超えて社会課題に包括的にアプローチする姿勢に、他業界にはない圧倒的な社会貢献の可能性を感じています。 私はデータ分析の業務や計量経済学の学びを通じ、表面的な数値にとらわれず背後にある因果関係を読み解き、最悪の事態を想定して「仕組み化」する力を培ってきました。入社後はこの強みを活かし、複雑化する社会の潜在リスクを可視化して最適な備えを提供し、企業の挑戦や人々の安心を根底から支えたいです。</div>
+</article>
+<article class="card" data-company="三菱UFJニコス">
+  <header>
+    <div class="co">三菱UFJニコス</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">当社で挑戦したいこと、あるいは社会で実現したいこととその理由（全角300字まで）</div>
+  <div class="body">私が社会で実現したいのは、法人決済・経費業務のDXを通じ、企業の支払いを速く・正確に・安全に行える環境を広げることです。現金や振込中心の属人的な運用に潜む不正やミスのリスクを、デジタル化による統制で解決します。 これを貴社で挑戦したい理由は、法人決済領域に注力し、企業活動の中核を変革できる立場にあるためです。私の強みは業務の構造化と自動化を用いた型化です。顧客業務をヒアリングしてデータ定義を固め、反復作業はシステムに委譲し、人は運用と説明責任に集中する設計を徹底して手戻りを減らします。貴社の総合金融グループの基盤と私の強みを掛け合わせ、法人顧客の生産性向上と安全性を推進したいです。</div>
+</article>
+<article class="card is-best" data-company="大和証券">
+  <header>
+    <div class="co">大和証券</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">当社及び選択したコース・職制を志望する理由（400文字以下）</div>
+  <div class="body">大和証券を志望する理由は、投資の意思決定支援を中核に、顧客の資産価値最大化をCXとして徹底している点に強く共感したためです。私が実現したいCXは、①資金管理の摩擦を減らし、投資行動を円滑化すること、②判断の最中に根拠ある情報提供と説明で納得形成を行うこと、③実行後も継続的なモニタリングと見直しで長期成果に伴走すること、の三つです。対面の信頼を維持しつつ、デジタルで接点を拡張するハイブリッド設計により、品質を落とさず生産性も高められると考えます。さらに、生成AIを効率化ではなく、透明性・説明責任・人間介在を前提としたガバナンスの下で取り入れる姿勢にも魅力を感じています。外部技術も取り込み、金融の統制とスピードを両立させる点に顧客価値へ最短で変換する強みがあります。私は、データ定義・整備を徹底し、運用まで型化することで、AIをガバナンス下で安全に業務へ組み込み、意思決定の質と速さを高めたいです。</div>
+</article>
+<article class="card is-best" data-company="かんぽ生命（デジタルコース）">
+  <header>
+    <div class="co">かんぽ生命（デジタルコース）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">株式会社かんぽ生命保険 志望理由（400文字以内）</div>
+  <div class="body">郵便局ネットワークから得られる膨大な顧客データを活用し、CX向上と業務変革を牽引する貴社のデジタルコースを志望します。<br>貴社はフルクラウド基盤や生成AIの導入を推進する一方、金融機関として厳格なセキュリティ審査や顧客データの環境分離など、高度なAIガバナンスを敷いています。私は単に最新技術を追うのではなく、「監査性や説明責任を担保し、安全に現場へ実装するプロセス」にこそデータ人材の真の価値があると考え、強く共感しています。<br>私は長期インターンで、属人的な集計業務をPythonで自動化しました。その際、単にコードを書くのではなく、手動入力点や検証ログを意図的に残す設計を行い、複雑な要件を構造化して関係者と合意形成を図ることで、実運用に耐えうる基盤を構築しました。<br>入社後はこの「確実なプロセス設計と合意形成力」を活かし、Snowflake等の次世代データ基盤を活用した分析やモデル実装において、現場に寄り添った安全で価値あるDXを推進します。</div>
+</article>
+<article class="card is-best" data-company="ゆうちょ銀行">
+  <header>
+    <div class="co">ゆうちょ銀行</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">株式会社ゆうちょ銀行 志望理由（400文字以内）</div>
+  <div class="body">全国の郵便局網から得られる圧倒的なデータ資産を活用し、安心・安全をテクノロジーで強固にする貴行の姿勢に惹かれ志望します。分析で意思決定を支え、現場導入まで責任を持つという貴行のデータサイエンティストの役割に強く共感し、本コースを第一志望とします。 私はゼミで因果推論を学び、長期インターンでは業務の構造化と丁寧な合意形成を通じて、実運用に耐えうるデータ基盤を構築してきました。貴行においては、主に2点で貢献します。 第一に因果推論による施策評価です。各種施策が真に顧客行動をどう変えたかを特定し、精度の高い経営戦略や提案の最適化を支えます。 第二に現場が納得し安全に使えるモデルの実装です。現場の肌感とデータをすり合わせることで、金融機関に不可欠なAIの説明責任と監査性を担保します。 データに基づく論理と現場への寄り添いを両立させ、貴行の顧客体験向上に貢献します。</div>
+</article>
+<article class="card" data-company="日本郵政（ITデジタルコース）">
+  <header>
+    <div class="co">日本郵政（ITデジタルコース）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">日本郵政株式会社 志望理由（400文字以内）</div>
+  <div class="body">日本郵政グループが掲げる「リアルとデジタルの融合」と「信頼回復に向けたIT」という戦略に強く共感し、ITデジタルコースを志望します。 貴社は全国に圧倒的なリアル接点を持つ一方、グループ各社でシステムやアプリが部分最適になりやすいという特有の課題を抱えていると認識しています。私はこの部分最適の壁を打破し、グループ横断で一貫したUXとガバナンスを提供する中核を担いたいと考えています。 私は長期インターンで、担当者間で集計定義が異なり意思決定が止まる課題に直面しました。そこで、曖昧な指標を構造化して定義を統一し、検証手順の標準化とログの整備を行うことで、関係者間の合意形成と実運用への定着を実現しました。 この定義の標準化と丁寧な合意形成という強みは、貴社のITガバナンス業務に直結すると確信しています。横断的なIT基盤を構築し、監査性と安全性を担保したグループ全体のDX推進に貢献します。</div>
+</article>
+<article class="card is-best" data-company="りそな（専門コース）">
+  <header>
+    <div class="co">りそな（専門コース）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">専門コース志望理由</div>
+  <div class="body">一人が二十五人分の力を発揮できる組織の実現を、データの信頼性とITの活用から主導したいと考えます。長期インターンにおいて16時間を要した財務資料作成を三十分へ短縮した際、単なる自動化に留まらず、0とnullの財務的な峻別や根拠の無い数値の排除といったデータ品質の抜本的改善に加え、フロントローディングによる業務フローの再設計を主導しました。 データサイエンスコースにおいては、安易に最新技術を過信せず、出力の妥当性を評価できる審美眼を持って、経営判断の礎となる高精度な分析基盤を構築します。またIT企画コースにおいては、技術を手段として適材適所に配置する指揮者の役割を担い、既存業務の負債を解消して人が高度な判断に注力できる環境を作りたいと考えています。信託併営という複雑なビジネスモデルを持つ貴グループにおいて、高い信頼性と生産性を両立させる仕組みを構想し、実行する所存です。<br>アセットマネジメントコースにおいては、投資判断の根幹を支える定量分析と、技術を駆使した多角的な定性的洞察の両立を追求します。インターンでデータの揺らぎから運用の背景を読み解いた経験を活かし、緻密な定量把握に加え、自然言語処理等の技術を用いて非構造化データから市場の機微や文脈を抽出する手法を確立したいと考えています。数値の裏にある本質を技術で浮き彫りにし、確かな根拠に基づいた運用で、受託者責任を全うしお客様の将来の豊かさに貢献します。</div>
+</article>
+<article class="card is-best" data-company="三井住友銀行（本選考）">
+  <header>
+    <div class="co">三井住友銀行（本選考）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約200字（未完の短縮版）</span></div>
+  </header>
+  <div class="q">三井住友銀行を志望する理由とともに、希望するコースの志望理由（400字程度）</div>
+  <div class="body">三井住友銀行を志望するのは、幅広い金融課題に対し、銀行機能とグループ総合力を活かして意思決定から実行まで伴走できる点に魅力を感じるためです。第一希望はデータサイエンスコースです。経済学で培った構造化力と、長期インターンで磨いた技術を用い、論点整理と根拠ある選択肢提示によって意思決定の質を高めたいと考えています。第二、三希望のコースでも同じ軸で、企業の成長投資や資産形成の意思決定支援を提供したいです</div>
+</article>
+<article class="card" data-company="三井住友銀行（インターン用）">
+  <header>
+    <div class="co">三井住友銀行（インターン用）</div>
+    <div class="badges"><span class="b note">submitted</span></div>
+  </header>
+  <div class="q">インターン志望理由（参加希望インターン・理由）</div>
+  <div class="body">私は現在、長期インターンに参加していますが金融データを扱った経験はありません。そのため、銀行が保有するデータからどのように新たな価値を創造しているのか学びたいです。またデータの本質についてのフィードバックをもらえたというコメントを見てとても魅力的に感じました。</div>
+</article>
+<article class="card" data-company="三井住友海上あいおい損害保険（資産運用ビジョン）">
+  <header>
+    <div class="co">三井住友海上あいおい損害保険（資産運用ビジョン）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">三井住友海上あいおい損害保険で実現したいキャリアビジョン（300字）</div>
+  <div class="body">合併新会社の一期生として、資産データを統合し工学と経済学を融合したクオンタメンタル運用を実装したいです。短期では、旧2社の異なる運用基盤をつなぐ翻訳者になります。私のデータ実装力を活かして予測値を経済学的に解釈し、納得感のある投資判断へと昇華させる共通言語を確立します。中長期では、スケールメリットを活かしたポートフォリオ改革に挑みます。MSIの攻めのグローバル投資とADIの堅実なALMを高度な数理モデルで融合させ、有事の安全性と収益性を両立する新会社独自の運用モデルを構築したいです。最終的には、テクノロジーを手段として使いこなして責任ある意思決定を行うファンドマネージャーとして、貴社の財務基盤を支えます。</div>
+</article>
+<article class="card is-best" data-company="日本生命（資産運用）">
+  <header>
+    <div class="co">日本生命（資産運用）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">資産運用領域で活用できそうな知識やスキル、将来取り組みたい仕事（400字以内）</div>
+  <div class="body">活用したい知識、スキルは長期インターンで培った「データエンジニアリング力」と「因果推論」の知識です。膨大な市場データの収集・整理を自動化し、人間が「深い思考」に集中できる環境を整えることで、組織全体の投資判断の質と効率を向上させたいと考えています。取り組みたい仕事・成し遂げたいこととしては、市場がパニックに陥った際でも、冷静なデータ分析と長期的視座に基づき、規律ある投資判断ができる「市場の安定装置」のようなファンドマネージャーを目指します。具体的には、グローバルな社会情勢の変化をデータから読み解き、リスクを精緻に管理することで、どのような環境下でもご契約者様への約束を守り抜く安定運用を実現したいです。将来は、自ら運用を担うだけでなく、チーム全体のデータ活用やナレッジ共有を推進するリーダーとして、貴社の「人」の力を最大化し、日本経済の持続的な成長に貢献したいと考えています。</div>
+</article>
+<article class="card is-best" data-company="野村アセットマネジメント">
+  <header>
+    <div class="co">野村アセットマネジメント</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">Q2. 資産運用業界、及び当社を希望する理由（300字以内）</div>
+  <div class="body">政治・経済という不確実な事象の中に、データと論理で因果を見出し、未来への道筋を描くことに強い知的好奇心を感じます。仮説に基づいてリスクを取り、結果で責任を負う運用こそ、私が追求したい職務です。中でも貴社を志望するのは、国内随一の運用資産規模と圧倒的な情報網を有し、私の目指すマクロ変数を組み込んだ堅牢なポートフォリオを世界レベルで検証・実装できる唯一の場だと考えるからです。また、多様な資産クラスと戦略を有する貴社でこそ、定性情報の定量化が活きると確信しています。私の持つデータサイエンスと因果推論の知見を還元し、貴社が掲げる投資の好循環の実現と、豊かな社会の創造に貢献したいと強く願っています。</div>
+</article>
+<article class="card is-best" data-company="野村アセットマネジメント（コース・職種別）">
+  <header>
+    <div class="co">野村アセットマネジメント（コース・職種別）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">Q3. 自身の能力・経験・スキル・特性を踏まえ、応募コース・募集職種への志望動機（300字以内）</div>
+  <div class="body">私は「因果推論」と「データエンジニアリング」を武器に、顧客資産を守り抜く「堅牢な戦略家」を目指し貴社を志望します。長期インターンでは、ベテランの暗黙知をデータ分析により形式知へ翻訳する業務に従事しました。理論を机上の空論で終わらせず、不備のある実データを整備し、保守性の高いパイプラインを構築する「実装力」が私の強みです。また、新NISA普及に伴う非合理な行動変容を新たな変数と捉え、定量化することで独自の収益機会を創出したいと考えます。部活動のバスケ経験で培った「守りの精神」を受託者責任の遂行に結びつけ、評論家ではなく結果に責任を持つ運用者として、日本社会の安定に貢献します。</div>
+</article>
+<article class="card" data-company="電通デジタル（インターン）">
+  <header>
+    <div class="co">電通デジタル（インターン）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">本インターンシップを志望した理由（400字以下）</div>
+  <div class="body">現在、私が参加している長期インターンではコンサルティングを行うためのデータ分析を行っています。コンサルティングはあくまでも提案をすることしかできないので、施策の実行と検証を行える本インターンはとても魅力的です。<br><br>私は、生成AIの登場によりデータサイエンティストの業務の多くが代替されるのではないかと危惧しています。そのため、これからの時代は新たな価値創出においてデータサイエンティストの力を発揮できると考えています。本インターンの概要にビジネス価値創出の部分が強調されていた点について、私の意見と一致しており、自身の成長につながると感じました。<br><br>私は大学で経済学を学び、同時に独学でデータサイエンスを勉強しています。経済学的視点とデータサイエンスのスキルを兼ね備えている点が私の強みです。このインターンシップで私の強みを最大限に伸ばし、学びを深めたいという強い思いから、今回応募いたしました。</div>
+</article>
+<article class="card is-best" data-company="野村証券（インターン・セルサイドアナリスト）">
+  <header>
+    <div class="co">野村証券（インターン・セルサイドアナリスト）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">志望業界・セルサイドアナリスト志望動機（300字以下）</div>
+  <div class="body">私が志望する業界は金融、通信、ITの3つです。これらの業界では『データの豊富さ』と『データサイエンスを前提として経済学と関わるか』を軸に、自身のキャリアを考えました。<br><br>データを活用する職種として、データサイエンティスト、クオンツ、事業企画、そしてアナリストを比較検討しました。その中でも、私が最も惹かれたのはアナリストです。理由は、単なるデータ分析に留まらず、経営者のビジョンといった定性情報を組み合わせ、未来の企業価値という『正解のない問い』に対する自分なりのストーリーを構築し、社会に発信できる点に大きな魅力を感じたからです。<br><br>アナリスト職の中でもセルサイドアナリストを強く志望いたします。アナリストの業務では、市場全体の動向を踏まえ、それが担当業界や個別企業に与える影響を深く分析することが不可欠です。この『マクロとミクロを接続する思考』は、私が卒業論文で研究している『日本市場を利用したGDP予測』と強い関連があり、私の強みを最大限に活かせる場だと確信しております。</div>
+</article>
+<article class="card is-best" data-company="三井住友信託銀行（インターン）">
+  <header>
+    <div class="co">三井住友信託銀行（インターン）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">submitted</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">志望動機（400字）</div>
+  <div class="body">信託銀行の業務領域の広さに強く魅力を感じ、インターン参加を志望します。説明会で、不動産や投資信託など多様なデータを活用できる点に魅力を感じました。私はこれまでデータ分析を行ってきましたが、銀行業務のデータ分析は未経験です。そのため、信託銀行ならではの豊富な顧客・取引データを分析し、データに基づく意思決定を支援する仕組みを学びたいと考えています。特に資産運用や顧客行動データを用いた需要予測モデルの構築と、それをマーケティング施策に結びつける過程を体験したいです。また、分析結果を分かりやすく伝える可視化にも関心があり、迅速な意思決定を促す指標や表現を学び、提案できる力を身につけたいと考えています。</div>
+</article>
+<article class="card" data-company="三菱UFJ信託銀行（draft）">
+  <header>
+    <div class="co">三菱UFJ信託銀行（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約200字</span></div>
+  </header>
+  <div class="q">Q7: 当社を志望する理由、当社で実現したい夢や目標（450字）</div>
+  <div class="body">御社は他の信託銀行さんと異なり、新しい取り組みを積極的に導入しています。特に顧客視点でのDX導入についてはデータサイエンスを目指す私としても非常に良い取り組みだと考えております。私が大学生時代に力を入れてきた新しいことに挑戦するということについて、御社ではより積極的に新しいことを導入する姿勢が見られ、私の能力が大幅に発揮できるのではないかと考えております。顧客視点でのDX導入によって、より顧客の需要に基づいてカスタマーサービスを提供できることにつながります。私がデータサイエンスを用いてより満足度の高いカスタマーサービスを提供し、顧客満足度1位を取りたいという目標を掲げております。</div>
+</article>
+<article class="card is-best" data-company="サントリー（draft）">
+  <header>
+    <div class="co">サントリー（draft）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">draft</span><span class="b len">約500字</span></div>
+  </header>
+  <div class="q">Q2: 志望理由・成し遂げたいこと（250-500字）</div>
+  <div class="body">私は、因果推論・経済学の学びとインターンでのデータ整備・自動化の経験を軸に、DXを設計・推進したいと考えています。データから価値を生む段階に踏み込んでいる貴社のデジタル＆テクノロジー領域は、自分の問題意識と強みを最も活かせるフィールドだと考え志望します。<br><br>DX戦略企画としては、工場DX・絆ドリブンマーケティング・ウェルネスDXといった個別プロジェクトを、「どの顧客価値と収益構造を変えるのか」という視点で一本のロードマップに統合し、DXを恒常的に回していく仕組みづくりに関わりたいです。データサイエンスの立場では、登録者と未登録者で行動が大きく異なる動画プラットフォームのように、絆スコアの高低によって顧客構造が分かれると捉えています。絆スコアが売上やLTV等の指標に与える因果効果をDiDや傾向スコアで推定し、「絆の経済的価値」を定量化する分析に挑みたいです。<br><br>最終的には、貴社の中で築いた「データから価値を生むDXモデル」を社内外に広げ、日本全体のDX成熟度の底上げに貢献したいです。貴社のデジタル＆テクノロジーを「事業変革の司令塔」として機能させていく人材に成長したいと考えています。</div>
+</article>
+<article class="card" data-company="ブリジストン（draft）">
+  <header>
+    <div class="co">ブリジストン（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約200字（提出用部分のみ）</span></div>
+  </header>
+  <div class="q">Q7: 志望動機（400字）</div>
+  <div class="body">私は、長期的な視点で計画を立て、チームを巻き込みながら成果を出すことが得意です。マクロ的な視点から全体像を捉え、目標達成に向けて段階的に行動を設計することを常に意識しています。<br><br>現在はアルバイトとしてデータサイエンティストの業務に携わり、分析業務や自動化タスクを担当しています。日々の業務では、データの数値だけでなくビジネス上の背景も理解した上でアウトプットを作成しています。<br><br>※備考: 下書きに「本インターンのテーマ『航空機タイヤの摩耗予測によるタイヤ交換日の通知アルゴリズムの構築』について、タイヤのドメイン知識はないが、コンペティションでの特徴量生成や機械学習モデルの改善などを活かしたい」との記載あり。志望動機本文は未完成。</div>
+</article>
+<article class="card" data-company="横浜銀行（draft）">
+  <header>
+    <div class="co">横浜銀行（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約200字（夏版）</span></div>
+  </header>
+  <div class="q">Q1: 横浜銀行インターンシップ（デジタル戦略・データサイエンスコース）に応募する理由（300字以下）</div>
+  <div class="body">私がデータサイエンスを学びたいと強く思ったのは、大学の授業で統計やデータ分析を学んだことがきっかけです。そこで得た知識を活かして、実際のビジネス課題に取り組みたいと考えました。横浜銀行のインターンシップでは、デジタル戦略やデータサイエンスの実践的なスキルを身に付け、金融業界でのデータ活用の最前線を体験したいと思っています。また、サービスの企画立案のプロセスを通じて、データを活用した価値創出の手法を学び、将来のキャリアに活かしたいと考えています。</div>
+</article>
+<article class="card is-best" data-company="横浜銀行・冬インターン版（draft）">
+  <header>
+    <div class="co">横浜銀行・冬インターン版（draft）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">draft</span><span class="b len">約350字</span></div>
+  </header>
+  <div class="q">横浜銀行のインターンシップ【データサイエンスコース】に応募する理由（400字以下）提出用</div>
+  <div class="body">私はこれまでPythonを用いたデータ分析を行ってきましたが、企業実務で広く使われるSASを活用した分析の特徴や、システムとして導入されている理由を理解したいと考えています。大学ではマクロ経済学と統計学を中心に学び、経済全体の動きを俯瞰する力を養いました。しかし、分析対象が国家や世界といった長期的なスケールに偏っており、地域や企業といったミクロな課題を具体的に把握する経験が不足していると感じています。<br>横浜銀行は地元に根ざし、地域経済の実情に基づいたデータ分析を行っている点に魅力を感じます。データサイエンスの知識を地域密着型の金融実務にどのように活用しているのかを学びたいです。特に、企業や個人の課題を定量的に把握し、改善施策へとつなげる分析設計の考え方を実務を通して身につけたいと考え、応募いたしました。</div>
+</article>
+<article class="card" data-company="三井住友信託銀行（draft）">
+  <header>
+    <div class="co">三井住友信託銀行（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">Q1: 志望動機（400字）提出用</div>
+  <div class="body">信託銀行の業務領域の広さに強く魅力を感じ、インターン参加を志望します。説明会で、不動産や投資信託など多様なデータを活用できる点に魅力を感じました。私はこれまでデータ分析を行ってきましたが、銀行業務のデータ分析は未経験です。そのため、信託銀行ならではの豊富な顧客・取引データを分析し、データに基づく意思決定を支援する仕組みを学びたいと考えています。特に資産運用や顧客行動データを用いた需要予測モデルの構築と、それをマーケティング施策に結びつける過程を体験したいです。また、分析結果を分かりやすく伝える可視化にも関心があり、迅速な意思決定を促す指標や表現を学び、提案できる力を身につけたいと考えています<br><br>※提出版と内容はほぼ同一。</div>
+</article>
+<article class="card" data-company="野村證券（draft）・セルサイドアナリスト志望動機">
+  <header>
+    <div class="co">野村證券（draft）・セルサイドアナリスト志望動機</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">Q3: 志望業界・業界選択基準・セルサイドアナリスト志望動機（300字）提出用</div>
+  <div class="body">私が志望する業界は金融、通信、ITの3つです。これらの業界では『データの豊富さ』と『データサイエンスを前提として経済学と関わるか』を軸に、自身のキャリアを考えました。<br><br>データを活用する職種として、データサイエンティスト、クオンツ、事業企画、そしてアナリストを比較検討しました。その中でも、私が最も惹かれたのはアナリストです。理由は、単なるデータ分析に留まらず、経営者のビジョンといった定性情報を組み合わせ、未来の企業価値という『正解のない問い』に対する自分なりのストーリーを構築し、社会に発信できる点に大きな魅力を感じたからです。<br><br>アナリスト職の中でもセルサイドアナリストを強く志望いたします。アナリストの業務では、市場全体の動向を踏まえ、それが担当業界や個別企業に与える影響を深く分析することが不可欠です。この『マクロとミクロを接続する思考』は、私が卒業論文で研究している『日本市場を利用したGDP予測』と強い関連があり、私の強みを最大限に活かせる場だと確信しております。<br><br>以上の理由から、セルサイドアナリストこそが私の行うべき職業であると確信し、強く志望いたします。<br><br>※submitted版（野村証券.md）と同内容。</div>
+</article>
+<article class="card is-best" data-company="三菱UFJモルガン・スタンレー証券（draft）">
+  <header>
+    <div class="co">三菱UFJモルガン・スタンレー証券（draft）</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b note">draft</span><span class="b len">約400字</span></div>
+  </header>
+  <div class="q">三菱UFJモルガン・スタンレー証券投資銀行部門のインターンシップを志望する理由及び最も関心のある業務（400文字以下）</div>
+  <div class="body">私はM&amp;A、とりわけIT・デジタル領域の買収側の意思決定に関わり、企業の成長投資を成立させるプロセスを学びたく本インターンを志望します。買収は弱点補完と強みのレバレッジにより新たな価値を創る手段であり、成長領域への投資として重要性が増していると考えます。最も関心があるのはM&amp;Aアドバイザリーで、戦略仮説の設定から交渉・実行までを一気通貫で設計する点に魅力を感じます。貴社は国内基盤とグローバル連携を併せ持ち、クロスボーダーにも挑める点に惹かれます。IT企業の長期インターンでは前提整理不足による手戻りを経験後、目的・定義・検証フローを標準化し手戻り0・納期遅延0を実現しました。この経験を活かし、ワークでは論点を構造化し根拠を明確にして提案を磨き、買収後の価値創造まで見据えたシナジー設計を体得したいです。将来はM&amp;Aを通じて日本企業の投資と競争力強化に寄与したいです。</div>
+</article>
+<article class="card" data-company="IBM（draft）">
+  <header>
+    <div class="co">IBM（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">Q1: あなたがIBMインターンシップに参加する理由について、具体的に記述してください。（300文字以下）</div>
+  <div class="body">僕が参加している長期インターンではシニアデータサイエンティストから振られた分析タスクをこなしていました。そのため１つのプロジェクトを最初から最後まで携わる経験はありませんでした。御社のインターンを通じ、プロジェクトの始めに行うKPIの設定や分析設計を身につけたいと考えております。また、長期インターンシップを通じて、データサイエンティストという言葉の広さと、各企業における具体的な業務内容への理解を深めたいと痛感いたしました。さらに、貴社でご活躍されているデータサイエンティストの方々と直接コミュニケーションを通じ、お考えを学び、自身の目指すデータサイエンティスト像に近づくための糧としたい所存です。</div>
+</article>
+<article class="card" data-company="第一生命（draft）">
+  <header>
+    <div class="co">第一生命（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約100字</span></div>
+  </header>
+  <div class="q">Q1: 上記で選択したインターンシップを志望する理由を教えてください。（100字）</div>
+  <div class="body">これまで参加したコンペでは金融データを扱った経験はありませんでした。この機会を通じて経済学とデータサイエンスの融合のさせ方について学びたいです。</div>
+</article>
+<article class="card" data-company="大和総研（draft）">
+  <header>
+    <div class="co">大和総研（draft）</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">約300字</span></div>
+  </header>
+  <div class="q">Q4: 目的と理由（400字以下）</div>
+  <div class="body">経済を予測できる力を身につけるために経済学部へ進学し、統計・データサイエンス・因果推論を学んできました。分析の精度と根拠は重視してきた一方、実データを対象に「予測→示唆→社会への発信」まで一貫して行う実務経験は十分ではありません。エビデンスに基づく迅速でわかりやすい情報発信を通じて社会に貢献する大和総研の姿勢に強く共感し、インターンへの参加を志望します。<br><br>本インターンでの目的は、①過去の経済政策の効果測定の型を学ぶ、②高頻度データによる短期見通しと10–20年のシナリオ作成を体験する、③非専門家にも伝わる要旨・図表の作法を習得することです。学んだ統計・因果推論を、実データの見通しと政策含意へ橋渡しする実践力を現場で磨き上げたいと考えています。</div>
+</article></div>
+</section></div>
+<div class="tab-panel" data-tab="other"><section class="group">
+  <h2>カテゴリ1: チームワーク・協働 <span class="count">(4)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友銀行 submitted">
+  <header>
+    <div class="co">三井住友銀行 submitted</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">152字</span></div>
+  </header>
+  <div class="q">チームワーク</div>
+  <div class="body">私が「チームワーク」を発揮した取り組みは、中学2年時の文化祭におけるクラス企画のチーフ経験です。中高全学年のクラス企画の中で観客動員数2位を獲得しました。私の役割は、段取り設計と役割分担を行い、全体を前に進めることです。準備段階では温度感が異なるメンバーも多く、作業が進まないことが課題でした。そこで目標を背景から共有し、役割を再設計しました。結果として全体が自発的に動き、当日の運営も成功しました。相手を尊重しつつ共通目標に向けて協働設計することで、チームとして力を発揮できると学びました。</div>
+</article>
+<article class="card" data-company="三井住友海上あおい損害保険">
+  <header>
+    <div class="co">三井住友海上あおい損害保険</div>
+    <div class="badges"><span class="b len">407字</span></div>
+  </header>
+  <div class="q">組織やチームをよりよくするために自ら考え、行動した経験（400字）</div>
+  <div class="body">個別指導塾のバイトリーダーとして、指導品質の「脱属人化」と「標準化」を推進し、組織全体の教育力を向上させました。当時、教室では講師間の連携が希薄で、指導報告書の記載内容も個人の裁量に委ねられていました。そのため、情報共有不足による引き継ぎミスや、担当変更による指導の質の低下が常態化していました。私はこれを「仕組みの欠陥」と捉え、2つの改革を行いました。第一に、報告書のフォーマットを刷新し、記載すべき定性・定量項目を定義することで、誰が見ても生徒状況を正確に把握できる状態に整えました。第二に、社員と講師のパイプ役となり、優れた指導法を共有・マニュアル化する運用を定着させました。結果、講師個人の経験則に依存していた授業が、組織として「再現可能なオペレーション」へと進化し、誰が担当しても高品質な指導が提供できる体制を確立しました。</div>
+</article>
+<article class="card" data-company="三井住友信託銀行">
+  <header>
+    <div class="co">三井住友信託銀行</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">198字</span></div>
+  </header>
+  <div class="q">チーム・組織で取り組んだ活動（—提出用—）</div>
+  <div class="body">私は中高一貫校の文化祭において、中学2年時にクラス企画のチーフを務め、中高全学年で観客動員数2位という結果を残しました。私の役割は、企画の段取りを設計し、全体を指揮することでした。来場者が楽しめる構成と、限られた準備時間で実現可能な計画の両立を意識して企画を練りました。<br>一方で、効率的に進めたい私の思いとは裏腹に、なかなか動いてくれないメンバーも多く、当初は「なぜ合理的に動いてくれないのか」と戸惑いを感じました。そこで「なぜこの順番で行うのか」「ここを工夫すると当日が楽になる」といった背景やメリットを言葉にして伝えることを意識し、メンバーの得意な作業に合わせて役割を再設計しました。<br>その結果、準備後半には自発的に動いてくれるメンバーが増え、当日も大きなトラブルなく運営できました。私は「人は必ずしも合理的に動かない」という前提に立ち、背景を共有しながら周囲を巻き込むことの重要性を学びました。</div>
+</article>
+<article class="card" data-company="三井住友カード">
+  <header>
+    <div class="co">三井住友カード</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">50字程度・概要のみ</span></div>
+  </header>
+  <div class="q">チームや組織で協力して成果を上げた経験（400字）</div>
+  <div class="body">企画プロジェクトにおけるオープンキャンパスアンケート導入・データガバナンス設定を主導しました。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>カテゴリ2: 挫折・困難・失敗 <span class="count">(5)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="SOMPO submitted">
+  <header>
+    <div class="co">SOMPO submitted</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">185字</span></div>
+  </header>
+  <div class="q">これまでの人生で、うまくいかなかったことや挫折した経験（200文字以下</div>
+  <div class="body">長期インターンで、複数のタスクに焦り設計を怠り、手作業に固執した結果、タスクが期限未達となり上司に巻き取られるという明確な敗北を経験しました。人為的ミスが多発しプロジェクトの進捗を止めたことに、強い悔しさと不甲斐なさを感じました。この挫折から、原因を構造化し、標準フォーマットの策定と定着を通じて仕組みで解決する思考へと転換。再現性のある型に落とし込んで乗り越えるという、現在の私の土台を築きました。</div>
+</article>
+<article class="card" data-company="かんぽ（デジタル）">
+  <header>
+    <div class="co">かんぽ（デジタル）</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">363字</span></div>
+  </header>
+  <div class="q">学生時代に最も苦労あるいは努力した経験（400字）</div>
+  <div class="body">長期インターンで、属人化していた財務集計業務の自動化に苦労しました。当初、私は要件や手順の曖昧さを放置したままプログラミング実装を進めてしまい、後から仕様の認識ズレやデータ不備が発覚し、大幅な手戻りと納期遅延を引き起こしました。この失敗から「自分の技術力への過信」と「確認工程の軽視」という課題を痛感しました。<br>これを乗り越えるため、次からは作業着手前に「確認事項や例外処理」を徹底的に洗い出し、クライアントと前提を早期に合意するプロセスを構築しました。また、完全自動化に固執せず、目視確認が必要な部分はあえて手動入力点として残すなど、実運用に耐えうる安全な設計を心がけました。<br>この経験から、技術力以上に、関係者との丁寧な合意形成や、不確実性を一つずつ構造化して前に進める「地道で確実なプロセス設計」がビジネスにおいて不可欠であると学びました。</div>
+</article>
+<article class="card" data-company="三井住友銀行">
+  <header>
+    <div class="co">三井住友銀行</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">168字</span></div>
+  </header>
+  <div class="q">プロフェッショナル</div>
+  <div class="body">私が「プロフェッショナル」を発揮した取り組みは、IT企業での長期インターンにおけるデータサイエンス業務です。<br>期限内に完遂できず上司に巻き取っていただいた経験を機に、依頼時点で要件を言語化し、工程を分解して優先順位を付け、設計を書いてから実装する手順に改めました。<br>また、チェックフローと再現性のある集計ロジックを組み込み、短時間で検証できる形に改善しました。その結果、私に任せていただける仕事の範囲が広がりました。<br>これらを通じて、成果物に責任を持ち、学習と改善で自分を高め続ける重要性を体得しました。</div>
+</article>
+<article class="card" data-company="三菱UFJモルガン・スタンレー証券">
+  <header>
+    <div class="co">三菱UFJモルガン・スタンレー証券</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">259字</span></div>
+  </header>
+  <div class="q">チームで得た成果（冬季投資銀行インターン）</div>
+  <div class="body">長期インターンのDSチームで、案件ごとに発生する数値合わせ業務の標準化に取り組みました。3人のDSがそれぞれ独自のやり方で対応しており、私はフォーマットを持たずに作業が破綻し、先輩に巻き取っていただいた経験があります。これは個人のミスではなくチームの構造的な問題だと捉え、先輩2名にヒアリングして共通手順とチェック項目を整理し、包括的な数値合わせフォーマットを作成しました。さらに生成AIに投げるプロンプトとしてナレッジ化し共有したことで、先輩の負担は減り、誰でも数値をそろえられる状態を実現できました。私は現場の非効率を言語化し、周囲を巻き込みプロセスを設計し直す役割を担いました。</div>
+</article>
+<article class="card" data-company="野村證券">
+  <header>
+    <div class="co">野村證券</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">293字</span></div>
+  </header>
+  <div class="q">誰かに指導を受けて行動・考え方が変わった経験（—提出用—）</div>
+  <div class="body">IT企業での長期インターンにおいて、上司のアドバイスで仕事の進め方とコミュニケーションの姿勢が大きく変わった経験があります。<br>インターン当初の私は、与えられたタスクを頭の中だけで整理し、「自分でやりきってから報告する」進め方をしていました。その結果、複数の案件が重なった際に処理が追いつかず、上司にタスクを巻き取っていただくという事態を招いてしまいました。<br>その際、上司からは「能力の問題ではなく、進め方と共有の仕方を変えた方がいい」と指摘を受けました。<br>この指導を受けてからは、タスクをもらった時点で必ず全体像とステップを書き出し、まとめてから着手するようにしました。また、「着手前の相談」と「途中経過の共有」をセットにして進めることを自分のルールにしました。<br>結果、納期遅延はなくなり、私が組んだ集計ロジックやアウトプット形式がそのままクライアント向けレポートの標準として使われるようになりました。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>カテゴリ3: 弱み・短所 <span class="count">(2)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="かんぽ生命（デジタルコース">
+  <header>
+    <div class="co">かんぽ生命（デジタルコース</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">142字</span></div>
+  </header>
+  
+  <div class="body">責任感が強すぎて、仕事を一人で抱え込んでしまう点です。「自分でやった方が早い・確実だ」と考えてしまい、他者に任せることが苦手でした。しかし、インターンでの失敗を通じて、一人で抱え込むことが逆にチーム全体のリスクになると学びました。現在は、タスクの進捗やリスクを可視化して早めに上司に共有することや、「人に任せるためのマニュアル（型）作り」に注力することで、組織として成果を出すスタイルへの転換を図っています。</div>
+</article>
+<article class="card" data-company="ゴールドマンサックス">
+  <header>
+    <div class="co">ゴールドマンサックス</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">260字</span></div>
+  </header>
+  <div class="q">長所・短所（400字）</div>
+  <div class="body">私の長所は課題を細分化し、解決策を提示することです。大学一年生の頃から続けていた個別指導塾の講師業では生徒の点数が伸びない原因や理解できていないなどの課題を掘り下げて分析することが求められました。講師を続けていくにつれ苦手科目の点数が次第に伸びてきたことで課題の発見と対策は成功したと認識しました。一方、私の短所は１つの分野の専門性を磨くことです。PCの自作を試みたときに、事前に詳細に調べて友人に相談したのですが、元々詳しい友人には知識では劣っていて、専門性を磨くことは短所であると感じました。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>カテゴリ4: リーダーシップ・意思決定 <span class="count">(3)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友信託銀行 draft">
+  <header>
+    <div class="co">三井住友信託銀行 draft</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">527字</span></div>
+  </header>
+  <div class="q">チーム・組織で取り組んだ活動（下書き・詳細版</div>
+  <div class="body">私がチーム・組織で取り組んだ活動として印象に残っているのは、中高一貫校の文化祭で実行委員として携わった経験です。特に中学2年時にはクラス企画のチーフを務め、中高6学年すべてのクラスの中で観客動員数2位という結果を残しました。<br>私の役割は、クラスの出し物のコンセプト決めから装飾・当日の運営まで、全体の段取りを設計し、メンバーに役割を割り振って進行管理を行うことでした。担任の先生が「賞を取りたい」という思いを持っていたこともあり、来場者が楽しめる構成と、限られた準備時間で実現可能な計画の両立を意識して企画を練りました。<br>一方で、効率的に進めたい私の思いとは裏腹に、なかなか動いてくれないメンバーも多く、当初は「なぜ合理的に動いてくれないのか」と苛立ちや戸惑いを感じました。そこで、単に作業指示を出すのではなく、「なぜこの順番で準備するのか」「ここを工夫すると当日の運営が楽になる」といった背景やメリットを言葉にして伝えることを意識し、メンバーの得意な作業に合わせて役割を再設計しました。<br>その結果、準備後半には自発的に動いてくれるメンバーが増え、当日も大きなトラブルなく運営できました。観客動員数全体2位という結果にクラス全員と担任の先生が喜んでくれたことを通じて、私は「目標から逆算して段取りを設計すること」と同時に、「人は必ずしも合理的に動かない前提で、背景を共有しながら周囲を巻き込むこと」の重要性を学びました。</div>
+</article>
+<article class="card" data-company="IBM">
+  <header>
+    <div class="co">IBM</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">185字</span></div>
+  </header>
+  <div class="q">あなたの強みが発揮されたエピソード（200文字以下）</div>
+  <div class="body">僕は中学３年間、クラスの文化祭実行委員を勤めリーダーシップを発揮し、クラスを盛り上げてきたと実感しています。特に中学２年生のころの文化祭では集客数が中学全体で1位、中高全体で２位を取りました。出し物のテーマ、内容、シフト、班分けなどは基本的に一人で行い、その後クラスメートに仕事を割り振る形で行いました。集客数で入賞するという目標を達成し、最後までやり切ることができました。</div>
+</article>
+<article class="card" data-company="三井住友カード">
+  <header>
+    <div class="co">三井住友カード</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">375字</span></div>
+  </header>
+  <div class="q">本選考 / リーダーシップを発揮したエピソード（問題解決版）</div>
+  <div class="body">私が問題解決をした経験は、長期インターンで属人化した財務資料作成業務をPythonで自動化し、業務継続リスクを解消した取り組みです。 第一に全体像把握です。既存の手順書を工程分解し、自動化可否や例外条件を棚卸ししました。仕様の曖昧さを実装前に洗い出し、手戻りを防ぐ設計を行いました。 第二に計画力です。「確認待ちでの停滞」を防ぐため、不明点を初期に一括で質問し、回答待ちの間に実装可能な工程を先行させる並行稼働を行いました。 第三にタスク整理です。工程ごとの完了条件を定義し、検証ログを残す設計にしました。データ欠損等のトラブルも前提を合意して仕様に反映し、従来2日要した作業を30分に短縮する再現性のある仕組みを構築しました。 この経験から、実装技術以上に論点の構造化と段取りが解決の鍵だと学びました。</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>カテゴリ5: キャリアビジョン・将来像 <span class="count">(5)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="三井住友海上あおい損害保険 submitted">
+  <header>
+    <div class="co">三井住友海上あおい損害保険 submitted</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">295字</span></div>
+  </header>
+  <div class="q">三井住友海上あいおい損害保険で実現したいキャリアビジョン（300字</div>
+  <div class="body">合併新会社の一期生として、資産データを統合し工学と経済学を融合したクオンタメンタル運用を実装したいです。短期では、旧2社の異なる運用基盤をつなぐ翻訳者になります。私のデータ実装力を活かして予測値を経済学的に解釈し、納得感のある投資判断へと昇華させる共通言語を確立します。中長期では、スケールメリットを活かしたポートフォリオ改革に挑みます。MSIの攻めのグローバル投資とADIの堅実なALMを高度な数理モデルで融合させ、有事の安全性と収益性を両立する新会社独自の運用モデルを構築したいです。最終的には、テクノロジーを手段として使いこなして責任ある意思決定を行うファンドマネージャーとして、貴社の財務基盤を支えます。</div>
+</article>
+<article class="card" data-company="三井住友銀行">
+  <header>
+    <div class="co">三井住友銀行</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">170字</span></div>
+  </header>
+  <div class="q">将来像</div>
+  <div class="body">私が将来なりたい社会人像は、利害関係者間の論点を構造化し、根拠ある選択肢を提示して意思決定の質を高め、実行まで前に進められるプロフェッショナルです。<br>私は経済学で培った構造的な見立てと、データ分析による検証力を用いて、現状把握と予測を行い、判断材料を可視化して提供したいです。<br>入社後は業務知識と定量分析力を用いて信頼を積み上げ、将来は社内外を巻き込みながら大きな案件を動かせる人材になりたいです。</div>
+</article>
+<article class="card" data-company="日本生命">
+  <header>
+    <div class="co">日本生命</div>
+    <div class="badges"><span class="b note">submitted</span><span class="b len">400字</span></div>
+  </header>
+  <div class="q">資産運用領域で活用できそうな知識やスキル、将来取り組みたい仕事（400字）</div>
+  <div class="body">活用したい知識、スキルは長期インターンで培った「データエンジニアリング力」と「因果推論」の知識です。膨大な市場データの収集・整理を自動化し、人間が「深い思考」に集中できる環境を整えることで、組織全体の投資判断の質と効率を向上させたいと考えています。取り組みたい仕事・成し遂げたいこととしては、市場がパニックに陥った際でも、冷静なデータ分析と長期的視座に基づき、規律ある投資判断ができる「市場の安定装置」のようなファンドマネージャーを目指します。具体的には、グローバルな社会情勢の変化をデータから読み解き、リスクを精緻に管理することで、どのような環境下でもご契約者様への約束を守り抜く安定運用を実現したいです。将来は、自ら運用を担うだけでなく、チーム全体のデータ活用やナレッジ共有を推進するリーダーとして、貴社の「人」の力を最大化し、日本経済の持続的な成長に貢献したいと考えています。</div>
+</article>
+<article class="card" data-company="三菱UFJモルガン・スタンレー証券">
+  <header>
+    <div class="co">三菱UFJモルガン・スタンレー証券</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">203字</span></div>
+  </header>
+  <div class="q">就職先を決めるにあたって重視するポイント・将来なりたい姿（300字）</div>
+  <div class="body">私が就職先で重視するのは、①挑戦機会があり成長に必要な基礎（企業価値評価・論点整理）を高い基準で磨けること、②失敗しても全力でリカバーし再発防止までやり切る文化があること、③共有・確認が円滑でチームで認識を揃えながら推進できること、④人間関係が良好でフィードバックが機能する雰囲気があることです。将来はM&amp;Aを起点に資本政策・資金調達まで含めた選択肢を設計し、意思決定と実行を前に進められる人材を目指しています。</div>
+</article>
+<article class="card" data-company="三井住友カード">
+  <header>
+    <div class="co">三井住友カード</div>
+    <div class="badges"><span class="b note">draft</span><span class="b len">183字</span></div>
+  </header>
+  <div class="q">3年後どのようなキャリアを築きたいか</div>
+  <div class="body">分析結果をクライアントの日常業務（オペレーション）に定着させ、実利を生む「実装責任者」としてのキャリアを確立したいです。<br><br>3年後、AIにより分析自体はコモディティ化しますが、現場がそれを使いこなせない「実装の壁」が課題になると考えます。私はインターンで培った「論理を現場の習慣に落とし込む力」を活かし、単なる施策提案を超えて現場が無理なく回せる仕組みを構築し、御社のデータを社会の実益に変える実績を築きます</div>
+</article></div>
+</section>
+<section class="group">
+  <h2>カテゴリ6: 指導を受けた経験・成長 <span class="count">(1)</span></h2>
+  <div class="grid"><article class="card is-best" data-company="野村證券 draft">
+  <header>
+    <div class="co">野村證券 draft</div>
+    <div class="badges"><span class="b best">⭐ Best</span><span class="b len">680字</span></div>
+  </header>
+  <div class="q">誰かに指導を受けて行動・考え方が変わった経験（下書き版・詳細</div>
+  <div class="body">IT企業での長期インターンにおいて、上司からの指導をきっかけに、仕事の進め方とコミュニケーションの姿勢が大きく変わった経験があります。<br><br>インターン当初の私は、与えられたタスクを頭の中だけで整理し、「とりあえず自分でやりきってから報告する」進め方をしていました。その結果、複数の案件が重なった際に処理が追いつかず、期限内に終わらずに上司にタスクを巻き取っていただくという事態を招いてしまいました。<br><br>その際、上司からは「能力の問題ではなく、進め方と共有の仕方を変えた方がいい」と指摘を受けました。具体的には、<br><br>- まず最初に、目的・アウトプットのイメージ・タスクの分解を紙やツールに「見える形」で整理すること<br>- どのタスクをいつまでにどこまで進めるか、事前に相談したうえで優先順位を決めること<br>- 途中経過の段階で小さくアウトプットを見せ、方向性が合っているかこまめに確認すること<br><br>この指導を受けてからは、タスクをもらった時点で必ず全体像とステップを書き出し、Notionや紙にまとめてから着手するようにしました。また、「終わってから報告」ではなく、「着手前の相談」と「途中経過の共有」をセットにして進めることを自分のルールにしました。最初は手間に感じましたが、むしろ手戻りが減り、期限内に終わる確度が高まることを実感しました。<br><br>その結果、納期遅延はほとんどなくなり、私が組んだ集計ロジックやアウトプット形式がそのままクライアント向けレポートの標準として使われるようになりました。現在では、新しいタスクを受けた際に「まず分解して可視化し、早めにすり合わせる」ことが完全に習慣化しており、学業や他の活動でも大きな課題に取り組むときは同じやり方を意識しています。こうした指導を通じて、私は「一人で抱え込んで頑張ること」ではなく、「プロセスを設計し、周囲と共有しながら進めること」が成果につながるという考え方に変わりました。</div>
+</article></div>
+</section></div>
+
+<script>
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+tabs.forEach(t => t.addEventListener('click', () => {
+  tabs.forEach(x => x.classList.remove('active'));
+  panels.forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  document.querySelector(`.tab-panel[data-tab="${t.dataset.target}"]`).classList.add('active');
+}));
+
+const filter = document.getElementById('filter');
+const bestonly = document.getElementById('bestonly');
+const collapse = document.getElementById('collapse');
+const cards = document.querySelectorAll('.card');
+
+function applyFilter() {
+  const q = filter.value.trim().toLowerCase();
+  const bo = bestonly.checked;
+  cards.forEach(c => {
+    const text = c.textContent.toLowerCase();
+    const matchQ = !q || text.includes(q);
+    const matchB = !bo || c.classList.contains('is-best');
+    c.classList.toggle('hidden', !(matchQ && matchB));
+  });
+}
+function applyCollapse() {
+  cards.forEach(c => c.classList.toggle('collapsed', collapse.checked));
+}
+filter.addEventListener('input', applyFilter);
+bestonly.addEventListener('change', applyFilter);
+collapse.addEventListener('change', applyCollapse);
+cards.forEach(c => c.addEventListener('click', e => {
+  if (e.target.closest('.body, .q')) {
+    c.classList.toggle('collapsed');
+  }
+}));
+applyCollapse();
+</script>
+</body>
+</html>
