@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>準備進捗ダッシュボード</title>
+<style>
+:root {
+  --bg: #0f1115;
+  --panel: #161a22;
+  --border: #242935;
+  --text: #e6e8eb;
+  --muted: #8a93a6;
+  --on: #4ade80;
+  --warn: #fbbf24;
+  --off: #2a3142;
+  --brief: #38bdf8;
+  --research: #a78bfa;
+  --qa: #f472b6;
+  --transcript: #facc15;
+  --reflection: #34d399;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  margin: 0; padding: 24px;
+  background: var(--bg); color: var(--text);
+  font-size: 14px;
+}
+h1 { font-size: 20px; margin: 0 0 4px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+.summary {
+  display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.stat {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px; min-width: 120px;
+}
+.stat .v { font-size: 22px; font-weight: 600; }
+.stat .k { font-size: 11px; color: var(--muted); }
+.legend {
+  display: flex; gap: 14px; margin-bottom: 12px; flex-wrap: wrap;
+  color: var(--muted); font-size: 12px;
+}
+.legend-item { display: inline-flex; align-items: center; gap: 4px; }
+.controls { margin-bottom: 12px; }
+.controls input {
+  background: var(--panel); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 10px; border-radius: 6px; min-width: 240px;
+}
+table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden;
+}
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+th {
+  background: #1c212d; color: var(--muted); font-weight: 500;
+  font-size: 12px; position: sticky; top: 0; z-index: 1;
+  cursor: pointer; user-select: none;
+}
+th.stage, td.cell, th.num, td.num { text-align: center; }
+td.company { font-weight: 500; white-space: nowrap; }
+td.cell.empty { color: var(--off); }
+td.cell .sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.badge {
+  display: inline-block; min-width: 18px; height: 18px; line-height: 18px;
+  text-align: center; border-radius: 4px; font-size: 10px; font-weight: 700;
+  margin: 0 1px; padding: 0 3px;
+}
+.badge.research { background: var(--research); color: #1a0f2e; }
+.badge.qa { background: var(--qa); color: #2a0a1c; }
+.badge.transcript { background: var(--transcript); color: #2a1f00; }
+.badge.reflection { background: var(--reflection); color: #07261a; }
+.badge.brief-on { background: var(--brief); color: #002030; }
+.badge.missing { background: var(--off); color: #495069; }
+tr:hover td { background: #1a2030; }
+tr.hidden { display: none; }
+</style>
+</head>
+<body>
+<h1>準備進捗ダッシュボード</h1>
+<div class="meta">生成: 2026-05-10 16:25 / 対象: company-info</div>
+
+<div class="summary">
+  <div class="stat"><div class="v">39</div><div class="k">総企業数</div></div>
+  <div class="stat"><div class="v">20</div><div class="k">research_brief 済</div></div>
+  <div class="stat"><div class="v">3</div><div class="k">想定問答 着手</div></div>
+  <div class="stat"><div class="v">3</div><div class="k">面接実施済</div></div>
+  <div class="stat"><div class="v">0</div><div class="k">振り返り済</div></div>
+</div>
+
+<div class="legend">
+  <span>各セル:</span> <span class="legend-item"><span class="badge research">R</span> 調査</span><span class="legend-item"><span class="badge qa">Q</span> 想定問答</span><span class="legend-item"><span class="badge transcript">T</span> 文字起こし</span><span class="legend-item"><span class="badge reflection">F</span> 振り返り</span>
+  <span>（薄色 = 未実施）</span>
+</div>
+
+<div class="controls">
+  <input id="filter" type="text" placeholder="企業名で絞り込み (例: みずほ, アセット)">
+</div>
+
+<table id="t">
+  <thead><tr><th class="company">企業</th><th class="stage">Brief</th><th class="stage">1次</th><th class="stage">面談</th><th class="stage">2次</th><th class="stage">3次</th><th class="stage">4次</th><th class="stage">5次</th><th class="stage">最終</th><th class="num">files</th></tr></thead>
+  <tbody>
+    <tr><td class="company">りそなグループ</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">データサイエンスコース・IT企画コース・アセットマネジメントコース（3コース比較） / 2026-03-17</div></td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge transcript" title="文字起こし (20260316)">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell"><span class="badge research" title="調査 (20260406)">R</span><span class="badge qa" title="想定問答 (20260406)">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">7</td></tr>
+<tr><td class="company">明治安田アセットマネジメント</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">運用職 / 企画職・IT職 / 2026-04-23</div></td><td class="cell"><span class="badge research" title="調査 (20260423)">R</span><span class="badge qa" title="想定問答 (20260417)">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge transcript" title="文字起こし (20260416)">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">13</td></tr>
+<tr><td class="company">JCB</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">基幹職（C職）・総合コース（オープン採用） / 2026-03-27</div></td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge transcript" title="文字起こし (20260416)">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">5</td></tr>
+<tr><td class="company">みずほフィナンシャルグループ</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">グループオープン型 / 2026-04-23</div></td><td class="cell"><span class="badge research" title="調査 (20260405)">R</span><span class="badge qa" title="想定問答 (20260405)">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">28</td></tr>
+<tr><td class="company">SMBC信託銀行</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合職（オープン） / 2026-03-18</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">SMBC日興証券</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合コース / 2026-03-22</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">アセットマネジメントOne</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">オープンコース（総合コース相当）/ FM・リサーチコース参考 / 2026-04-05</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">2</td></tr>
+<tr><td class="company">ソニー銀行</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合職（職種区分なし） / 2026-03-14</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">ニッセイアセットマネジメント</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合コース / 2026-03-26</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">2</td></tr>
+<tr><td class="company">ビューカード</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">経営企画・商品企画開発 / 2026-03-14</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">三井住友信託銀行</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合職（Gコース） / 2026-03-17</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">三井住友海上火災保険</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">専門人財－テックビジネスコース / 2026-03-17</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">三菱UFJ銀行</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">オープンコース / システム・デジタルコース / 2026-03-14</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">3</td></tr>
+<tr><td class="company">三菱総合研究所</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">コンサルタント職（統計データ・データアナリティクス / 社会データ分析） / 2026-03-29</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">大和アセットマネジメント</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合コース / 2026-03-20</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">5</td></tr>
+<tr><td class="company">東京海上アセットマネジメント</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合職 / 2026-04-04</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">2</td></tr>
+<tr><td class="company">楽天銀行</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">全国型（総合職） / 2026-03-15</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">第一生命</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">スペシャリティコース（資産運用コース・ITデジタルコース） / 2026-03-20</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">農林中金全共連アセットマネジメント</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">総合職 / 2026-03-17</div></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">2</td></tr>
+<tr><td class="company">電通デジタル</td><td class="cell brief"><span class="badge brief-on">✓</span><div class="sub">AI&amp;データコンサルティングコース / 2026-03-16</div></td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">3</td></tr>
+<tr><td class="company">AMBL</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">MUFG</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">SMFG</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">かんぽ生命</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell"><span class="badge missing">R</span><span class="badge missing">Q</span><span class="badge missing">T</span><span class="badge missing">F</span></td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">8</td></tr>
+<tr><td class="company">ふくおかFG</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">みずほ</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">みんなの銀行</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">りそな</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">3</td></tr>
+<tr><td class="company">コンコルディアFG</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">サイバーエージェント</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">ソフトバンク</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">4</td></tr>
+<tr><td class="company">三井住友DSアセットマネジメント</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">2</td></tr>
+<tr><td class="company">三井住友海上あおい損害保険</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">三菱UFJアセットマネジメント</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">三菱銀行</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">大和証券</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">野村アセットマネジメント</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">野村信託銀行</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+<tr><td class="company">野村證券</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="cell empty">–</td><td class="num">1</td></tr>
+  </tbody>
+</table>
+
+<script>
+const input = document.getElementById('filter');
+const rows = document.querySelectorAll('#t tbody tr');
+input.addEventListener('input', () => {
+  const q = input.value.trim().toLowerCase();
+  rows.forEach(r => {
+    const name = r.querySelector('td.company').textContent.toLowerCase();
+    r.classList.toggle('hidden', q && !name.includes(q));
+  });
+});
+</script>
+</body>
+</html>
