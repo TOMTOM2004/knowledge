@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AM横断比較表</title>
+<style>
+:root {
+  --bg: #0f1115; --panel: #161a22; --panel2: #1c212d;
+  --border: #242935; --text: #e6e8eb; --muted: #8a93a6; --accent: #38bdf8;
+  --good: #4ade80; --warn: #fbbf24; --bad: #f87171; --good-bg: #0f2a18;
+  --warn-bg: #2a1f00; --bad-bg: #2e0e0e;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  margin: 0; padding: 24px;
+  background: var(--bg); color: var(--text);
+  font-size: 13px; line-height: 1.6;
+}
+h1 { font-size: 22px; margin: 0 0 4px; }
+.meta { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+.stats { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.stat {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 14px; min-width: 80px;
+}
+.stat.total { border-color: var(--accent); }
+.stat .k { font-size: 11px; color: var(--muted); }
+.stat .v { font-size: 14px; font-weight: 600; margin-top: 2px; }
+.controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.controls input {
+  background: var(--panel); border: 1px solid var(--border); color: var(--text);
+  padding: 7px 11px; border-radius: 6px; min-width: 260px; font-size: 13px;
+}
+.controls .btn {
+  background: var(--panel); border: 1px solid var(--border); color: var(--muted);
+  padding: 7px 12px; border-radius: 6px; cursor: pointer; font-family: inherit;
+  font-size: 12px;
+}
+.controls .btn.active { background: var(--panel2); color: var(--text); border-color: var(--accent); }
+.controls .btn:hover { color: var(--text); }
+.controls .lab { color: var(--muted); font-size: 12px; }
+.grp { margin-bottom: 28px; }
+.grp h2 {
+  font-size: 15px; color: var(--accent); margin: 0 0 8px;
+  padding: 6px 10px; background: var(--panel); border-radius: 6px;
+  border-left: 3px solid var(--accent); position: sticky; top: 0; z-index: 5;
+}
+.grp h2 .cnt { color: var(--muted); font-size: 12px; font-weight: 400; }
+.tw { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+table {
+  width: 100%; min-width: 800px; border-collapse: separate; border-spacing: 0;
+  background: var(--panel);
+}
+thead th {
+  background: var(--panel2); color: var(--muted); font-weight: 500;
+  padding: 8px 10px; text-align: left; font-size: 11px;
+  position: sticky; top: 38px; z-index: 4;
+  border-bottom: 1px solid var(--border);
+}
+thead th.axis { left: 0; z-index: 6; min-width: 180px; max-width: 220px; background: var(--panel2); }
+thead th.co { min-width: 380px; }
+thead th.eval { min-width: 60px; text-align: center; }
+thead th.src-cell { min-width: 90px; }
+tbody td {
+  padding: 10px; vertical-align: top; border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+}
+tbody td.axis {
+  position: sticky; left: 0; background: var(--panel);
+  font-weight: 500; min-width: 180px; max-width: 220px; z-index: 2;
+  border-right: 1px solid var(--border);
+}
+tbody td.axis .aid {
+  display: inline-block; background: var(--border); color: var(--muted);
+  padding: 1px 5px; border-radius: 3px; font-size: 10px;
+  font-family: ui-monospace, monospace; margin-right: 4px;
+}
+tbody td.content { line-height: 1.7; }
+tbody td.content strong { color: var(--accent); }
+tbody td.eval { text-align: center; }
+tbody td.src-cell { font-size: 11px; }
+tbody tr:hover td { background: #1a2030; }
+tbody tr:hover td.axis { background: #1d2434; }
+tbody tr.hidden { display: none; }
+.ev {
+  display: inline-block; min-width: 22px; padding: 2px 6px;
+  border-radius: 4px; font-weight: 700; font-size: 12px; text-align: center;
+}
+.ev.good { background: var(--good-bg); color: var(--good); }
+.ev.warn { background: var(--warn-bg); color: var(--warn); }
+.ev.bad { background: var(--bad-bg); color: var(--bad); }
+.ev.unk { background: var(--border); color: var(--muted); }
+details.src summary {
+  cursor: pointer; color: var(--accent); font-size: 11px; list-style: none;
+}
+details.src summary::-webkit-details-marker { display: none; }
+details.src summary::before { content: "▶ "; font-size: 9px; }
+details.src[open] summary::before { content: "▼ "; }
+details.src div {
+  margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.55;
+  word-break: break-all;
+}
+.src-empty { color: var(--border); }
+code {
+  background: var(--panel2); color: var(--text);
+  padding: 1px 4px; border-radius: 3px; font-size: 11px;
+  font-family: ui-monospace, monospace;
+}
+</style>
+</head>
+<body>
+<h1>AM横断比較表</h1>
+<div class="meta">生成: 2026-05-10 17:35 / 対象: docs/am_competitor_comparison.md / 27軸 / 比較対象: MYAM</div>
+
+<div class="stats"><div class="stat"><div class="k">A群</div><div class="v"><span class="ev good">◎7</span> <span class="ev warn">△2</span> <span class="ev bad">✗0</span></div></div><div class="stat"><div class="k">B群</div><div class="v"><span class="ev good">◎3</span> <span class="ev warn">△4</span> <span class="ev bad">✗1</span></div></div><div class="stat"><div class="k">C群</div><div class="v"><span class="ev good">◎4</span> <span class="ev warn">△0</span> <span class="ev bad">✗0</span></div></div><div class="stat"><div class="k">D群</div><div class="v"><span class="ev good">◎6</span> <span class="ev warn">△0</span> <span class="ev bad">✗0</span></div></div><div class="stat total"><div class="k">合計</div><div class="v"><span class="ev good">◎20</span> <span class="ev warn">△6</span> <span class="ev bad">✗1</span></div></div></div>
+
+<div class="controls">
+  <input id="filter" type="text" placeholder="軸名・内容で絞り込み">
+  <span class="lab">評価:</span>
+  <button class="btn ev-btn active" data-ev="">全て</button>
+  <button class="btn ev-btn" data-ev="◎">◎ のみ</button>
+  <button class="btn ev-btn" data-ev="△">△ のみ</button>
+  <button class="btn ev-btn" data-ev="✗">✗ のみ</button>
+  <span class="lab">群:</span>
+  <button class="btn gr-btn active" data-gr="">全群</button>
+  <button class="btn gr-btn" data-gr="A">A</button>
+  <button class="btn gr-btn" data-gr="B">B</button>
+  <button class="btn gr-btn" data-gr="C">C</button>
+  <button class="btn gr-btn" data-gr="D">D</button>
+</div>
+
+<section class="grp" data-group="A">
+  <h2>A群: 事業・顧客・商品 <span class="cnt">(9軸)</span></h2>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th class="axis">軸</th>
+          <th class="co">MYAM</th>
+          <th class="eval">評価</th>
+          <th class="src-cell">出典</th>
+        </tr>
+      </thead>
+      <tbody><tr data-group="A" data-eval="◎" data-axis="A-1"><td class="axis"><span class="aid">A-1</span> 顧客構成</td><td class="content">グループ内（明治安田生命45.7兆円の一部受託）が主柱。<strong>公募投信純資産5,134億円</strong>（2026年3月末、投信協会統計）＝業界<strong>80社中35位</strong>。全体の投資信託財産合計21,977億円（2025年8月末）。PL上は委託者報酬87.8億円(78%)+運用受託報酬23.8億円(21%)+投資助言報酬0.2億円 → <strong>委託者報酬（公募投信）が収益の8割、一任運用は2割</strong>。外部顧客拡大がKPI</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>投信協会統計I01114_pub.xlsx 2026/03 / 正会員財務届出書PL / dalton_prospectus p.1</div></details></td></tr><tr data-group="A" data-eval="◎" data-axis="A-2"><td class="axis"><span class="aid">A-2</span> 販売チャネル</td><td class="content"><strong>BtoB型営業</strong>: 販売会社（地銀等）の本部担当者に提案→会社全体として採用の形。個人顧客への直接訪問はほぼなし。営業企画部が契約書作成・ニーズ収集→商品部に連携。商品部からの逆方向（戦略提案→現場ニーズ確認）もあり。<strong>FOF方式</strong>も活用（外資系戦略をMYAMでパッケージ化）。Man Group提携でグローバルプライベートアセット領域を外部展開中。支払手数料26.6億円（営業収益の23.7%）＝販売会社への代行手数料が主</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>transcript_findings [面談会一次情報] / research_brief 軸1 / 財務届出書PL</div></details></td></tr><tr data-group="A" data-eval="△" data-axis="A-3"><td class="axis"><span class="aid">A-3</span> グループ内役割分担</td><td class="content">MYAM=運用子会社（219名）。MYTECNO=IT子会社（生保基幹系担当）。本社運用部門との具体的な棲み分けは【要確認】</td><td class="eval"><span class="ev warn">△</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸2</div></details></td></tr><tr data-group="A" data-eval="◎" data-axis="A-4"><td class="axis"><span class="aid">A-4</span> 母体法的形態</td><td class="content">明治安田生命=<strong>相互会社</strong>（契約者に責任）。株主がいないため短期利益圧力が弱く、長期投資志向と整合。MYAM自体も100%子会社で上場していないため、四半期業績開示義務がなく<strong>短期パフォーマンス圧力が構造的に弱い</strong>。この構造がエンゲージメントの長期時間軸（マイルストン管理STEP1-4）を可能にしている。資本金10億円、発行済株式18,887株（全株明治安田生命保有）</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>FSA資料 p.6 / 財務届出書 p.1</div></details></td></tr><tr data-group="A" data-eval="△" data-axis="A-5"><td class="axis"><span class="aid">A-5</span> パッシブ/アクティブ比率</td><td class="content">「クオリティの高い調査・分析に基づいた<strong>アクティブ運用を中心</strong>」（運用哲学）。パッシブ運用は「主に定量分析アプローチによる運用、内外株式のパッシブ型運用」（クオンツ運用部PM6名が担当）。パッシブでは「主に議決権行使や協働エンゲージメントを通してスチュワードシップ責任を果たす」。<strong>具体的なアクティブ/パッシブ比率の数値は未取得</strong></td><td class="eval"><span class="ev warn">△</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>sustainabilityreport_2025.pdf / www.myam.co.jp/about/structure/inside.html</div></details></td></tr><tr data-group="A" data-eval="◎" data-axis="A-6"><td class="axis"><span class="aid">A-6</span> 旗艦商品</td><td class="content"><strong>ダルトン・ジャパン・パートナー戦略ファンド</strong>（純資産524億円、国内株式最大）が旗艦。地域応援ファンド群（信州97億円/岐阜96億円/にいがた/九州45億円）も特徴的。DC・TOPIXインデックス（59億円）。NextGen ESG Japan Fund（50億円シード）。公募投信は地方金融機関チャネル×地域特化型が商品戦略の柱</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>www.myam.co.jp/fund/price/ [Playwright MCP経由]</div></details></td></tr><tr data-group="A" data-eval="◎" data-axis="A-7"><td class="axis"><span class="aid">A-7</span> Alternative positioning</td><td class="content"><strong>成長領域として明確に位置づけ</strong>。中計3カ年6,000億円を海外プライベート資産に投資（親会社主導）。Man Group提携（10年1,500億円・プライベートデット中心）。インパクトファイナンス840億円（FY2024）→目標1,200億円</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸1-D / FSA資料 p.11</div></details></td></tr><tr data-group="A" data-eval="◎" data-axis="A-8"><td class="axis"><span class="aid">A-8</span> Asset growth quality</td><td class="content"><strong>公募投信純資産5,134億円</strong>（2026年3月末）。2026年3月期の資金増減: 設定70.7億円 vs 解約92.8億円 = <strong>純流出▲22.1億円</strong>。運用増減▲356.1億円（市場下落影響）。純資産増減▲380.1億円。業界80社中35位。ニッセイAM（5,125億円）と僅差。<strong>課題</strong>: 純流出状態であり、外部顧客拡大KPIの達成は道半ば</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>投信協会統計I01114_pub.xlsx 2026/03</div></details></td></tr><tr data-group="A" data-eval="◎" data-axis="A-9"><td class="axis"><span class="aid">A-9</span> Fee resilience</td><td class="content">委託者報酬87.8億円（収益の78%）＝残高連動型で安定。<strong>アクティブ中心</strong>のため信託報酬率はパッシブ専業より高い（ダルトン: 年率0.8745%+成功報酬HWM方式）。プライベートアセット・インパクト領域（Man Group提携/インパクトファイナンス1,200億円目標）が高付加価値の成長源。調査費25.5億円＝営業収益の22.7%を調査に投入しアクティブの質を維持。<strong>パッシブ料率競争からの距離が構造的な耐性</strong></td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>財務届出書PL / dalton_prospectus p.8 / research_brief 軸1-B</div></details></td></tr></tbody>
+    </table>
+  </div>
+</section>
+<section class="grp" data-group="B">
+  <h2>B群: 運用の中身 <span class="cnt">(8軸)</span></h2>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th class="axis">軸</th>
+          <th class="co">MYAM</th>
+          <th class="eval">評価</th>
+          <th class="src-cell">出典</th>
+        </tr>
+      </thead>
+      <tbody><tr data-group="B" data-eval="◎" data-axis="B-1"><td class="axis"><span class="aid">B-1</span> Alpha source</td><td class="content"><strong>独自のROIC-WACCフレームワーク</strong>で企業の資本効率と成長を4象限に分類し、戦略課題の解決策を策定→エンゲージメントで経営戦略ギャップを埋めて超過収益を追求。ESG格付（5段階）をDCF割引率に直接反映（高評価=-A%/低評価=+B%）。ESG分析・対話シートを約400銘柄に作成し、財務分析とESG分析を統合。「マーケットの非効率性を捉えた超過収益の獲得は可能」（運用哲学）。エンゲージメント事例: 電気機器メーカーに低収益事業の縮小・整理等4テーマでマイルストン管理（STEP1-4）→中計改善目標を前倒し達成。チームアプローチ型＝組織知の再現性を重視</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>sustainabilityreport_2025.pdf p.21-26 / research_brief 軸7-A</div></details></td></tr><tr data-group="B" data-eval="△" data-axis="B-1a"><td class="axis"><span class="aid">B-1a</span> Information edge</td><td class="content">アナリスト人数・調査投資額は非公開だが、<strong>定性情報優位の源泉を面談会で確認</strong>: 「社員の顔が明るいか、オフィスが綺麗か」等の現場訪問時の定性判断を重視。「人間でしか判断できない部分はある。一概に全部が機械化プログラム化されるかと言われたらノー」（責任投資部）。年1回は必ず対面対話を制度化。役員級（取締役）との対話も実施</td><td class="eval"><span class="ev warn">△</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>transcript_findings_面談会1_20260416.md [面談会一次情報]</div></details></td></tr><tr data-group="B" data-eval="✗" data-axis="B-1b"><td class="axis"><span class="aid">B-1b</span> Alternative data</td><td class="content"><strong>未取得</strong></td><td class="eval"><span class="ev bad">✗</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>情報非公開</div></details></td></tr><tr data-group="B" data-eval="◎" data-axis="B-2"><td class="axis"><span class="aid">B-2</span> Research architecture</td><td class="content"><strong>運用本部7部体制</strong>（2025年4月時点）: 株式運用部（PM11名/平均19年）、責任投資部（5名/平均18年）、企業調査グループ（リーダー経験25年/平均16年）、グローバル株式運用部（PM4名/平均19年）、債券運用部（PM7名/平均16年+クレジット調査G平均23年）、グローバル債券運用部（PM6名/平均16年）、クオンツ運用部（PM6名/平均13年）、ポートフォリオ・マネジメント部（PM10名/平均11年）。運用本部長=菅康弘（経験29年）。<strong>PM合計49名+調査グループ。平均経験年数15-19年と業界屈指のシニア集団</strong></td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>www.myam.co.jp/about/structure/inside.html [Playwright MCP経由]</div></details></td></tr><tr data-group="B" data-eval="◎" data-axis="B-3"><td class="axis"><span class="aid">B-3</span> Decision rights</td><td class="content">チームアプローチ＝委員会型。<strong>意思決定構造</strong>: 運用本部長（菅康弘/経験29年）の下、各部長（株式=鐘ヶ江/経験29年、責任投資=佐藤/経験10年等）が運用責任者。<strong>「FMが最終意思決定者。アナリスト推奨のパフォーマンスも計測される」</strong>（面談会証言）。議決権行使は「アナリストが個別精査→ガイドラインと異なる場合は議決権行使分科会（担当執行役員＝分科会長）で協議」。責任投資委員会（社長＝委員長）がモニタリング。<strong>スチュワードシップ諮問委員会</strong>（社外取締役過半数）が独立検証。<strong>営業と運用の完全分離</strong>: 「ファンドを売るからこの株を見とけ、ということはない」（面談会証言）→販売圧力が銘柄選定に影響しない構造</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>www.myam.co.jp/about/structure/inside.html &amp; /stewardship.html &amp; /voting/ [Playwright MCP経由] / transcript_findings [面談会一次情報]</div></details></td></tr><tr data-group="B" data-eval="△" data-axis="B-4"><td class="axis"><span class="aid">B-4</span> Portfolio construction</td><td class="content">DC日本株アクティブ: TOPIX500から銘柄選定、ファンダメンタルズ分析ベース。成長性・クオリティ・バリュエーション重視。<strong>ダルトン・ジャパン</strong>: 特化型ファンド（寄与度10%超の集中投資）。銘柄選定3基準=Good Business（強固なキャッシュフロー・競争優位性・ESG）×Margin of Safety（本源的価値vs市場割安）×Alignment of Interest（経営陣と株主の利害一致）。運用はダルトン・インベストメンツ・インク（LA拠点）に委託。エンゲージメント3手段（面談・提案・レター）でROE/ROIC改善・ガバナンス改善・政策保有株削減を推進。<strong>Active Share・組入銘柄数の具体数値は運用報告書（全体版）に記載のため未取得</strong></td><td class="eval"><span class="ev warn">△</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>dalton_prospectus1.pdf p.2-5, 9 [curl+Read]</div></details></td></tr><tr data-group="B" data-eval="△" data-axis="B-5"><td class="axis"><span class="aid">B-5</span> Time horizon</td><td class="content">「超長期・生保ALM」の定性記述に加え、<strong>ESGインテグレーション分析で5期以上の長期業績予想を実施</strong>。DCF法で「将来獲得するフリーキャッシュフローを適切な割引率で現在価値に」。エンゲージメントも「マイルストン管理」で長期にわたり成果を確認（STEP1提示→STEP4実行）。「中長期視点から投資先企業の持続的成長を促す」が基本姿勢。<strong>ターンオーバー率等の定量裏付けはなお未取得</strong></td><td class="eval"><span class="ev warn">△</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>sustainabilityreport_2025.pdf p.19, 21, 25 / research_brief</div></details></td></tr><tr data-group="B" data-eval="△" data-axis="B-6"><td class="axis"><span class="aid">B-6</span> Risk management philosophy</td><td class="content">運用審査部がVaR・トラッキングエラーを管理。「リスクを抑制しながら運用収益を確保する」（RI報告書 p.35）。<strong>営業と運用の分離</strong>が制度的に担保されており、販売ニーズが運用判断を歪めるリスクを構造的に排除（面談会証言）。<strong>損切り規律・下落局面対応の具体情報は非公開</strong></td><td class="eval"><span class="ev warn">△</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸2 / RI報告書 p.35 / transcript_findings [面談会一次情報]</div></details></td></tr></tbody>
+    </table>
+  </div>
+</section>
+<section class="grp" data-group="C">
+  <h2>C群: スチュワードシップ <span class="cnt">(4軸)</span></h2>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th class="axis">軸</th>
+          <th class="co">MYAM</th>
+          <th class="eval">評価</th>
+          <th class="src-cell">出典</th>
+        </tr>
+      </thead>
+      <tbody><tr data-group="C" data-eval="◎" data-axis="C-1"><td class="axis"><span class="aid">C-1</span> Stewardship integration</td><td class="content">ESG投融資とスチュワードシップ活動を<strong>「両輪」</strong>と位置づけ。対話→議決権行使→投資判断のPDCAサイクル。投資対象約400銘柄に独自「ESG分析・対話シート」を作成しESG格付を付与。<strong>PRI 2024年次評価で4項目★★★★★（最高評価）</strong>。責任投資部（5名/平均18年）が専任。みずほR&amp;Tコンサルティングレポートで<strong>74運用機関中1位</strong>（企業IR向けアンケート、スチュワードシップ活動×サステナビリティ評価）。NZAM加盟（2023年1月）、TNFD Adopter登録（2024年7月）。NZAM中間目標: 投資ポートフォリオ残高52%対象にカーボンフットプリント2030年末比50%削減</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>stewardshipreview_2025.pdf p.3-4, 7, 17 / FSA資料 p.8-10</div></details></td></tr><tr data-group="C" data-eval="◎" data-axis="C-2"><td class="axis"><span class="aid">C-2</span> 議決権行使方針</td><td class="content"><strong>2024年度（MYAM単体）</strong>: 会社提案反対率<strong>15.7%</strong>（2,172/13,834議案）。株主提案反対率91.8%（293/319議案）。取締役選解任の反対率16.9%。買収防衛策反対率8.0%。<strong>MYAM固有ガイドライン</strong>: 国内株式用+J-REIT用の2種を策定（2026年4月改定版が最新）。2024年12月改定で社外取締役の独立性判断基準を具体化。「ガイドラインと異なる判断が適切な場合は別途協議」=機械的適用ではない柔軟性。議決権行使分科会（担当執行役員＝分科会長）→責任投資委員会（社長＝委員長）→<strong>社外取締役過半のスチュワードシップ諮問委員会</strong>が独立検証。エンゲージメントと議決権行使の一体運営を明記。<strong>旧データ注記</strong>: 不賛同比率7.0%（2021年度）は親会社RI報告書の数値</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>stewardshipreview_2025.pdf p.14-15 / www.myam.co.jp/about/voting/ &amp; /guideline.html [Playwright MCP経由]</div></details></td></tr><tr data-group="C" data-eval="◎" data-axis="C-3"><td class="axis"><span class="aid">C-3</span> 対話テーマ・実績</td><td class="content"><strong>MYAM単体 年間1,470件</strong>（2024年度、対象420社）。うちマネジメント対話329件（96社）。テーマ別: ガバナンス423件(29%)/環境406件(27%)/社会393件(27%)/事業戦略159件(11%)/財務・資本政策89件(6%)。対話マイルストン管理（提示37%→共有47%→着手13%→実行3%）。協働エンゲージメント: 機関投資家協働対話フォーラムで不祥事アジェンダ幹事。<strong>対話事例</strong>: 自動車セクターA社に経営戦略上の課題解決策を策定しエンゲージメント→ROE8%未達でも構造改革の進捗を確認し賛成判断。<strong>旧データ注記</strong>: 親会社RI報告書の682件（2021年度）はグループ全体の数値</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>stewardshipreview_2025.pdf p.8-12 [curl+Read]</div></details></td></tr><tr data-group="C" data-eval="◎" data-axis="C-4"><td class="axis"><span class="aid">C-4</span> Stewardship autonomy</td><td class="content"><strong>ISS/Glass Lewis非依存</strong>。ESGアナリストが約400銘柄に独自ESG格付を付与（2025年度からG格付の評価項目を「機関設計」「監督の実効性」「経営力」「取締役会の実効性」に再編）。議決権行使はガイドラインに基づきアナリストが個別精査→分科会→責任投資委員会（社長決裁）。<strong>議決権行使の具体的判断事例を公開</strong>（P15: ROE8%未満企業への対応、不祥事企業の取締役選任判断、株主提案への個別精査）。コンプライアンス・リスク管理部による事後検証+スチュワードシップ諮問委員会（社外取締役過半数）の独立検証で二重チェック</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>stewardshipreview_2025.pdf p.7, 13-15 / RI報告書 p.37, 45, 49-50</div></details></td></tr></tbody>
+    </table>
+  </div>
+</section>
+<section class="grp" data-group="D">
+  <h2>D群: 持続可能性 <span class="cnt">(6軸)</span></h2>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th class="axis">軸</th>
+          <th class="co">MYAM</th>
+          <th class="eval">評価</th>
+          <th class="src-cell">出典</th>
+        </tr>
+      </thead>
+      <tbody><tr data-group="D" data-eval="◎" data-axis="D-1"><td class="axis"><span class="aid">D-1</span> Economics/incentives</td><td class="content"><strong>営業収益112.4億円</strong>（2025年3月期）。内訳: 委託者報酬87.8億円(78%)+運用受託報酬23.8億円(21%)+投資助言報酬0.2億円。<strong>営業利益12.2億円（営業利益率10.9%）</strong>。経常利益12.3億円、当期純利益8.5億円。調査費25.5億円（自社12.3億円+委託13.2億円）＝営業収益の22.7%を調査に投資。給料・手当15.9億円（人件費率14.1%）。委託者報酬が収益の8割を占め、AUM連動型の安定構造</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>正会員財務状況届出書202509 PL [curl+Read]</div></details></td></tr><tr data-group="D" data-eval="◎" data-axis="D-2"><td class="axis"><span class="aid">D-2</span> Talent model</td><td class="content">従来: 入社1-2年バック/ミドル→異動でリサーチ/PM。<strong>2026年4月に新卒1名が国内株PMチームに直配置</strong>（面談会証言。従来パスを変更）。「やりたいと言い続ければ割と思った通りの部署に行ける」（面談会証言）→少数精鋭ゆえのキャリア自律性。明治安田生命へのローテーション異動あり。中途採用比率高い。<strong>PM平均経験年数15-19年</strong>のシニア集団の中で、新卒直配置による若手育成を開始した過渡期</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸5 / transcript_findings [面談会一次情報] / structure/inside.html</div></details></td></tr><tr data-group="D" data-eval="◎" data-axis="D-2a"><td class="axis"><span class="aid">D-2a</span> Talent pipeline proxy</td><td class="content">新卒採用<strong>「3〜5人/年」</strong>（面談会証言）。新卒採用開始は<strong>約10年前</strong>から（≒2016年頃〜）。累計新卒30-50名/全219名。中途・出向者が主力構成。「若手が少ない＝同い年が少ないが、目上の方がわが子のように面倒を見てくれる」（面談会証言）。給料・手当15.9億円/219名≒<strong>平均年収726万円</strong>（推計）。2026年4月に新卒フロント直配置を開始し、人材パイプラインの質的転換が進行中</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸6 / transcript_findings [面談会一次情報] / 財務届出書PL</div></details></td></tr><tr data-group="D" data-eval="◎" data-axis="D-3"><td class="axis"><span class="aid">D-3</span> 親会社シナジー/制約</td><td class="content"><strong>安定受託基盤</strong>: 明治安田生命45.7兆円。DXパートナーシップ（アクセンチュア300億円/5年）。<strong>制約</strong>: 保守的・官僚的体質（OpenWork複数指摘）。「プロ意識の希薄さ」「切迫感の欠如」。親会社色が強く意思決定が遅い</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸6</div></details></td></tr><tr data-group="D" data-eval="◎" data-axis="D-4"><td class="axis"><span class="aid">D-4</span> 海外ネットワーク</td><td class="content"><strong>Man Group提携</strong>（英国、プライベートデット中心、10年1,500億円）。<strong>ダルトン・インベストメンツ・インク</strong>（米国LA拠点、東京/ラスベガス/NY/香港/ムンバイ/シドニー/ソウルに拠点）にダルトンファンドの運用を委託。<strong>UBPインベストメンツ</strong>（スイス・ジュネーブ、ユニオン・バンケール・プリヴェ日本拠点）が委託会社。グローバル株式運用部（PM4名/平均19年）が外国株式運用を担当。委託調査費13.2億円＝外部リサーチへの投資</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>dalton_prospectus p.4 / structure/inside.html / 財務届出書PL</div></details></td></tr><tr data-group="D" data-eval="◎" data-axis="D-5"><td class="axis"><span class="aid">D-5</span> Organizational health</td><td class="content">OpenWork 2.75/5（23名回答）。残業月24h。有給消化率52.4%。「保守的」「親会社が保険会社で非常に保守的」「意見は通りやすいが変革は遅い」</td><td class="eval"><span class="ev good">◎</span></td><td class="src-cell"><details class="src"><summary>出典</summary><div>research_brief 軸6 / OpenWork</div></details></td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+const filter = document.getElementById('filter');
+const evBtns = document.querySelectorAll('.ev-btn');
+const grBtns = document.querySelectorAll('.gr-btn');
+let curEv = '';
+let curGr = '';
+
+function apply() {
+  const q = filter.value.trim().toLowerCase();
+  document.querySelectorAll('tbody tr').forEach(tr => {
+    const text = tr.textContent.toLowerCase();
+    const ev = tr.dataset.eval || '';
+    const gr = tr.dataset.group || '';
+    const okQ = !q || text.includes(q);
+    const okE = !curEv || ev.includes(curEv);
+    const okG = !curGr || gr === curGr;
+    tr.classList.toggle('hidden', !(okQ && okE && okG));
+  });
+  document.querySelectorAll('.grp').forEach(s => {
+    const visible = s.querySelectorAll('tbody tr:not(.hidden)').length;
+    s.style.display = (curGr && s.dataset.group !== curGr) ? 'none' : (visible === 0 ? 'none' : '');
+  });
+}
+
+filter.addEventListener('input', apply);
+evBtns.forEach(b => b.addEventListener('click', () => {
+  evBtns.forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  curEv = b.dataset.ev;
+  apply();
+}));
+grBtns.forEach(b => b.addEventListener('click', () => {
+  grBtns.forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  curGr = b.dataset.gr;
+  apply();
+}));
+</script>
+</body>
+</html>
