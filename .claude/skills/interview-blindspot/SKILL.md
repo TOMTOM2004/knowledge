@@ -36,7 +36,7 @@ allowed-tools: Read, Write, Edit, Glob
 
 ```
 company-info/<企業名>/reflection_<N>次_*.md  ← 最新ファイルを使用
-company-info/<企業名>/transcript_<N>次_*.md  ← 最新ファイルを使用
+company-info/<企業名>/transcript/transcript_<N>次_*.md  ← 新構成（transcript/配下を優先）。無ければ旧・直下 company-info/<企業名>/transcript_<N>次_*.md
 ```
 
 | 状態 | 対応 |
