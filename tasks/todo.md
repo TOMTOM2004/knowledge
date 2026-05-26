@@ -48,6 +48,3 @@ _Last updated: 2026-05-26 / session: みずほ2次QA 抜本改訂_
 ## ❌ Out of scope
 - research_brief 更新は別途（company-researcher経由）
 - 塾PoC・34進め方の細部（手法・数値）は記憶限定で【要確認】残し
-
-- [ ] #travel-planner
-予定通りで問題ないので価格や今予約をとってしまうものについてリストアップする。（Slack #todo より _2026-05-16_）
