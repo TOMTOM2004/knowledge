@@ -2,10 +2,13 @@
 _Last updated: 2026-05-26 / session: みずほ2次QA 抜本改訂_
 
 ## 🎯 Next action（1つだけ、具体的に）
-- What: みずほFG 2次面接の**模擬面接（声出し練習）**。skeptical-interviewer または interview-debate-orchestrator で実戦
-- Where: `company-info/みずほフィナンシャルグループ/interview_qa_2次面接_20260515.md`（高1-10・中1-5・Step2.5/3/4）
-- Done when: 高7(なぜみずほ)・高4(ガクチカ)・高10(挫折)・高8(キャリア)・高1(自己紹介) が30/60秒で自然に出る＋深掘り耐性
-- 着手タイミング: 2次面接の日程が見えたら
+- What: みずほFG **2次面接（5/26実施）反省会** — 文字起こし完了後、下記3観点でディスカッション
+  1. **乖離分析**: 想定問答集（interview_qa_2次面接_20260515.md）と実際に聞かれた質問を照合
+  2. **未準備質問の深掘り**: 想定問答に無かった＝考えていなかった論点を洗い出し、本人も考えておく
+  3. **喋りすぎ対策＝背景説明が長い根本原因**: 面接に限らず上司報告でも背景過多。背景の省略・結論先出しを汎用コミュ課題として改善
+- Where: `company-info/みずほフィナンシャルグループ/transcript/transcript_2次面接_20260526.md`（2分割音声を結合して作成予定）
+- Done when: 3観点の議論完了＋`reflection_2次_20260526.md` に反映、qaに人柄/ワークスタイル系の不足軸を追記
+- 着手タイミング: 2次音声の文字起こし（バックグラウンド実行中・ID bi4mhde71）完了後
 
 ## 🎉 本セッション成果（2026-05-26）※全て `claude/20260524-mizuho-2ji-qa-augment` に push 済
 - **みずほ2次想定問答集を大幅改訂**:
@@ -18,8 +21,9 @@ _Last updated: 2026-05-26 / session: みずほ2次QA 抜本改訂_
 
 ## 📍 State snapshot
 - ✅ Done: 上記すべて push 済（ブランチ claude/20260524-mizuho-2ji-qa-augment）
-- 🟡 In progress: なし
+- 🟡 In progress: 2次面接(5/26)音声の文字起こし実行中（mlx-whisper, `raw音声/*2次面接-1,-2*.m4a` の2分割→結合して1本 `transcript_2次面接_20260526.md` に）
 - 🔴 Blocked: なし
+- 🔧 修正: 1次transcriptを 20260525→**20260406** にリネーム（5/25は文字起こし実行日／面接日は4/6）。5/12を transcript/reflection とも **CareerLounge-大企業RM** にリネーム
 
 ## 🧠 Context not in code
 - **コース確定**: グループオープン型（BK/TB法人＝産業調査・AM／SC法人WM＝リサーチ・クオンツ）。軸足は銀行・信託。問答集 frontmatter・接続マップ反映済
@@ -41,7 +45,7 @@ _Last updated: 2026-05-26 / session: みずほ2次QA 抜本改訂_
 
 ## 📂 Key files
 - `company-info/みずほフィナンシャルグループ/interview_qa_2次面接_20260515.md`（本日の主成果）
-- `company-info/みずほフィナンシャルグループ/transcript/transcript_1次面接_20260525.md`（コース確定の根拠）
+- `company-info/みずほフィナンシャルグループ/transcript/transcript_1次面接_20260406.md`（コース確定の根拠。旧名_20260525）
 - `ES/素材/{18卒論輸入価格,33幼少期,34進め方,35塾PoC}.md`
 - `graduation-thesis/docs/`（卒論本体・新テーマ）
 
