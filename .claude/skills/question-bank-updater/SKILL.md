@@ -22,8 +22,10 @@ allowed-tools: Read, Write, Edit, Glob, Grep
 
 ファイルパスが指定されない場合は、全社の transcript を検索する:
 ```
+company-info/*/transcript/*.md
 company-info/*/transcript_*.md
 ```
+（新構成は `transcript/` サブフォルダ配下、旧構成は直下。両方を検索対象にする）
 処理済みログ（`docs/question_bank.md` の「処理済み transcript ログ」）に記録されているファイルは除外する。
 
 ---

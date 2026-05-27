@@ -24,7 +24,8 @@
 | 企業調査 brief | `company-info/<企業名>/research_brief.md` |
 | 面接調査 / 想定問答（新） | `company-info/<企業名>/interview_{research,qa}_<N>次_<日付>.md` |
 | 面接OS設定・生成物 | `company-info/<企業名>/interview-os/{configs,generated,sessions,learning}/` |
-| 面接振り返り / transcript | `company-info/<企業名>/{reflection,transcript}_<N>次_<日付>.md` |
+| 面接振り返り | `company-info/<企業名>/reflection_<N>次_<日付>.md`（直下） |
+| transcript | `company-info/<企業名>/transcript/transcript_<N>次_<日付>.md`（**transcript/ サブフォルダ配下**。音声派生物は `transcript/transcript_assets/`）。※旧構成の直下 `transcript_*.md` も後方互換で可 |
 | 直前チェックシート | `company-info/<企業名>/interview_direct_prep_<N>次_<日付>.md` |
 | 横断ドキュメント | `docs/{interview_patterns,question_bank,am-comparison-framework,application_status,success_record}.md` |
 | ペルソナ / スキーマ | `tools/interview_os/`, `docs/schemas/` |

@@ -35,7 +35,7 @@ allowed-tools: Read, Write, Edit, Glob
 
 以下を並列で読み込む。
 
-1. `company-info/<企業名>/transcript_<前回N>次_*.md` — 最新ファイル（必須）
+1. `company-info/<企業名>/transcript/transcript_<前回N>次_*.md`（新・transcript/配下を優先）または `company-info/<企業名>/transcript_<前回N>次_*.md`（旧・直下、後方互換）— 最新ファイル（必須）
    - 存在しない場合: `【transcript が見つかりません】` と表示して終了
 2. `company-info/<企業名>/interview_qa_<前回N>次_*.md` — 最新ファイル（任意）
    - 存在しない場合: transcript のみで分析（警告を表示）
