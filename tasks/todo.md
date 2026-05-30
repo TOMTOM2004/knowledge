@@ -1,57 +1,52 @@
-# Handoff — みずほFG 2次面接(5/26)反省会 ＋ 最終面接 志望ロジック固め
-_Last updated: 2026-05-26 16:26 / session: みずほ2次反省会＋最終ロジック_
+# Handoff — 別PC同期 ＋ みずほ2次transcript重複解消 ＋ ブランチ大整理
+_Last updated: 2026-05-30 / session: リポジトリ整理（3次transcript同期・重複解消・ブランチ23→2本）_
 
-## 🎯 Next action（1つだけ、具体的に）
-- What: みずほFG **最終面接（人事呼称「オファー面接」＝最終相当・1社に絞られる）の想定問答作成**
-  - 志望ロジック #1〜#4・銀行vs証券・マクロ/ミクロは**確定済**（下記）。即 interview-qa 起動可
-  - **必須参照フローは `interview_research_最終面接_20260526.md` の「🔁 想定問答作成時の必須参照フロー」に固定済**（role_deepdive_SC_career-to-research §6＝銀行vs証券決定版／reflection_2次の盲点／本ファイル）
-- Where: `company-info/みずほフィナンシャルグループ/interview_research_最終面接_20260526.md`
-- Done when: 最終面接版 interview_qa 生成（なぜその社か×銀証・就活終える覚悟・かんぽ/信託差別化・#1-#4 を反映）
-- 期限感: 2次結果は **6/26まで連絡**。オファー面接日程が出たら直結
+## 🎯 Next action（ユーザー側で実施）
+- [ ] **PR #39 をマージ**（`https://github.com/TOMTOM2004/knowledge/pull/39`／2次transcript重複解消＋本todo更新）。マージ後 `claude/20260530-mizuho-transcript-cleanup` は削除可
+- [ ] **別PC側の同期**: `git checkout main && git pull` ＋ `git fetch --prune`。削除済みローカルブランチが残れば `git branch -D <ブランチ名>` で1本ずつ削除
 
-## 🎉 本セッション成果（2026-05-26）※全て `claude/20260524-mizuho-2ji-qa-augment` に push 済
-- **2次面接(5/26)を文字起こし→整形→反省会**: 2分割音声(録音切れ)を結合し `transcript_2次面接_20260526.md` 作成（補正表/Q&A整形/手応え付き）。計数テストなし＝1次との区別点
-- **reflection_2次_20260526 作成 ＋ interview-blindspot で盲点追記**（本人FB反映）: 盲点＝①信託への低志望露呈②営業不安の自己開示③オファー濃淡喪失「銀行でも証券でも同じ」④保有内定差別化が浅い
-- **乖離分析**: 1次=人柄スクリーニング／2次=志望度・意思確認 という構造把握。qaは志望動機の論理を厚くしたが2次本丸は「本当に来るか」確認
-- **喋りすぎ＝背景説明が長い**を実データで特定（Q23挫折で前提6-7段／Q7弱み2分）。対策＝「前提のところなんですけど」禁句・結論/原因/対策を各1文。**面接に限らず上司報告にも効く汎用コミュ課題**（本人申告）
-- **最終面接(オファー面接)の選考調査**: `interview_research_最終面接_20260526.md`。最終相当・合否あり・人事/役員1対1・なぜその社か/就活終える覚悟が核
-- **証券キャリアパス確定**: `role_deepdive_SC_career-to-research_20260526.md`。エクイティ調査部アナリスト等の正式役職名＋かなで社内公募の異動経路。法人WM営業→エクイティ調査部→GIB M&A
-- **志望ロジック固め（本人壁打ち）**: #1かんぽ差別化（相手=社内 vs 顧客／成果が顧客に届くか）・銀行vs証券=本命銀行（定性の取得源・制度ルート・マクロ志向）・#2信託リカバリ（不動産バリュエーション/自社株評価×オーナー意向）・#3 DS接続（名目→実質→構造を自分で判断＝経済学部進学の根）・#4「行けなかったらトライし続ける」
+## 🎉 本セッション成果（2026-05-30）
+- **みずほ3次面接transcript を同期確認**: 別PCが PR#38 で push 済（5/29 main マージ）。このPCの main を origin/main へ ff（39コミット遅れを解消）し取込。`transcript/transcript_3次面接_20260529.md` ＋ assets(.json/.srt/.txt)
+- **2次transcript の重複解消（PR #39 作成・マージ待ち）**: 別PC=PR#35 の faster-whisper版（旧命名）と本PCの mlx正本が重複 → 旧命名版 `transcript_みずほフィナンシャルグループ 2次面接.md` を削除。正本 `transcript_2次面接_20260526.md`（補正表+Q&A整形+全文逐語①②）と生データ `-1/-2.md` を維持
+- **ブランチ大整理（リモート 23→2本）**:
+  - マージ済み17本 + PR#29 CLOSED 1本 を origin 削除
+  - ローカルのみ・マージ済み 2本（SMBC-nikkousyoukenn / nissay-asset-management-es）削除
+  - 未マージ3本を精査の上 全削除: playwright-mcp-integration（投信協会DSは4/23リファクタで main の references/ に取込済＝陳腐化）/ am-full-comparison（8社profile・比較表が main と0行差＝陳腐化）/ myam-uniqueness-audit（closed PR#29内包・MYAM 1次完了で用済み）
+  - 現役 mizuho-2ji-qa-augment 削除（deliverable は PR#36/#37 で main に完備・0行差、残りは完了済みhandoffのみ）
 
 ## 📍 State snapshot
-- ✅ Done: 上記すべて push 済（commit 969e752, 5de3eef）。ブランチ `claude/20260524-mizuho-2ji-qa-augment`
-- 🟡 In progress: なし（次は最終面接版 interview-qa）
+- ✅ Done: 3次transcript取込（main 反映済）、ブランチ整理（origin 2本＝main + PR#39ブランチ）
+- 🟡 In progress: **PR #39 マージ待ち（ユーザー側）** / **別PC同期待ち（ユーザー側）**
 - 🔴 Blocked: なし
-- 🔧 本セッションのリネーム訂正: 1次transcript 20260525→**20260406**（5/25は文字起こし実行日／面接日=4/6）。5/12を transcript・reflection とも **CareerLounge-大企業RM**（面接→面談）
 
 ## 🧠 Context not in code
-- **選考フロー**: 1次(4/6・計数テストあり)→ 2次(5/26・計数なし・3社2次兼用)→ **オファー面接(=最終相当・1社に絞る)**。2次結果6/26まで
-- **志望順位**: ①銀行 ②証券 ③信託（2次で明言）。本命=銀行（軸に直結・産業調査部ルート明確・マクロ志向）
-- **かんぽ生命**: DX戦略部の内々定の約束あり・来週最終。みずほ内定なら行く可能性高。差別化＝相手が社内 vs 顧客
-- **信託の本音**（面接では言わない）: 作業多くAI化すべき・人間の仕事に懐疑。表では不動産/承継の定量×定性で前向きに
+- **みずほ最終面接（オファー面接）本番待ち**: 想定問答 `interview_qa_最終面接_20260527.md` ＋ 当日用チートシート `当日用/最終面接_要点+60秒版_20260529.md` は main に完備。日程出たら interview-direct-prep で直前シート生成
+- **選考フロー**: 1次(4/6・計数あり)→2次(5/26・計数なし・3社兼用)→**オファー面接(=最終相当・1社に絞る)**。2次結果は **6/26まで連絡**
+- **志望順位**: ①銀行 ②証券 ③信託。本命=銀行（軸直結・産業調査部ルート・マクロ志向）
+- **かんぽ生命**: DX戦略部の内々定の約束あり。みずほ内定なら行く可能性高。差別化＝相手が社内 vs 顧客
 - **コース確定**: グループオープン型（BK/TB法人＋SC法人WM）。"色々やりたい"NG・到達点(産業調査起点M&A)を必ず添える
-- **卒論**: 輸入価格ショック→所得層別家計影響（Phase1-3完了）。旧テーマ(POS/DID/IV)は使わない
+- **transcript後続フロー（3次・未実施）**: interview-blindspot（reflection照合・盲点抽出）/ question-bank-updater（3次質問を question_bank.md 登録）
 
-## ❌ Don't do (this task)
+## ❌ Don't do（durable・継続）
 - [feedback] 自己紹介にPREP法を強制しない（自然な流れ。PREPは論点回答向け）
 - [feedback] 価値観の出所（生得 vs 環境）を区別、曖昧な特性を「幼少期から」と盛らない
 - [feedback] 最終面接で「銀行でも証券でも同じ」はNG＝志望の濃淡が消える。**"同じ軸・別ルート・優先は銀行"**で一貫
 - [trap] 長期インターンはチーム文脈で使わない（一人完遂が強み。チームは塾講師05・文化祭06）
-- [trap] 面接transcriptの「何次」はファイル名/即答でなく**中身の物証**で確認（計数テスト有無/面接官冒頭発言/結果通知日の時系列）。今回0525ファイル=1次・面接日4/6だった
-- [trap-refined] Desktop配下のquarantine付m4aでも `python3` の mlx_whisper.transcribe は読めた（旧trap「bash経由はEPERMで不可」は操作/API依存。一律ブロックではない）
+- [trap] 面接transcriptの「何次」はファイル名/即答でなく**中身の物証**で確認（計数テスト有無/面接官冒頭発言/結果通知日の時系列）
+- [process] skill のマージ可否判定は SKILL.md 本体だけでなく `references/` も含めて照合（リファクタで内容が references/ へ移動する。playwright判定で一度誤判定した）
 
 ## ❓ Open questions for user
-- [ ] research_brief.md（みずほ）更新: 卒論1行＋一次情報(4/6,5/12,5/26,コース確定)を軸7/8に反映（company-researcher経由）
-- [ ] みずほ2次ブランチを PR化して main マージするか
-- [ ] 模擬面接（声出し）を最終面接前に実施するか（skeptical-interviewer）
+- [ ] research_brief.md（みずほ）更新: 卒論1行＋一次情報(4/6,5/12,5/26,5/29)を軸7/8に反映（company-researcher経由）
+- [ ] 模擬面接（声出し）をオファー面接前に実施するか（skeptical-interviewer）
+- [ ] 3次面接の reflection 作成＋ interview-blindspot を回すか（transcript 到着済）
 
-## 📂 Key files（本セッション）
-- `company-info/みずほフィナンシャルグループ/interview_research_最終面接_20260526.md`（最終面接調査＋必須参照フロー＋確定ロジック）★次回起点
-- `company-info/みずほフィナンシャルグループ/role_deepdive_SC_career-to-research_20260526.md`（§6 銀行vs証券決定版）
+## 📂 Key files
+- `company-info/みずほフィナンシャルグループ/interview_qa_最終面接_20260527.md`（最終面接想定問答・main完備）★本番起点
+- `company-info/みずほフィナンシャルグループ/当日用/最終面接_要点+60秒版_20260529.md`（当日用チートシート）
+- `company-info/みずほフィナンシャルグループ/transcript/transcript_3次面接_20260529.md`（3次transcript・同期取込）
+- `company-info/みずほフィナンシャルグループ/transcript/transcript_2次面接_20260526.md`（2次正本）
 - `company-info/みずほフィナンシャルグループ/reflection_2次_20260526.md`（盲点＝潰すべき弱点）
-- `company-info/みずほフィナンシャルグループ/transcript/transcript_2次面接_20260526.md`
-- `company-info/みずほフィナンシャルグループ/interview_qa_2次面接_20260515.md`（2次想定問答・前セッション主成果）
 
-## ❌ Out of scope
+## 📂 Out of scope
 - research_brief 更新は別途（company-researcher経由）
-- 最終面接版 interview-qa の生成は次セッション
+- PR #39 マージ・別PC同期はユーザー側で実施
