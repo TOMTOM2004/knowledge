@@ -7,14 +7,6 @@
 
 ---
 
-## 出力スタイル
-
-- 説明は最小限。変更は diff 中心
-- 冗長な前置き・要約は省略
-- 日本語で会話
-
----
-
 ## ファイル配置の要所
 
 | 種類 | 場所 |
@@ -104,8 +96,8 @@ reflection テンプレ → `docs/schemas/reflection-template.md`
 - `interview-blindspot` を transcript なしで実行しない
 - `question-bank-updater` で質問文を要約・意訳しない（逐語記録）
 - `reflection_*.md` の `result` を未設定のまま放置しない
-- main ブランチに直接 commit・push しない（グローバル hook で物理的にブロック済み）
-- `.env`・秘密情報を commit しない
+
+（出力スタイル・Branch-first・Security はグローバル CLAUDE.md が常時ロードされるためここに重複させない — 2026-06-11 棚卸し）
 
 ---
 
